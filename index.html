@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniWealth Pro | Multi-Timeframe Command Terminal</title>
+  <title>OmniWealth Pro | Multi-Horizon Terminal</title>
   <!-- Tailwind CSS & Chart.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -62,7 +62,7 @@
       </button>
 
       <div class="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
-        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Encrypted Local Storage Terminal
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Encrypted Local Browser Sandbox
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
           <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
             OmniWealth Multi-Horizon OS
           </h1>
-          <p class="text-xs text-slate-400">Intraday • Swing (3-8D) • Positional (3-6W) • Long-Term (6-18M)</p>
+          <p class="text-xs text-slate-400">Penny/Turnaround • Swing (3-8D) • Positional (3-6W) • Long-Term (6-18M)</p>
         </div>
       </div>
 
@@ -180,7 +180,7 @@
               </li>
               <li class="flex items-start gap-2">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                <span><b>Tactical Intraday/F&O:</b> 15% strictly managed with same-day rules.</span>
+                <span><b>Turnaround / Penny:</b> Capped at &lt;5% to prevent outsized downside risk.</span>
               </li>
             </ul>
           </div>
@@ -205,7 +205,7 @@
         <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Futures & Options (F&O)</button>
       </div>
 
-      <!-- 2.1 My Stock Holdings (Timeframe-Categorized) -->
+      <!-- 2.1 My Stock Holdings -->
       <div id="stock-sub-holdings" class="space-y-4">
         <div class="flex justify-between items-center">
           <div>
@@ -251,19 +251,18 @@
             <input 
               type="text" 
               id="tv-symbol-input" 
-              placeholder="e.g. RELIANCE, TATAMOTORS" 
-              value="NSE:NIFTY" 
+              placeholder="e.g. SUZLON, RELIANCE" 
+              value="NSE:SUZLON" 
               class="bg-slate-800 border border-slate-700 px-3 py-2 rounded-xl text-xs uppercase outline-none focus:border-blue-500 font-semibold"
             />
             <button onclick="loadCustomTVSymbol()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold shadow">
               Load Chart
             </button>
             <div class="flex flex-wrap gap-1 ml-1">
+              <button onclick="changeTVSymbol('NSE:SUZLON')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">SUZLON</button>
+              <button onclick="changeTVSymbol('NSE:RPOWER')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">RPOWER</button>
               <button onclick="changeTVSymbol('NSE:NIFTY')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">NIFTY</button>
-              <button onclick="changeTVSymbol('NSE:BANKNIFTY')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">BANKNIFTY</button>
               <button onclick="changeTVSymbol('NSE:HDFCBANK')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">HDFC</button>
-              <button onclick="changeTVSymbol('NSE:RELIANCE')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">RELIANCE</button>
-              <button onclick="changeTVSymbol('NSE:TCS')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">TCS</button>
               <button onclick="changeTVSymbol('NSE:ZOMATO')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">ZOMATO</button>
             </div>
           </div>
@@ -272,7 +271,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider" id="chart-symbol-label">NSE:NIFTY Live Chart</span>
+              <span class="text-xs font-bold text-slate-300 uppercase tracking-wider" id="chart-symbol-label">NSE:SUZLON Live Chart</span>
               <span class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Streaming Real-Time
               </span>
@@ -312,7 +311,7 @@
                 <option value="swing_momentum" selected>2. Momentum Swing (3 - 8 Days)</option>
                 <option value="swing_positional">3. Positional Breakout (3 - 6 Weeks)</option>
                 <option value="longterm_quality">4. Long-Term Compounding (6 - 18M)</option>
-                <option value="turnaround_spec">5. Turnaround Setup (2 - 4 Months)</option>
+                <option value="turnaround_spec">5. Turnaround / Penny (2 - 4 Months)</option>
               </select>
               <button onclick="autoCalculateSmartLevels()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Auto-Generate Levels
@@ -323,35 +322,35 @@
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label class="text-xs text-slate-400 font-medium">Stock Ticker Symbol</label>
-              <input type="text" id="eval-ticker" placeholder="e.g. TATASTEEL" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 uppercase font-semibold" />
+              <input type="text" id="eval-ticker" placeholder="e.g. SUZLON" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 uppercase font-semibold" />
             </div>
             <div>
               <label class="text-xs text-slate-400 font-medium">Proposed Entry Price (₹)</label>
-              <input type="number" id="eval-entry" placeholder="e.g. 150" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-blue-400" />
+              <input type="number" id="eval-entry" placeholder="e.g. 65" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-blue-400" />
             </div>
             <div>
               <label class="text-xs text-slate-400 font-medium">Strict Stop-Loss (₹)</label>
-              <input type="number" id="eval-sl" placeholder="e.g. 142.5" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-rose-400" />
+              <input type="number" id="eval-sl" placeholder="e.g. 57.2" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-rose-400" />
             </div>
             <div>
               <label class="text-xs text-slate-400 font-medium">Target 1 (₹)</label>
-              <input type="number" id="eval-t1" placeholder="e.g. 168.75" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-emerald-400" />
+              <input type="number" id="eval-t1" placeholder="e.g. 88.4" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-emerald-400" />
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="text-xs text-slate-400 font-medium">Target 2 (Runner / Resistance) (₹)</label>
-              <input type="number" id="eval-t2" placeholder="e.g. 180.00" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-emerald-300" />
+              <input type="number" id="eval-t2" placeholder="e.g. 105.00" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-emerald-300" />
             </div>
             <div>
               <label class="text-xs text-slate-400 font-medium">Active Horizon Strategy</label>
               <select id="eval-horizon-select" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 text-slate-200 font-medium">
                 <option value="intraday_orb">Intraday Setup (Exit by 3:15 PM Same Day)</option>
-                <option value="swing_momentum" selected>Active Swing Trade (Estimated: 3 to 8 Trading Days)</option>
+                <option value="swing_momentum">Active Swing Trade (Estimated: 3 to 8 Trading Days)</option>
                 <option value="swing_positional">Short-Term Positional (Estimated: 3 to 6 Weeks)</option>
                 <option value="longterm_quality">Long-Term Compounding (Estimated: 6 to 18 Months)</option>
-                <option value="turnaround_spec">Turnaround Setup (Estimated: 2 to 4 Months)</option>
+                <option value="turnaround_spec" selected>Turnaround / Penny (Estimated: 2 to 4 Months)</option>
               </select>
             </div>
           </div>
@@ -360,7 +359,7 @@
             <button onclick="evaluateTradeEntry()" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-lg shadow-blue-500/20">
               <i data-lucide="check-circle-2" class="w-4 h-4"></i> Run Feasibility & Time-Horizon Matrix
             </button>
-            <button onclick="inspectSymbolInTV(document.getElementById('eval-ticker').value || 'NIFTY')" class="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+            <button onclick="inspectSymbolInTV(document.getElementById('eval-ticker').value || 'SUZLON')" class="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-sm font-semibold transition flex items-center gap-2">
               <i data-lucide="radio" class="w-4 h-4 text-emerald-400"></i> Verify with Live Chart
             </button>
           </div>
@@ -369,21 +368,21 @@
         </div>
       </div>
 
-      <!-- 2.4 Curated Watchlists (Top 45+) WITH TIME-FRAME BADGES -->
-      <div id="stock-sub-recs" class="hidden space-y-6">
+      <!-- 2.4 Curated Watchlists (Top 45+) INCLUDING PENNY STOCKS -->
+      <div id="stock-sub-recs" class="space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <div class="flex flex-wrap justify-between items-center gap-4">
             <div>
               <h3 class="text-base font-bold text-slate-100">Curated Multi-Cap Watchlists & Actionable Triggers</h3>
-              <p class="text-xs text-slate-400">Filter across all 5 time horizons to select setups matching your strategy.</p>
+              <p class="text-xs text-slate-400">Click any filter below including <b>Penny / Sub-₹100 (10)</b> to view setups.</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <button onclick="filterRecs('all')" id="rec-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All (45)</button>
-              <button onclick="filterRecs('large')" id="rec-btn-large" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Large-Cap (6-18M)</button>
-              <button onclick="filterRecs('mid')" id="rec-btn-mid" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Mid-Cap (3-12M)</button>
-              <button onclick="filterRecs('small')" id="rec-btn-small" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Small-Cap (2-6M)</button>
-              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Turnaround (2-4M)</button>
-              <button onclick="filterRecs('swing')" id="rec-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Active Swing (3-8D)</button>
+              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">Penny / Sub-₹100 (10)</button>
+              <button onclick="filterRecs('large')" id="rec-btn-large" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Large-Cap (10)</button>
+              <button onclick="filterRecs('mid')" id="rec-btn-mid" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Mid-Cap (10)</button>
+              <button onclick="filterRecs('small')" id="rec-btn-small" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Small-Cap (10)</button>
+              <button onclick="filterRecs('swing')" id="rec-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Active Swing (5)</button>
             </div>
           </div>
 
@@ -447,7 +446,7 @@
           </div>
           <div>
             <h2 class="text-lg font-bold text-white">Timeframe-Aware Portfolio Doctor</h2>
-            <p class="text-xs text-slate-400">Evaluates exit triggers based on whether a holding is an Intraday, Swing, Positional, or Long-Term investment.</p>
+            <p class="text-xs text-slate-400">Evaluates exit triggers based on whether a holding is an Intraday, Swing, Positional, Penny, or Long-Term investment.</p>
           </div>
         </div>
       </div>
@@ -530,20 +529,20 @@
   </main>
 
   <!-- ================= MODALS ================= -->
-  <!-- Stock Holding Modal (With Timeframe Selector) -->
+  <!-- Stock Holding Modal -->
   <div id="modal-add-stock" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
       <h3 class="text-lg font-bold">Add / Edit Stock Holding</h3>
-      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. HDFCBANK)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold" />
+      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. SUZLON)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold" />
       
       <div class="grid grid-cols-2 gap-2">
         <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
         <select id="input-stock-horizon" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs font-semibold text-blue-400">
-          <option value="Long-Term (6-18M)" selected>Long-Term (6-18M)</option>
+          <option value="Long-Term (6-18M)">Long-Term (6-18M)</option>
           <option value="Positional (3-6W)">Positional (3-6W)</option>
           <option value="Swing (3-8D)">Swing (3-8D)</option>
+          <option value="Turnaround / Penny (2-4M)">Turnaround / Penny (2-4M)</option>
           <option value="Intraday (Same Day)">Intraday (Same Day)</option>
-          <option value="Turnaround (2-4M)">Turnaround (2-4M)</option>
         </select>
       </div>
 
@@ -638,55 +637,21 @@
 
   <!-- ================= APPLICATION SCRIPTS ================= -->
   <script>
-    const MASTER_PASS = "S.j.@$10";
-
-    function checkAuth() {
-      const isAuth = sessionStorage.getItem('omniwealth_auth');
-      const lockScreen = document.getElementById('terminal-lock-screen');
-      if (isAuth === 'unlocked') {
-        lockScreen.classList.add('hidden');
-      } else {
-        lockScreen.classList.remove('hidden');
-      }
-    }
-
-    function unlockTerminal() {
-      const input = document.getElementById('terminal-pass-input');
-      const err = document.getElementById('lock-error-msg');
-      if (input.value === MASTER_PASS) {
-        sessionStorage.setItem('omniwealth_auth', 'unlocked');
-        document.getElementById('terminal-lock-screen').classList.add('hidden');
-        err.classList.add('hidden');
-        input.value = '';
-      } else {
-        err.classList.remove('hidden');
-        input.classList.add('border-rose-500');
-        setTimeout(() => input.classList.remove('border-rose-500'), 2000);
-      }
-    }
-
-    function lockTerminal() {
-      sessionStorage.removeItem('omniwealth_auth');
-      document.getElementById('terminal-pass-input').value = '';
-      document.getElementById('terminal-lock-screen').classList.remove('hidden');
-    }
-
-    function togglePassVisibility() {
-      const input = document.getElementById('terminal-pass-input');
-      const icon = document.getElementById('pass-eye-icon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.setAttribute('data-lucide', 'eye-off');
-      } else {
-        input.type = 'password';
-        icon.setAttribute('data-lucide', 'eye');
-      }
-      lucide.createIcons();
-    }
-
-    // Master Curated Watchlists (45 Top Setups with Multi-Timeframe Badges)
+    // Master Curated Watchlists (All 45 Setups including the 10 Penny Stocks)
     const MASTER_RECOMMENDATIONS = [
-      // Large Cap (6 - 18 Months)
+      // 1. Penny / Turnaround Stocks (Sub-₹100)
+      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', entry: '62-68', t1: 95, t2: 115, sl: 53, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
+      { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', entry: '38-42', t1: 60, t2: 72, sl: 31, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt settlement and renewable power venture pivot.' },
+      { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', entry: '2.2-2.6', t1: 4.2, t2: 5.5, sl: 1.8, timeframe: '2 - 3 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G telecom small-cell tower tenancies.' },
+      { ticker: 'JPPOWER', name: 'Jaiprakash Power', cat: 'penny', entry: '17-19', t1: 28, t2: 34, sl: 14, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Thermal plant turnaround & debt restructuring.' },
+      { ticker: 'SOUTHBANK', name: 'South Indian Bank', cat: 'penny', entry: '24-27', t1: 38, t2: 45, sl: 21, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'NPA cleanup lifting Return on Assets.' },
+      { ticker: 'VI', name: 'Vodafone Idea', cat: 'penny', entry: '7.5-8.5', t1: 13, t2: 16.5, sl: 6.2, timeframe: '3 - 6 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Equity infusion & 4G/5G capital expenditure.' },
+      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', entry: '20-22', t1: 32, t2: 38, sl: 17, timeframe: '2 - 5 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Resolution of legacy bad debt book.' },
+      { ticker: 'HFCL', name: 'HFCL Ltd', cat: 'penny', entry: '110-118', t1: 165, t2: 190, sl: 96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G optical fiber cables & defense exports.' },
+      { ticker: 'INFIBEAM', name: 'Infibeam Avenues', cat: 'penny', entry: '28-31', t1: 44, t2: 52, sl: 24, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'AI payment fraud detection & international growth.' },
+      { ticker: 'TRIDENT', name: 'Trident Ltd', cat: 'penny', entry: '34-37', t1: 52, t2: 60, sl: 30, timeframe: '3 - 5 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'US textile export demand revival.' },
+
+      // 2. Large Cap (6 - 18 Months)
       { ticker: 'HDFCBANK', name: 'HDFC Bank', cat: 'large', entry: '1600-1650', t1: 1920, t2: 2150, sl: 1490, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Post-merger loan-to-deposit normalization.' },
       { ticker: 'RELIANCE', name: 'Reliance Industries', cat: 'large', entry: '1240-1280', t1: 1520, t2: 1700, sl: 1160, timeframe: '6 - 15 Months', horizon: 'Long-Term (6-18M)', thesis: 'Telecom tariff expansion and retail monetization.' },
       { ticker: 'ICICIBANK', name: 'ICICI Bank', cat: 'large', entry: '1180-1220', t1: 1450, t2: 1600, sl: 1090, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Top RoA and low credit cost among peers.' },
@@ -698,7 +663,7 @@
       { ticker: 'M&M', name: 'Mahindra & Mahindra', cat: 'large', entry: '2750-2850', t1: 3400, t2: 3800, sl: 2540, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Dominant SUV market share & farm equip cashflows.' },
       { ticker: 'NTPC', name: 'NTPC Ltd', cat: 'large', entry: '360-380', t1: 470, t2: 530, sl: 330, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Green hydrogen & renewable expansion.' },
 
-      // Mid Cap (3 - 12 Months)
+      // 3. Mid Cap (3 - 12 Months)
       { ticker: 'CUMMINSIND', name: 'Cummins India', cat: 'mid', entry: '3650-3800', t1: 4600, t2: 5100, sl: 3380, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Data center backup power & green engines.' },
       { ticker: 'SOLARINDS', name: 'Solar Industries', cat: 'mid', entry: '10200-10800', t1: 13500, t2: 15000, sl: 9400, timeframe: '4 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Pinaka rockets & global defense export orders.' },
       { ticker: 'DIXON', name: 'Dixon Tech', cat: 'mid', entry: '11500-12200', t1: 15400, t2: 17000, sl: 10400, timeframe: '3 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'PLI beneficiary in smartphone & IT hardware.' },
@@ -710,7 +675,7 @@
       { ticker: 'TRENT', name: 'Trent Ltd', cat: 'mid', entry: '5800-6200', t1: 7800, t2: 8900, sl: 5300, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Rapid Zudio store expansion & inventory turns.' },
       { ticker: 'SUPREMEIND', name: 'Supreme Industries', cat: 'mid', entry: '4400-4650', t1: 5800, t2: 6400, sl: 4050, timeframe: '4 - 9 Months', horizon: 'Positional (3-6W)', thesis: 'National piping & infrastructure demand leader.' },
 
-      // Small Cap (2 - 6 Months)
+      // 4. Small Cap (2 - 6 Months)
       { ticker: 'KAYNES', name: 'Kaynes Technology', cat: 'small', entry: '4800-5100', t1: 6500, t2: 7200, sl: 4350, timeframe: '2 - 5 Months', horizon: 'Positional (3-6W)', thesis: 'Aerospace, defense & OSAT semiconductor assembly.' },
       { ticker: 'DATAREPAT', name: 'Data Patterns', cat: 'small', entry: '2650-2800', t1: 3600, t2: 4100, sl: 2420, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Fighter jet radar systems & avionics.' },
       { ticker: 'ELECON', name: 'Elecon Engineering', cat: 'small', entry: '620-660', t1: 850, t2: 960, sl: 565, timeframe: '2 - 4 Months', horizon: 'Swing (3-8D)', thesis: 'Global industrial gear market share expansion.' },
@@ -722,19 +687,7 @@
       { ticker: 'PNCINFRA', name: 'PNC Infratech', cat: 'small', entry: '380-410', t1: 540, t2: 620, sl: 345, timeframe: '2 - 4 Months', horizon: 'Positional (3-6W)', thesis: 'Highway monetization deleveraging balance sheet.' },
       { ticker: 'ACTIONIND', name: 'Action Construction (ACE)', cat: 'small', entry: '1200-1280', t1: 1700, t2: 1950, sl: 1080, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Dominant mobile industrial crane manufacturer.' },
 
-      // Turnaround / Sub-₹100 (2 - 4 Months)
-      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', entry: '62-68', t1: 95, t2: 115, sl: 53, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
-      { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', entry: '38-42', t1: 60, t2: 72, sl: 31, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'Debt settlement and renewable power venture pivot.' },
-      { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', entry: '2.2-2.6', t1: 4.2, t2: 5.5, sl: 1.8, timeframe: '2 - 3 Months', horizon: 'Turnaround (2-4M)', thesis: '5G telecom small-cell tower tenancies.' },
-      { ticker: 'JPPOWER', name: 'Jaiprakash Power', cat: 'penny', entry: '17-19', t1: 28, t2: 34, sl: 14, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'Thermal plant turnaround & debt restructuring.' },
-      { ticker: 'SOUTHBANK', name: 'South Indian Bank', cat: 'penny', entry: '24-27', t1: 38, t2: 45, sl: 21, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'NPA cleanup lifting Return on Assets.' },
-      { ticker: 'VI', name: 'Vodafone Idea', cat: 'penny', entry: '7.5-8.5', t1: 13, t2: 16.5, sl: 6.2, timeframe: '3 - 6 Months', horizon: 'Turnaround (2-4M)', thesis: 'Equity infusion & 4G/5G capital expenditure.' },
-      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', entry: '20-22', t1: 32, t2: 38, sl: 17, timeframe: '2 - 5 Months', horizon: 'Turnaround (2-4M)', thesis: 'Resolution of legacy bad debt book.' },
-      { ticker: 'HFCL', name: 'HFCL Ltd', cat: 'penny', entry: '110-118', t1: 165, t2: 190, sl: 96, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: '5G optical fiber cables & defense exports.' },
-      { ticker: 'INFIBEAM', name: 'Infibeam Avenues', cat: 'penny', entry: '28-31', t1: 44, t2: 52, sl: 24, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'AI payment fraud detection & international growth.' },
-      { ticker: 'TRIDENT', name: 'Trident Ltd', cat: 'penny', entry: '34-37', t1: 52, t2: 60, sl: 30, timeframe: '3 - 5 Months', horizon: 'Turnaround (2-4M)', thesis: 'US textile export demand revival.' },
-
-      // Active Swing (3 - 8 Trading Days)
+      // 5. Active Swing (3 - 8 Trading Days)
       { ticker: 'BEL', name: 'Bharat Electronics', cat: 'swing', entry: '310-318', t1: 365, t2: 395, sl: 292, timeframe: '4 - 8 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Flat Base breakout near 52-week highs.' },
       { ticker: 'HAL', name: 'Hindustan Aeronautics', cat: 'swing', entry: '4550-4650', t1: 5400, t2: 5800, sl: 4320, timeframe: '5 - 10 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Cup & Handle pattern breakout on defense orders.' },
       { ticker: 'COALINDIA', name: 'Coal India', cat: 'swing', entry: '440-455', t1: 520, t2: 560, sl: 420, timeframe: '3 - 7 Trading Days', horizon: 'Swing (3-8D)', thesis: '20-EMA pullback support with high dividend yield.' },
@@ -744,7 +697,7 @@
 
     let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
     let chartInstance = null;
-    let currentTVSymbol = 'NSE:NIFTY';
+    let currentTVSymbol = 'NSE:SUZLON';
 
     function init() {
       lucide.createIcons();
@@ -904,7 +857,7 @@
 
     // --- TRADINGVIEW ENGINE ---
     function formatSymbolForTV(rawSym) {
-      if (!rawSym) return 'NSE:NIFTY';
+      if (!rawSym) return 'NSE:SUZLON';
       rawSym = rawSym.trim().toUpperCase();
       if (rawSym.includes(':')) return rawSym;
       return `NSE:${rawSym}`;
@@ -988,7 +941,7 @@
 
     // --- CURATED RECOMMENDATIONS ---
     function filterRecs(cat) {
-      ['all', 'large', 'mid', 'small', 'penny', 'swing'].forEach(c => {
+      ['all', 'penny', 'large', 'mid', 'small', 'swing'].forEach(c => {
         const btn = document.getElementById(`rec-btn-${c}`);
         btn.classList.remove('rec-filter-active');
         btn.classList.add('bg-slate-800', 'text-slate-300');
