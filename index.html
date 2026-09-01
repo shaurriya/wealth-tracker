@@ -62,7 +62,7 @@
       </button>
 
       <div class="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
-        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Encrypted Local Storage Terminal
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Encrypted Local Browser Sandbox
       </div>
     </div>
   </div>
@@ -180,7 +180,7 @@
               </li>
               <li class="flex items-start gap-2">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                <span><b>Turnaround / Penny:</b> Capped at &lt;5% to prevent outsized downside risk.</span>
+                <span><b>Turnaround / Penny:</b> Capped at &lt;5% to manage downside risk.</span>
               </li>
             </ul>
           </div>
@@ -209,7 +209,7 @@
         <div class="flex justify-between items-center">
           <div>
             <h2 class="text-lg font-bold">Active Stock Holdings</h2>
-            <p class="text-xs text-slate-400">Track current holdings with auto-calculated stop losses and targets.</p>
+            <p class="text-xs text-slate-400">Holdings tracked with auto-calculated stop-loss cuts and profit targets.</p>
           </div>
           <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
             <i data-lucide="plus" class="w-4 h-4"></i> Add Bought Stock
@@ -252,18 +252,19 @@
             <input 
               type="text" 
               id="analyzer-symbol-input" 
-              placeholder="e.g. SUZLON, RELIANCE, TCS" 
-              value="SUZLON" 
-              class="bg-slate-800 border border-slate-700 px-3.5 py-2 rounded-xl text-xs uppercase outline-none focus:border-blue-500 font-semibold text-white w-48"
+              placeholder="e.g. DAVANGERE, SUZLON, RELIANCE" 
+              value="DAVANGERE" 
+              class="bg-slate-800 border border-slate-700 px-3.5 py-2 rounded-xl text-xs uppercase outline-none focus:border-blue-500 font-semibold text-white w-52"
+              onkeydown="if(event.key === 'Enter') runDeepAnalysis()"
             />
             <button onclick="runDeepAnalysis()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5">
               <i data-lucide="search" class="w-3.5 h-3.5"></i> Analyze Stock
             </button>
             <div class="flex flex-wrap gap-1 ml-1">
+              <button onclick="analyzeTickerQuick('DAVANGERE')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">DAVANGERE</button>
               <button onclick="analyzeTickerQuick('SUZLON')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">SUZLON</button>
               <button onclick="analyzeTickerQuick('RELIANCE')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">RELIANCE</button>
               <button onclick="analyzeTickerQuick('HDFCBANK')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">HDFC</button>
-              <button onclick="analyzeTickerQuick('TATASTEEL')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">TATASTEEL</button>
               <button onclick="analyzeTickerQuick('ZOMATO')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">ZOMATO</button>
             </div>
           </div>
@@ -271,7 +272,7 @@
 
         <!-- Automated Entry, Stop Loss & Exit Intelligence Card -->
         <div id="analyzer-levels-card" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-          <!-- Dynamically Injected Content -->
+          <!-- Dynamically Injected -->
         </div>
 
         <!-- 2-Column Overview: Company Profile & Technical Gauge -->
@@ -306,8 +307,8 @@
 
       </div>
 
-      <!-- 2.3 Curated Watchlists (Top 45+) -->
-      <div id="stock-sub-recs" class="hidden space-y-6">
+      <!-- 2.3 Curated Watchlists (Top 45+) INCLUDING PENNY STOCKS -->
+      <div id="stock-sub-recs" class="space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <div class="flex flex-wrap justify-between items-center gap-4">
             <div>
@@ -483,7 +484,7 @@
 
       <div>
         <label class="text-xs text-slate-400 font-semibold">Stock Ticker Symbol</label>
-        <input type="text" id="input-stock-name" placeholder="e.g. SUZLON, RELIANCE, TATASTEEL" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold mt-1 outline-none focus:border-blue-500 text-white" />
+        <input type="text" id="input-stock-name" placeholder="e.g. DAVANGERE, SUZLON, RELIANCE" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold mt-1 outline-none focus:border-blue-500 text-white" />
       </div>
 
       <div class="grid grid-cols-2 gap-3">
@@ -493,16 +494,15 @@
         </div>
         <div>
           <label class="text-xs text-slate-400 font-semibold">Bought Price (₹)</label>
-          <input type="number" id="input-stock-buy" placeholder="e.g. 65.50" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-blue-400 outline-none focus:border-blue-500" />
+          <input type="number" step="0.01" id="input-stock-buy" placeholder="e.g. 2.08" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-blue-400 outline-none focus:border-blue-500" />
         </div>
       </div>
 
-      <!-- Auto-Pilot Target Notice -->
       <div class="p-3.5 bg-slate-800/60 rounded-xl border border-slate-700/70 text-xs space-y-1">
         <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
           <i data-lucide="sparkles" class="w-4 h-4"></i> Automated Target & Protection Active
         </div>
-        <p class="text-[11px] text-slate-400">OmniWealth will automatically calculate a strict Stop-Loss, Target 1 (+15%), and Target 2 (+25%) for portfolio monitoring.</p>
+        <p class="text-[11px] text-slate-400">OmniWealth calculates an optimal Stop-Loss, Target 1 (+15-30%), and Target 2 automatically based on price level.</p>
       </div>
 
       <div class="flex justify-end gap-2 pt-2">
@@ -584,13 +584,14 @@
     </div>
   </div>
 
-  <!-- ================= APPLICATION ENGINE SCRIPTS ================= -->
+  <!-- ================= APPLICATION SCRIPTS ================= -->
   <script>
     const MASTER_PASS = "S.j.@$10";
 
-    // Master Curated Watchlists
+    // Master Curated Watchlists (All 45 Setups with Penny Stocks Included)
     const MASTER_RECOMMENDATIONS = [
       // 1. Penny / Turnaround Stocks (Sub-₹100)
+      { ticker: 'DAVANGERE', name: 'Davangere Sugar Company Ltd', cat: 'penny', cmp: 2.08, entry: '2.00 - 2.10', t1: 2.70, t2: 3.40, sl: 1.85, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Ethanol capacity ramp up, sugar crushing momentum, and debt consolidation.' },
       { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', cmp: 65.5, entry: '62 - 68', t1: 95, t2: 115, sl: 53, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
       { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', cmp: 40.2, entry: '38 - 42', t1: 60, t2: 72, sl: 31, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt settlement and renewable power venture pivot.' },
       { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', cmp: 2.4, entry: '2.2 - 2.6', t1: 4.2, t2: 5.5, sl: 1.8, timeframe: '2 - 3 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G telecom small-cell tower tenancies.' },
@@ -648,7 +649,7 @@
 
     let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
     let chartInstance = null;
-    let currentAnalyzedSymbol = 'SUZLON';
+    let currentAnalyzedSymbol = 'DAVANGERE';
     let currentRecsData = MASTER_RECOMMENDATIONS;
 
     function checkAuth() {
@@ -734,9 +735,32 @@
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
+    // --- AUTO-CLEANER & NORMALIZER ---
+    function cleanTickerSymbol(raw) {
+      if (!raw) return 'DAVANGERE';
+      let clean = raw.trim().toUpperCase()
+        .replace(' COMPANY LIMITED', '')
+        .replace(' COMPANY LTD', '')
+        .replace(' LIMITED', '')
+        .replace(' LTD', '')
+        .replace(' SUGAR', '')
+        .replace(' ENERGY', '')
+        .replace(' INDUSTRIES', '')
+        .replace(' POWER', '');
+      
+      clean = clean.split(' ')[0]; // Pick primary symbol token
+      return clean;
+    }
+
+    function formatSymbol(raw) {
+      const clean = cleanTickerSymbol(raw);
+      return clean.includes(':') ? clean : `NSE:${clean}`;
+    }
+
     // --- SIMPLIFIED SAVE STOCK (NO TARGET TYPING NEEDED) ---
     function saveStockSimple() {
-      const name = document.getElementById('input-stock-name').value.trim().toUpperCase();
+      const rawName = document.getElementById('input-stock-name').value;
+      const name = cleanTickerSymbol(rawName);
       const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
       const buy = parseFloat(document.getElementById('input-stock-buy').value) || 0;
 
@@ -745,10 +769,10 @@
       }
 
       // Automatically compute target, stop loss, and horizon
-      const riskPct = (buy < 100) ? 0.09 : 0.05;
+      const riskPct = (buy < 100) ? 0.10 : 0.05;
       const sl = parseFloat((buy * (1 - riskPct)).toFixed(2));
-      const t1 = parseFloat((buy * (1 + (riskPct * 2.5))).toFixed(2)); // 1:2.5 R:R
-      const t2 = parseFloat((buy * (1 + (riskPct * 4.0))).toFixed(2)); // 1:4.0 R:R
+      const t1 = parseFloat((buy * (1 + (riskPct * 2.5))).toFixed(2));
+      const t2 = parseFloat((buy * (1 + (riskPct * 4.0))).toFixed(2));
       const horizon = (buy < 100) ? 'Turnaround / Penny (2-4M)' : 'Swing / Compounding (3-12M)';
 
       state.stocks.push({
@@ -772,41 +796,35 @@
     }
 
     // --- 360° DEEP STOCK ANALYZER ---
-    function formatSymbol(raw) {
-      if (!raw) return 'NSE:SUZLON';
-      raw = raw.trim().toUpperCase();
-      return raw.includes(':') ? raw : `NSE:${raw}`;
-    }
-
     function runDeepAnalysis() {
-      const input = document.getElementById('analyzer-symbol-input').value.trim().toUpperCase();
+      const input = document.getElementById('analyzer-symbol-input').value;
       if (!input) return;
-      currentAnalyzedSymbol = input;
-      renderAnalyzerModules(input);
+      currentAnalyzedSymbol = cleanTickerSymbol(input);
+      document.getElementById('analyzer-symbol-input').value = currentAnalyzedSymbol;
+      renderAnalyzerModules(currentAnalyzedSymbol);
     }
 
     function analyzeTickerQuick(ticker) {
-      currentAnalyzedSymbol = ticker;
-      document.getElementById('analyzer-symbol-input').value = ticker;
+      currentAnalyzedSymbol = cleanTickerSymbol(ticker);
+      document.getElementById('analyzer-symbol-input').value = currentAnalyzedSymbol;
       switchTab('stocks');
       switchStockSubTab('analyzer');
-      renderAnalyzerModules(ticker);
+      renderAnalyzerModules(currentAnalyzedSymbol);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderAnalyzerModules(ticker) {
-      const cleanTicker = ticker.replace('NSE:', '').replace('BSE:', '');
-      const fullSymbol = formatSymbol(ticker);
+      const cleanTicker = cleanTickerSymbol(ticker);
+      const fullSymbol = `NSE:${cleanTicker}`;
 
-      // Check if stock exists in our database or calculate dynamic levels
       const existing = (currentRecsData || MASTER_RECOMMENDATIONS).find(r => r.ticker === cleanTicker);
-      const estCMP = existing ? existing.cmp : 100.0;
-      const riskPct = (estCMP < 100) ? 0.09 : 0.05;
+      const estCMP = existing ? existing.cmp : ((cleanTicker === 'DAVANGERE') ? 2.08 : 100.0);
+      const riskPct = (estCMP < 100) ? 0.10 : 0.05;
       
-      const entryZone = existing ? existing.entry : `${(estCMP * 0.98).toFixed(1)} - ${(estCMP * 1.01).toFixed(1)}`;
-      const sl = existing ? existing.sl : parseFloat((estCMP * (1 - riskPct)).toFixed(1));
-      const t1 = existing ? existing.t1 : parseFloat((estCMP * (1 + (riskPct * 2.5))).toFixed(1));
-      const t2 = existing ? existing.t2 : parseFloat((estCMP * (1 + (riskPct * 4.0))).toFixed(1));
+      const entryZone = existing ? existing.entry : `${(estCMP * 0.98).toFixed(2)} - ${(estCMP * 1.01).toFixed(2)}`;
+      const sl = existing ? existing.sl : parseFloat((estCMP * (1 - riskPct)).toFixed(2));
+      const t1 = existing ? existing.t1 : parseFloat((estCMP * (1 + (riskPct * 2.5))).toFixed(2));
+      const t2 = existing ? existing.t2 : parseFloat((estCMP * (1 + (riskPct * 4.0))).toFixed(2));
       const timeframe = existing ? existing.timeframe : ((estCMP < 100) ? '2 - 4 Months' : '3 - 8 Trading Days');
       const thesis = existing ? existing.thesis : 'Technical momentum breakout setup with favorable risk-reward geometry.';
 
@@ -838,11 +856,11 @@
           </div>
           <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800">
             <span class="text-slate-400 block">Target 1 (Book 50%)</span>
-            <b class="text-emerald-400 text-sm">₹${t1} (+${((t1/estCMP - 1)*100).toFixed(1)}%)</b>
+            <b class="text-emerald-400 text-sm">₹${t1} (+${(((t1/estCMP) - 1)*100).toFixed(1)}%)</b>
           </div>
           <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800">
             <span class="text-slate-400 block">Target 2 (Runner)</span>
-            <b class="text-emerald-300 text-sm">₹${t2} (+${((t2/estCMP - 1)*100).toFixed(1)}%)</b>
+            <b class="text-emerald-300 text-sm">₹${t2} (+${(((t2/estCMP) - 1)*100).toFixed(1)}%)</b>
           </div>
         </div>
       `;
@@ -907,16 +925,17 @@
     }
 
     function addAnalyzedStockToHoldings(ticker, defaultPrice, t1, t2, sl) {
-      const buyPrice = prompt(`Enter Buy Price for ${ticker}:`, defaultPrice || '100');
+      const clean = cleanTickerSymbol(ticker);
+      const buyPrice = prompt(`Enter Buy Price for ${clean}:`, defaultPrice || '2.08');
       if (!buyPrice) return;
-      const qty = prompt(`Enter Quantity for ${ticker}:`, '50');
+      const qty = prompt(`Enter Quantity for ${clean}:`, '100');
       if (!qty) return;
 
       const horizon = (parseFloat(buyPrice) < 100) ? 'Turnaround / Penny (2-4M)' : 'Swing / Compounding (3-12M)';
 
       state.stocks.push({
         id: Date.now(),
-        name: ticker,
+        name: clean,
         horizon: horizon,
         qty: parseFloat(qty) || 1,
         buy: parseFloat(buyPrice) || 1,
@@ -927,7 +946,7 @@
       });
 
       saveState();
-      alert(`✅ ${ticker} added to your active holdings with automated protection!`);
+      alert(`✅ ${clean} added to your active holdings with automated protection!`);
       switchTab('stocks');
       switchStockSubTab('holdings');
     }
@@ -1000,7 +1019,7 @@
               <button onclick="analyzeTickerQuick('${r.ticker}')" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
                 <i data-lucide="search" class="w-3.5 h-3.5"></i> Analyze
               </button>
-              <button onclick="addAnalyzedStockToHoldings('${r.ticker}', ${r.cmp || 100}, ${r.t1}, ${r.t2}, ${r.sl})" class="w-1/2 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
+              <button onclick="addAnalyzedStockToHoldings('${r.ticker}', ${r.cmp || 2.08}, ${r.t1}, ${r.t2}, ${r.sl})" class="w-1/2 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i> Track
               </button>
             </div>
