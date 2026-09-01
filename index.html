@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniWealth Pro | Terminal & Portfolio Engine</title>
+  <title>OmniWealth Pro | Multi-Timeframe Command Terminal</title>
   <!-- Tailwind CSS & Chart.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -31,7 +31,7 @@
 
       <div>
         <h2 class="text-2xl font-black text-white tracking-tight">OmniWealth Security Gate</h2>
-        <p class="text-xs text-slate-400 mt-1">Encrypted Personal Financial Terminal</p>
+        <p class="text-xs text-slate-400 mt-1">Multi-Horizon Private Financial Terminal</p>
       </div>
 
       <div class="space-y-3 text-left">
@@ -62,7 +62,7 @@
       </button>
 
       <div class="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
-        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Local Client-Side Sandbox Protection
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Encrypted Local Storage Terminal
       </div>
     </div>
   </div>
@@ -76,9 +76,9 @@
         </div>
         <div>
           <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
-            OmniWealth Pro Terminal
+            OmniWealth Multi-Horizon OS
           </h1>
-          <p class="text-xs text-slate-400">100% Private Portfolio & Market Command Center</p>
+          <p class="text-xs text-slate-400">Intraday • Swing (3-8D) • Positional (3-6W) • Long-Term (6-18M)</p>
         </div>
       </div>
 
@@ -109,10 +109,10 @@
         <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
       </button>
       <button onclick="switchTab('stocks')" id="tab-btn-stocks" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
-        <i data-lucide="line-chart" class="w-4 h-4"></i> Stocks Hub
+        <i data-lucide="line-chart" class="w-4 h-4"></i> Multi-Horizon Stocks Hub
       </button>
       <button onclick="switchTab('advisor')" id="tab-btn-advisor" class="py-3 px-1 text-amber-400 hover:text-amber-300 flex items-center gap-2 font-semibold">
-        <i data-lucide="zap" class="w-4 h-4"></i> Keep / Sell Signals
+        <i data-lucide="zap" class="w-4 h-4"></i> Timeframe Signals & Doctor
       </button>
       <button onclick="switchTab('mf')" id="tab-btn-mf" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
         <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds
@@ -167,21 +167,25 @@
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
           <div>
             <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-              <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i> Terminal Health & Privacy
+              <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i> Multi-Horizon Strategy Check
             </h3>
             <ul class="space-y-3 text-sm text-slate-300">
               <li class="flex items-start gap-2">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                <span>Password protected and stored strictly in local browser storage.</span>
+                <span><b>Core Compounding:</b> 50% target in Large & Quality Mid-Caps.</span>
               </li>
               <li class="flex items-start gap-2">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                <span>TradingView live feeds stream tick-by-tick without server APIs.</span>
+                <span><b>Alpha & Swing:</b> 25% target in 3-8 Day and 3-6 Week momentum setups.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                <span><b>Tactical Intraday/F&O:</b> 15% strictly managed with same-day rules.</span>
               </li>
             </ul>
           </div>
           <button onclick="switchTab('advisor')" class="w-full mt-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
-            View Live Keep / Sell Signals <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            View Live Multi-Horizon Signals <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
@@ -195,25 +199,28 @@
         <button onclick="switchStockSubTab('tradingview')" id="subtab-tradingview" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live TradingView Desk
         </button>
-        <button onclick="switchStockSubTab('evaluator')" id="subtab-evaluator" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">"Should I Enter?" Evaluator</button>
+        <button onclick="switchStockSubTab('evaluator')" id="subtab-evaluator" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">"Should I Enter?" & Time Estimator</button>
         <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Curated Watchlists (Top 45+)</button>
         <button onclick="switchStockSubTab('intraday')" id="subtab-intraday" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Intraday ORB Scanner</button>
         <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Futures & Options (F&O)</button>
       </div>
 
-      <!-- 2.1 My Stock Holdings -->
+      <!-- 2.1 My Stock Holdings (Timeframe-Categorized) -->
       <div id="stock-sub-holdings" class="space-y-4">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg font-bold">Active Stock Holdings</h2>
-          <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="plus" class="w-4 h-4"></i> Add Stock Holding
+          <div>
+            <h2 class="text-lg font-bold">Active Stock Holdings</h2>
+            <p class="text-xs text-slate-400">Holdings tagged by target horizon to evaluate accurate exit signals.</p>
+          </div>
+          <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Holding
           </button>
         </div>
         <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
           <table class="w-full text-left text-sm text-slate-300">
             <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
               <tr>
-                <th class="p-4">Ticker / Stock</th>
+                <th class="p-4">Ticker / Horizon</th>
                 <th class="p-4">Qty</th>
                 <th class="p-4">Avg Buy (₹)</th>
                 <th class="p-4">LTP (₹)</th>
@@ -240,7 +247,6 @@
             <p class="text-xs text-slate-400">Tick-by-tick candlestick chart & real-time automated indicator ratings.</p>
           </div>
 
-          <!-- Symbol Switcher -->
           <div class="flex flex-wrap items-center gap-2">
             <input 
               type="text" 
@@ -277,7 +283,7 @@
           <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col">
             <div class="flex justify-between items-center mb-3">
               <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Technical Signal Gauge</span>
-              <span class="text-[10px] text-slate-400">15m / 1D Gauge</span>
+              <span class="text-[10px] text-slate-400">Multi-Oscillator Rating</span>
             </div>
             <div class="w-full flex-1 min-h-[540px] bg-slate-950 rounded-xl p-2 overflow-hidden flex items-center justify-center">
               <div id="tradingview_ta_container" class="w-full h-full"></div>
@@ -286,25 +292,27 @@
         </div>
       </div>
 
-      <!-- 2.3 "Should I Enter?" Trade Evaluator (WITH SMART AUTO-CALCULATOR) -->
+      <!-- 2.3 "Should I Enter?" Trade Evaluator & Multi-Timeframe Generator -->
       <div id="stock-sub-evaluator" class="hidden space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-6">
           
           <div class="flex flex-wrap justify-between items-center gap-4">
             <div>
               <h3 class="text-base font-bold text-slate-100 flex items-center gap-2">
-                <i data-lucide="shield-alert" class="w-5 h-5 text-blue-400"></i> Trade Feasibility & Risk-Reward (R:R) Engine
+                <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i> Multi-Horizon Feasibility & Auto-Levels Estimator
               </h3>
-              <p class="text-xs text-slate-400 mt-1">Don't know the exact levels? Enter the stock price below and click "Auto-Calculate Smart Levels".</p>
+              <p class="text-xs text-slate-400 mt-1">Select your target timeframe and enter the current price. The algorithm sets mathematically calibrated Stop Loss and Target levels.</p>
             </div>
             
-            <!-- Smart Auto-Fill Quick Box -->
-            <div class="flex items-center gap-2 bg-slate-800/80 p-2 rounded-xl border border-slate-700">
-              <input type="number" id="quick-calc-cmp" placeholder="Current Price (₹)" class="bg-slate-900 border border-slate-600 px-3 py-1.5 rounded-lg text-xs w-32 outline-none" />
-              <select id="quick-calc-risk" class="bg-slate-900 border border-slate-600 px-2 py-1.5 rounded-lg text-xs outline-none">
-                <option value="0.03">Tight SL (3%)</option>
-                <option value="0.05" selected>Standard Swing SL (5%)</option>
-                <option value="0.07">Wide SL (7%)</option>
+            <!-- Quick Auto-Fill Generator -->
+            <div class="flex flex-wrap items-center gap-2 bg-slate-800/80 p-2 rounded-xl border border-slate-700">
+              <input type="number" id="quick-calc-cmp" placeholder="Stock CMP (₹)" class="bg-slate-900 border border-slate-600 px-3 py-1.5 rounded-lg text-xs w-28 outline-none font-semibold text-white" />
+              <select id="quick-calc-style" class="bg-slate-900 border border-slate-600 px-2 py-1.5 rounded-lg text-xs outline-none text-slate-300 font-medium">
+                <option value="intraday_orb">1. Intraday Momentum (45m - 4H)</option>
+                <option value="swing_momentum" selected>2. Momentum Swing (3 - 8 Days)</option>
+                <option value="swing_positional">3. Positional Breakout (3 - 6 Weeks)</option>
+                <option value="longterm_quality">4. Long-Term Compounding (6 - 18M)</option>
+                <option value="turnaround_spec">5. Turnaround Setup (2 - 4 Months)</option>
               </select>
               <button onclick="autoCalculateSmartLevels()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Auto-Generate Levels
@@ -312,7 +320,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label class="text-xs text-slate-400 font-medium">Stock Ticker Symbol</label>
               <input type="text" id="eval-ticker" placeholder="e.g. TATASTEEL" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 uppercase font-semibold" />
@@ -322,52 +330,60 @@
               <input type="number" id="eval-entry" placeholder="e.g. 150" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-blue-400" />
             </div>
             <div>
-              <label class="text-xs text-slate-400 font-medium">Strict Stop-Loss Price (₹)</label>
+              <label class="text-xs text-slate-400 font-medium">Strict Stop-Loss (₹)</label>
               <input type="number" id="eval-sl" placeholder="e.g. 142.5" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-rose-400" />
             </div>
             <div>
-              <label class="text-xs text-slate-400 font-medium">Target 1 Price (₹)</label>
+              <label class="text-xs text-slate-400 font-medium">Target 1 (₹)</label>
               <input type="number" id="eval-t1" placeholder="e.g. 168.75" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-emerald-400" />
             </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="text-xs text-slate-400 font-medium">Is Price Above 20 & 50 EMA? (Check Chart)</label>
-              <select id="eval-ema" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1">
-                <option value="yes">Yes (Bullish Trend Alignment)</option>
-                <option value="no">No (Trading below EMAs - Risky)</option>
-              </select>
+              <label class="text-xs text-slate-400 font-medium">Target 2 (Runner / Resistance) (₹)</label>
+              <input type="number" id="eval-t2" placeholder="e.g. 180.00" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 font-semibold text-emerald-300" />
             </div>
             <div>
-              <label class="text-xs text-slate-400 font-medium">Is Breakout Volume > 1.5x Avg? (Check Chart)</label>
-              <select id="eval-vol" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1">
-                <option value="yes">Yes (Volume Breakout Confirmed)</option>
-                <option value="no">No (Low Volume - Fakeout Risk)</option>
+              <label class="text-xs text-slate-400 font-medium">Active Horizon Strategy</label>
+              <select id="eval-horizon-select" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 text-slate-200 font-medium">
+                <option value="intraday_orb">Intraday Setup (Exit by 3:15 PM Same Day)</option>
+                <option value="swing_momentum" selected>Active Swing Trade (Estimated: 3 to 8 Trading Days)</option>
+                <option value="swing_positional">Short-Term Positional (Estimated: 3 to 6 Weeks)</option>
+                <option value="longterm_quality">Long-Term Compounding (Estimated: 6 to 18 Months)</option>
+                <option value="turnaround_spec">Turnaround Setup (Estimated: 2 to 4 Months)</option>
               </select>
             </div>
           </div>
 
-          <button onclick="evaluateTradeEntry()" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Evaluate Entry Signal & R:R Ratio
-          </button>
+          <div class="flex flex-wrap gap-3 pt-1">
+            <button onclick="evaluateTradeEntry()" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-lg shadow-blue-500/20">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i> Run Feasibility & Time-Horizon Matrix
+            </button>
+            <button onclick="inspectSymbolInTV(document.getElementById('eval-ticker').value || 'NIFTY')" class="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+              <i data-lucide="radio" class="w-4 h-4 text-emerald-400"></i> Verify with Live Chart
+            </button>
+          </div>
 
-          <div id="eval-result-card" class="hidden p-6 rounded-2xl border bg-slate-800/80 space-y-3"></div>
+          <div id="eval-result-card" class="hidden p-6 rounded-2xl border bg-slate-800/80 space-y-4"></div>
         </div>
       </div>
 
-      <!-- 2.4 Curated Watchlists (Top 45+) -->
+      <!-- 2.4 Curated Watchlists (Top 45+) WITH TIME-FRAME BADGES -->
       <div id="stock-sub-recs" class="hidden space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <div class="flex flex-wrap justify-between items-center gap-4">
             <div>
               <h3 class="text-base font-bold text-slate-100">Curated Multi-Cap Watchlists & Actionable Triggers</h3>
-              <p class="text-xs text-slate-400">Filter by category and click "View Chart" or "+ Track".</p>
+              <p class="text-xs text-slate-400">Filter across all 5 time horizons to select setups matching your strategy.</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <button onclick="filterRecs('all')" id="rec-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All (45)</button>
-              <button onclick="filterRecs('large')" id="rec-btn-large" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Large-Cap</button>
-              <button onclick="filterRecs('mid')" id="rec-btn-mid" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Mid-Cap</button>
-              <button onclick="filterRecs('small')" id="rec-btn-small" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Small-Cap</button>
-              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Turnaround / Sub-₹100</button>
-              <button onclick="filterRecs('swing')" id="rec-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Active Swing</button>
+              <button onclick="filterRecs('large')" id="rec-btn-large" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Large-Cap (6-18M)</button>
+              <button onclick="filterRecs('mid')" id="rec-btn-mid" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Mid-Cap (3-12M)</button>
+              <button onclick="filterRecs('small')" id="rec-btn-small" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Small-Cap (2-6M)</button>
+              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Turnaround (2-4M)</button>
+              <button onclick="filterRecs('swing')" id="rec-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Active Swing (3-8D)</button>
             </div>
           </div>
 
@@ -422,7 +438,7 @@
       </div>
     </section>
 
-    <!-- ================= 3. KEEP / SELL DECISION SIGNALS ================= -->
+    <!-- ================= 3. TIMEFRAME-AWARE SIGNALS DOCTOR ================= -->
     <section id="view-advisor" class="hidden space-y-6">
       <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -430,8 +446,8 @@
             <i data-lucide="activity" class="w-6 h-6"></i>
           </div>
           <div>
-            <h2 class="text-lg font-bold text-white">Automated Portfolio Doctor & Signals</h2>
-            <p class="text-xs text-slate-400">Algorithmic triggers evaluating Stop-Loss cuts, 50% profit-taking, runner trailing, and excessive drawdowns.</p>
+            <h2 class="text-lg font-bold text-white">Timeframe-Aware Portfolio Doctor</h2>
+            <p class="text-xs text-slate-400">Evaluates exit triggers based on whether a holding is an Intraday, Swing, Positional, or Long-Term investment.</p>
           </div>
         </div>
       </div>
@@ -514,19 +530,34 @@
   </main>
 
   <!-- ================= MODALS ================= -->
-  <!-- Stock Holding Modal -->
+  <!-- Stock Holding Modal (With Timeframe Selector) -->
   <div id="modal-add-stock" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
       <h3 class="text-lg font-bold">Add / Edit Stock Holding</h3>
       <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. HDFCBANK)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold" />
-      <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <input type="number" id="input-stock-buy" placeholder="Average Buy Price (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <input type="number" id="input-stock-current" placeholder="Current Price / LTP (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      
+      <div class="grid grid-cols-2 gap-2">
+        <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+        <select id="input-stock-horizon" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs font-semibold text-blue-400">
+          <option value="Long-Term (6-18M)" selected>Long-Term (6-18M)</option>
+          <option value="Positional (3-6W)">Positional (3-6W)</option>
+          <option value="Swing (3-8D)">Swing (3-8D)</option>
+          <option value="Intraday (Same Day)">Intraday (Same Day)</option>
+          <option value="Turnaround (2-4M)">Turnaround (2-4M)</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <input type="number" id="input-stock-buy" placeholder="Average Buy (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+        <input type="number" id="input-stock-current" placeholder="Current LTP (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      </div>
+
       <div class="grid grid-cols-2 gap-2">
         <input type="number" id="input-stock-t1" placeholder="Target 1 (₹)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
         <input type="number" id="input-stock-t2" placeholder="Target 2 (₹)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
       </div>
       <input type="number" id="input-stock-sl" placeholder="Stop Loss (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      
       <div class="flex justify-end gap-2 pt-2">
         <button onclick="closeModal('modal-add-stock')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
         <button onclick="saveStock()" class="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold">Save Stock</button>
@@ -534,7 +565,6 @@
     </div>
   </div>
 
-  <!-- Mutual Fund Modal -->
   <div id="modal-add-mf" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
       <h3 class="text-lg font-bold">Add Mutual Fund</h3>
@@ -554,7 +584,6 @@
     </div>
   </div>
 
-  <!-- FD Modal -->
   <div id="modal-add-fd" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
       <h3 class="text-lg font-bold">Add Fixed Deposit</h3>
@@ -569,7 +598,6 @@
     </div>
   </div>
 
-  <!-- Cash Modal -->
   <div id="modal-add-cash" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
       <h3 class="text-lg font-bold">Add Cash / Bank Account</h3>
@@ -588,7 +616,6 @@
     </div>
   </div>
 
-  <!-- F&O Modal -->
   <div id="modal-add-fno" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
       <h3 class="text-lg font-bold">Add F&O Position</h3>
@@ -611,7 +638,6 @@
 
   <!-- ================= APPLICATION SCRIPTS ================= -->
   <script>
-    // Security Passphrase
     const MASTER_PASS = "S.j.@$10";
 
     function checkAuth() {
@@ -658,72 +684,65 @@
       lucide.createIcons();
     }
 
-    // Master Curated Watchlists (45 Top Setups)
+    // Master Curated Watchlists (45 Top Setups with Multi-Timeframe Badges)
     const MASTER_RECOMMENDATIONS = [
-      // Large Cap
-      { ticker: 'HDFCBANK', name: 'HDFC Bank', cat: 'large', entry: '1600-1650', t1: 1920, t2: 2150, sl: 1490, thesis: 'Post-merger loan-to-deposit normalization.' },
-      { ticker: 'RELIANCE', name: 'Reliance Industries', cat: 'large', entry: '1240-1280', t1: 1520, t2: 1700, sl: 1160, thesis: 'Telecom tariff expansion and retail monetization.' },
-      { ticker: 'ICICIBANK', name: 'ICICI Bank', cat: 'large', entry: '1180-1220', t1: 1450, t2: 1600, sl: 1090, thesis: 'Top RoA and low credit cost among peers.' },
-      { ticker: 'LT', name: 'Larsen & Toubro', cat: 'large', entry: '3450-3550', t1: 4200, t2: 4600, sl: 3200, thesis: 'Multidecade high domestic/Middle-East order backlog.' },
-      { ticker: 'BHARTIARTL', name: 'Bharti Airtel', cat: 'large', entry: '1550-1620', t1: 1950, t2: 2200, sl: 1440, thesis: 'Strong ARPU compounding & enterprise cloud growth.' },
-      { ticker: 'TCS', name: 'Tata Consultancy Services', cat: 'large', entry: '3100-3250', t1: 3900, t2: 4300, sl: 2880, thesis: 'Zero debt, high dividend yield and AI pipelines.' },
-      { ticker: 'TITAN', name: 'Titan Company', cat: 'large', entry: '3150-3280', t1: 3950, t2: 4400, sl: 2940, thesis: 'Indian jewelry formalization tailwind.' },
-      { ticker: 'SUNPHARMA', name: 'Sun Pharmaceutical', cat: 'large', entry: '1650-1720', t1: 2050, t2: 2300, sl: 1520, thesis: 'Global specialty pharma margin resilience.' },
-      { ticker: 'M&M', name: 'Mahindra & Mahindra', cat: 'large', entry: '2750-2850', t1: 3400, t2: 3800, sl: 2540, thesis: 'Dominant SUV market share & farm equip cashflows.' },
-      { ticker: 'NTPC', name: 'NTPC Ltd', cat: 'large', entry: '360-380', t1: 470, t2: 530, sl: 330, thesis: 'Green hydrogen & renewable expansion.' },
+      // Large Cap (6 - 18 Months)
+      { ticker: 'HDFCBANK', name: 'HDFC Bank', cat: 'large', entry: '1600-1650', t1: 1920, t2: 2150, sl: 1490, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Post-merger loan-to-deposit normalization.' },
+      { ticker: 'RELIANCE', name: 'Reliance Industries', cat: 'large', entry: '1240-1280', t1: 1520, t2: 1700, sl: 1160, timeframe: '6 - 15 Months', horizon: 'Long-Term (6-18M)', thesis: 'Telecom tariff expansion and retail monetization.' },
+      { ticker: 'ICICIBANK', name: 'ICICI Bank', cat: 'large', entry: '1180-1220', t1: 1450, t2: 1600, sl: 1090, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Top RoA and low credit cost among peers.' },
+      { ticker: 'LT', name: 'Larsen & Toubro', cat: 'large', entry: '3450-3550', t1: 4200, t2: 4600, sl: 3200, timeframe: '9 - 18 Months', horizon: 'Long-Term (6-18M)', thesis: 'Multidecade high domestic/Middle-East order backlog.' },
+      { ticker: 'BHARTIARTL', name: 'Bharti Airtel', cat: 'large', entry: '1550-1620', t1: 1950, t2: 2200, sl: 1440, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Strong ARPU compounding & enterprise cloud growth.' },
+      { ticker: 'TCS', name: 'Tata Consultancy Services', cat: 'large', entry: '3100-3250', t1: 3900, t2: 4300, sl: 2880, timeframe: '12 - 18 Months', horizon: 'Long-Term (6-18M)', thesis: 'Zero debt, high dividend yield and AI pipelines.' },
+      { ticker: 'TITAN', name: 'Titan Company', cat: 'large', entry: '3150-3280', t1: 3950, t2: 4400, sl: 2940, timeframe: '6 - 14 Months', horizon: 'Long-Term (6-18M)', thesis: 'Indian jewelry formalization tailwind.' },
+      { ticker: 'SUNPHARMA', name: 'Sun Pharmaceutical', cat: 'large', entry: '1650-1720', t1: 2050, t2: 2300, sl: 1520, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Global specialty pharma margin resilience.' },
+      { ticker: 'M&M', name: 'Mahindra & Mahindra', cat: 'large', entry: '2750-2850', t1: 3400, t2: 3800, sl: 2540, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Dominant SUV market share & farm equip cashflows.' },
+      { ticker: 'NTPC', name: 'NTPC Ltd', cat: 'large', entry: '360-380', t1: 470, t2: 530, sl: 330, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Green hydrogen & renewable expansion.' },
 
-      // Mid Cap
-      { ticker: 'CUMMINSIND', name: 'Cummins India', cat: 'mid', entry: '3650-3800', t1: 4600, t2: 5100, sl: 3380, thesis: 'Data center backup power & green engines.' },
-      { ticker: 'SOLARINDS', name: 'Solar Industries', cat: 'mid', entry: '10200-10800', t1: 13500, t2: 15000, sl: 9400, thesis: 'Pinaka rockets & global defense export orders.' },
-      { ticker: 'DIXON', name: 'Dixon Tech', cat: 'mid', entry: '11500-12200', t1: 15400, t2: 17000, sl: 10400, thesis: 'PLI beneficiary in smartphone & IT hardware.' },
-      { ticker: 'MAXHEALTH', name: 'Max Healthcare', cat: 'mid', entry: '880-930', t1: 1180, t2: 1350, sl: 810, thesis: 'Bed capacity addition and high ARPOB metrics.' },
-      { ticker: 'PERSISTENT', name: 'Persistent Systems', cat: 'mid', entry: '5100-5350', t1: 6600, t2: 7200, sl: 4750, thesis: 'Outperforming Tier-1 IT in US software deals.' },
-      { ticker: 'POLYCAB', name: 'Polycab India', cat: 'mid', entry: '6200-6500', t1: 8100, t2: 9000, sl: 5750, thesis: 'Real estate boom and power cable dominance.' },
-      { ticker: 'MAZDOCK', name: 'Mazagon Dock', cat: 'mid', entry: '4100-4350', t1: 5500, t2: 6200, sl: 3750, thesis: 'Submarine & destroyer manufacturing backlog.' },
-      { ticker: 'HDFCAMC', name: 'HDFC AMC', cat: 'mid', entry: '4200-4450', t1: 5500, t2: 6000, sl: 3900, thesis: 'Financialization of household equity SIP inflows.' },
-      { ticker: 'TRENT', name: 'Trent Ltd', cat: 'mid', entry: '5800-6200', t1: 7800, t2: 8900, sl: 5300, thesis: 'Rapid Zudio store expansion & inventory turns.' },
-      { ticker: 'SUPREMEIND', name: 'Supreme Industries', cat: 'mid', entry: '4400-4650', t1: 5800, t2: 6400, sl: 4050, thesis: 'National piping & infrastructure demand leader.' },
+      // Mid Cap (3 - 12 Months)
+      { ticker: 'CUMMINSIND', name: 'Cummins India', cat: 'mid', entry: '3650-3800', t1: 4600, t2: 5100, sl: 3380, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Data center backup power & green engines.' },
+      { ticker: 'SOLARINDS', name: 'Solar Industries', cat: 'mid', entry: '10200-10800', t1: 13500, t2: 15000, sl: 9400, timeframe: '4 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Pinaka rockets & global defense export orders.' },
+      { ticker: 'DIXON', name: 'Dixon Tech', cat: 'mid', entry: '11500-12200', t1: 15400, t2: 17000, sl: 10400, timeframe: '3 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'PLI beneficiary in smartphone & IT hardware.' },
+      { ticker: 'MAXHEALTH', name: 'Max Healthcare', cat: 'mid', entry: '880-930', t1: 1180, t2: 1350, sl: 810, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Bed capacity addition and high ARPOB metrics.' },
+      { ticker: 'PERSISTENT', name: 'Persistent Systems', cat: 'mid', entry: '5100-5350', t1: 6600, t2: 7200, sl: 4750, timeframe: '4 - 9 Months', horizon: 'Positional (3-6W)', thesis: 'Outperforming Tier-1 IT in US software deals.' },
+      { ticker: 'POLYCAB', name: 'Polycab India', cat: 'mid', entry: '6200-6500', t1: 8100, t2: 9000, sl: 5750, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Real estate boom and power cable dominance.' },
+      { ticker: 'MAZDOCK', name: 'Mazagon Dock', cat: 'mid', entry: '4100-4350', t1: 5500, t2: 6200, sl: 3750, timeframe: '3 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Submarine & destroyer manufacturing backlog.' },
+      { ticker: 'HDFCAMC', name: 'HDFC AMC', cat: 'mid', entry: '4200-4450', t1: 5500, t2: 6000, sl: 3900, timeframe: '4 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Financialization of household equity SIP inflows.' },
+      { ticker: 'TRENT', name: 'Trent Ltd', cat: 'mid', entry: '5800-6200', t1: 7800, t2: 8900, sl: 5300, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Rapid Zudio store expansion & inventory turns.' },
+      { ticker: 'SUPREMEIND', name: 'Supreme Industries', cat: 'mid', entry: '4400-4650', t1: 5800, t2: 6400, sl: 4050, timeframe: '4 - 9 Months', horizon: 'Positional (3-6W)', thesis: 'National piping & infrastructure demand leader.' },
 
-      // Small Cap
-      { ticker: 'KAYNES', name: 'Kaynes Technology', cat: 'small', entry: '4800-5100', t1: 6500, t2: 7200, sl: 4350, thesis: 'Aerospace, defense & OSAT semiconductor assembly.' },
-      { ticker: 'DATAREPAT', name: 'Data Patterns', cat: 'small', entry: '2650-2800', t1: 3600, t2: 4100, sl: 2420, thesis: 'Fighter jet radar systems & avionics.' },
-      { ticker: 'ELECON', name: 'Elecon Engineering', cat: 'small', entry: '620-660', t1: 850, t2: 960, sl: 565, thesis: 'Global industrial gear market share expansion.' },
-      { ticker: 'GRAVITA', name: 'Gravita India', cat: 'small', entry: '1850-1980', t1: 2600, t2: 3000, sl: 1680, thesis: 'Mandatory battery scrap recycling regulations.' },
-      { ticker: 'KFINTECH', name: 'KFin Tech', cat: 'small', entry: '880-940', t1: 1250, t2: 1400, sl: 810, thesis: 'Dominant RTA in mutual funds & global alternatives.' },
-      { ticker: 'TEGAIND', name: 'Tega Industries', cat: 'small', entry: '1650-1750', t1: 2300, t2: 2600, sl: 1490, thesis: 'Gold/copper mining mill liner repeat revenues.' },
-      { ticker: 'CERA', name: 'Cera Sanitaryware', cat: 'small', entry: '7400-7800', t1: 9800, t2: 11000, sl: 6800, thesis: 'Premium housing renovation demand.' },
-      { ticker: 'NEWGEN', name: 'Newgen Software', cat: 'small', entry: '1050-1120', t1: 1450, t2: 1650, sl: 960, thesis: 'Banking workflow digital transformation SaaS.' },
-      { ticker: 'PNCINFRA', name: 'PNC Infratech', cat: 'small', entry: '380-410', t1: 540, t2: 620, sl: 345, thesis: 'Highway monetization deleveraging balance sheet.' },
-      { ticker: 'ACTIONIND', name: 'Action Construction (ACE)', cat: 'small', entry: '1200-1280', t1: 1700, t2: 1950, sl: 1080, thesis: 'Dominant mobile industrial crane manufacturer.' },
+      // Small Cap (2 - 6 Months)
+      { ticker: 'KAYNES', name: 'Kaynes Technology', cat: 'small', entry: '4800-5100', t1: 6500, t2: 7200, sl: 4350, timeframe: '2 - 5 Months', horizon: 'Positional (3-6W)', thesis: 'Aerospace, defense & OSAT semiconductor assembly.' },
+      { ticker: 'DATAREPAT', name: 'Data Patterns', cat: 'small', entry: '2650-2800', t1: 3600, t2: 4100, sl: 2420, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Fighter jet radar systems & avionics.' },
+      { ticker: 'ELECON', name: 'Elecon Engineering', cat: 'small', entry: '620-660', t1: 850, t2: 960, sl: 565, timeframe: '2 - 4 Months', horizon: 'Swing (3-8D)', thesis: 'Global industrial gear market share expansion.' },
+      { ticker: 'GRAVITA', name: 'Gravita India', cat: 'small', entry: '1850-1980', t1: 2600, t2: 3000, sl: 1680, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Mandatory battery scrap recycling regulations.' },
+      { ticker: 'KFINTECH', name: 'KFin Tech', cat: 'small', entry: '880-940', t1: 1250, t2: 1400, sl: 810, timeframe: '2 - 5 Months', horizon: 'Positional (3-6W)', thesis: 'Dominant RTA in mutual funds & global alternatives.' },
+      { ticker: 'TEGAIND', name: 'Tega Industries', cat: 'small', entry: '1650-1750', t1: 2300, t2: 2600, sl: 1490, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Gold/copper mining mill liner repeat revenues.' },
+      { ticker: 'CERA', name: 'Cera Sanitaryware', cat: 'small', entry: '7400-7800', t1: 9800, t2: 11000, sl: 6800, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Premium housing renovation demand.' },
+      { ticker: 'NEWGEN', name: 'Newgen Software', cat: 'small', entry: '1050-1120', t1: 1450, t2: 1650, sl: 960, timeframe: '2 - 5 Months', horizon: 'Swing (3-8D)', thesis: 'Banking workflow digital transformation SaaS.' },
+      { ticker: 'PNCINFRA', name: 'PNC Infratech', cat: 'small', entry: '380-410', t1: 540, t2: 620, sl: 345, timeframe: '2 - 4 Months', horizon: 'Positional (3-6W)', thesis: 'Highway monetization deleveraging balance sheet.' },
+      { ticker: 'ACTIONIND', name: 'Action Construction (ACE)', cat: 'small', entry: '1200-1280', t1: 1700, t2: 1950, sl: 1080, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Dominant mobile industrial crane manufacturer.' },
 
-      // Turnaround / Sub-₹100
-      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', entry: '62-68', t1: 95, t2: 115, sl: 53, thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
-      { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', entry: '38-42', t1: 60, t2: 72, sl: 31, thesis: 'Debt settlement and renewable power venture pivot.' },
-      { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', entry: '2.2-2.6', t1: 4.2, t2: 5.5, sl: 1.8, thesis: '5G telecom small-cell tower tenancies.' },
-      { ticker: 'JPPOWER', name: 'Jaiprakash Power', cat: 'penny', entry: '17-19', t1: 28, t2: 34, sl: 14, thesis: 'Thermal plant turnaround & debt restructuring.' },
-      { ticker: 'SOUTHBANK', name: 'South Indian Bank', cat: 'penny', entry: '24-27', t1: 38, t2: 45, sl: 21, thesis: 'NPA cleanup lifting Return on Assets.' },
-      { ticker: 'VI', name: 'Vodafone Idea', cat: 'penny', entry: '7.5-8.5', t1: 13, t2: 16.5, sl: 6.2, thesis: 'Equity infusion & 4G/5G capital expenditure.' },
-      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', entry: '20-22', t1: 32, t2: 38, sl: 17, thesis: 'Resolution of legacy bad debt book.' },
-      { ticker: 'HFCL', name: 'HFCL Ltd', cat: 'penny', entry: '110-118', t1: 165, t2: 190, sl: 96, thesis: '5G optical fiber cables & defense exports.' },
-      { ticker: 'INFIBEAM', name: 'Infibeam Avenues', cat: 'penny', entry: '28-31', t1: 44, t2: 52, sl: 24, thesis: 'AI payment fraud detection & international growth.' },
-      { ticker: 'TRIDENT', name: 'Trident Ltd', cat: 'penny', entry: '34-37', t1: 52, t2: 60, sl: 30, thesis: 'US textile export demand revival.' },
+      // Turnaround / Sub-₹100 (2 - 4 Months)
+      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', entry: '62-68', t1: 95, t2: 115, sl: 53, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
+      { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', entry: '38-42', t1: 60, t2: 72, sl: 31, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'Debt settlement and renewable power venture pivot.' },
+      { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', entry: '2.2-2.6', t1: 4.2, t2: 5.5, sl: 1.8, timeframe: '2 - 3 Months', horizon: 'Turnaround (2-4M)', thesis: '5G telecom small-cell tower tenancies.' },
+      { ticker: 'JPPOWER', name: 'Jaiprakash Power', cat: 'penny', entry: '17-19', t1: 28, t2: 34, sl: 14, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'Thermal plant turnaround & debt restructuring.' },
+      { ticker: 'SOUTHBANK', name: 'South Indian Bank', cat: 'penny', entry: '24-27', t1: 38, t2: 45, sl: 21, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'NPA cleanup lifting Return on Assets.' },
+      { ticker: 'VI', name: 'Vodafone Idea', cat: 'penny', entry: '7.5-8.5', t1: 13, t2: 16.5, sl: 6.2, timeframe: '3 - 6 Months', horizon: 'Turnaround (2-4M)', thesis: 'Equity infusion & 4G/5G capital expenditure.' },
+      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', entry: '20-22', t1: 32, t2: 38, sl: 17, timeframe: '2 - 5 Months', horizon: 'Turnaround (2-4M)', thesis: 'Resolution of legacy bad debt book.' },
+      { ticker: 'HFCL', name: 'HFCL Ltd', cat: 'penny', entry: '110-118', t1: 165, t2: 190, sl: 96, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: '5G optical fiber cables & defense exports.' },
+      { ticker: 'INFIBEAM', name: 'Infibeam Avenues', cat: 'penny', entry: '28-31', t1: 44, t2: 52, sl: 24, timeframe: '2 - 4 Months', horizon: 'Turnaround (2-4M)', thesis: 'AI payment fraud detection & international growth.' },
+      { ticker: 'TRIDENT', name: 'Trident Ltd', cat: 'penny', entry: '34-37', t1: 52, t2: 60, sl: 30, timeframe: '3 - 5 Months', horizon: 'Turnaround (2-4M)', thesis: 'US textile export demand revival.' },
 
-      // Active Swing
-      { ticker: 'BEL', name: 'Bharat Electronics', cat: 'swing', entry: '310-318', t1: 365, t2: 395, sl: 292, thesis: 'Flat Base breakout near 52-week highs.' },
-      { ticker: 'HAL', name: 'Hindustan Aeronautics', cat: 'swing', entry: '4550-4650', t1: 5400, t2: 5800, sl: 4320, thesis: 'Cup & Handle pattern breakout on defense orders.' },
-      { ticker: 'COALINDIA', name: 'Coal India', cat: 'swing', entry: '440-455', t1: 520, t2: 560, sl: 420, thesis: '20-EMA pullback support with high dividend yield.' },
-      { ticker: 'ZOMATO', name: 'Zomato Ltd', cat: 'swing', entry: '260-272', t1: 330, t2: 370, sl: 242, thesis: 'Blinkit quick commerce turning EBITDA positive.' },
-      { ticker: 'BSE', name: 'BSE Ltd', cat: 'swing', entry: '2700-2750', t1: 3300, t2: 3650, sl: 2520, thesis: 'Ascending triangle breakout on derivatives volumes.' }
+      // Active Swing (3 - 8 Trading Days)
+      { ticker: 'BEL', name: 'Bharat Electronics', cat: 'swing', entry: '310-318', t1: 365, t2: 395, sl: 292, timeframe: '4 - 8 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Flat Base breakout near 52-week highs.' },
+      { ticker: 'HAL', name: 'Hindustan Aeronautics', cat: 'swing', entry: '4550-4650', t1: 5400, t2: 5800, sl: 4320, timeframe: '5 - 10 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Cup & Handle pattern breakout on defense orders.' },
+      { ticker: 'COALINDIA', name: 'Coal India', cat: 'swing', entry: '440-455', t1: 520, t2: 560, sl: 420, timeframe: '3 - 7 Trading Days', horizon: 'Swing (3-8D)', thesis: '20-EMA pullback support with high dividend yield.' },
+      { ticker: 'ZOMATO', name: 'Zomato Ltd', cat: 'swing', entry: '260-272', t1: 330, t2: 370, sl: 242, timeframe: '5 - 12 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Blinkit quick commerce turning EBITDA positive.' },
+      { ticker: 'BSE', name: 'BSE Ltd', cat: 'swing', entry: '2700-2750', t1: 3300, t2: 3650, sl: 2520, timeframe: '4 - 9 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Ascending triangle breakout on derivatives volumes.' }
     ];
 
-    // Local Storage State
-    let state = {
-      stocks: [],
-      mf: [],
-      fd: [],
-      cash: [],
-      fno: []
-    };
+    let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
     let chartInstance = null;
     let currentTVSymbol = 'NSE:NIFTY';
 
@@ -747,7 +766,6 @@
       return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(val || 0);
     }
 
-    // Tab Navigation
     function switchTab(tabId) {
       ['dashboard', 'stocks', 'advisor', 'mf', 'fd', 'cash'].forEach(id => {
         document.getElementById(`view-${id}`).classList.add('hidden');
@@ -759,7 +777,6 @@
       lucide.createIcons();
     }
 
-    // Stocks Sub-Tabs
     function switchStockSubTab(subId) {
       ['holdings', 'tradingview', 'evaluator', 'recs', 'intraday', 'fno'].forEach(id => {
         document.getElementById(`stock-sub-${id}`).classList.add('hidden');
@@ -776,30 +793,113 @@
       lucide.createIcons();
     }
 
-    // Modal Helpers
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
-    // --- SMART AUTO LEVEL GENERATOR ---
+    // --- MULTI-TIMEFRAME AUTO LEVEL GENERATOR ---
     function autoCalculateSmartLevels() {
       const cmp = parseFloat(document.getElementById('quick-calc-cmp').value);
-      const riskPct = parseFloat(document.getElementById('quick-calc-risk').value);
+      const style = document.getElementById('quick-calc-style').value;
 
       if (!cmp || cmp <= 0) {
         return alert('Please enter a valid stock price (₹) to auto-generate levels.');
       }
 
+      let riskPct = 0.04;
+      let targetMult = 2.5;
+
+      if (style === 'intraday_orb') { riskPct = 0.012; targetMult = 2.0; }
+      else if (style === 'swing_momentum') { riskPct = 0.04; targetMult = 2.5; }
+      else if (style === 'swing_positional') { riskPct = 0.06; targetMult = 2.8; }
+      else if (style === 'longterm_quality') { riskPct = 0.09; targetMult = 3.5; }
+      else if (style === 'turnaround_spec') { riskPct = 0.12; targetMult = 3.0; }
+
       const entry = cmp;
       const riskAmount = entry * riskPct;
       const sl = parseFloat((entry - riskAmount).toFixed(2));
-      const t1 = parseFloat((entry + (riskAmount * 2.5)).toFixed(2)); // Strict 1:2.5 R:R
-      const t2 = parseFloat((entry + (riskAmount * 4.0)).toFixed(2)); // 1:4 R:R
+      const t1 = parseFloat((entry + (riskAmount * targetMult)).toFixed(2));
+      const t2 = parseFloat((entry + (riskAmount * (targetMult + 1.5))).toFixed(2));
 
       document.getElementById('eval-entry').value = entry;
       document.getElementById('eval-sl').value = sl;
       document.getElementById('eval-t1').value = t1;
+      document.getElementById('eval-t2').value = t2;
+      document.getElementById('eval-horizon-select').value = style;
 
       evaluateTradeEntry();
+    }
+
+    // --- "SHOULD I ENTER?" FEASIBILITY & TIME-HORIZON EVALUATOR ---
+    function evaluateTradeEntry() {
+      const ticker = document.getElementById('eval-ticker').value.trim().toUpperCase() || 'STOCK';
+      const entry = parseFloat(document.getElementById('eval-entry').value) || 0;
+      const sl = parseFloat(document.getElementById('eval-sl').value) || 0;
+      const t1 = parseFloat(document.getElementById('eval-t1').value) || 0;
+      const t2 = parseFloat(document.getElementById('eval-t2').value) || (t1 * 1.08);
+      const style = document.getElementById('eval-horizon-select').value;
+
+      if (entry <= 0 || sl <= 0 || t1 <= 0 || sl >= entry || t1 <= entry) {
+        return alert('Please enter valid Entry, Target (above entry), and Stop Loss (below entry).');
+      }
+
+      const risk = entry - sl;
+      const reward = t1 - entry;
+      const rrRatio = (reward / risk).toFixed(2);
+
+      let timeframeStr = '3 to 8 Trading Days';
+      let invalidationStr = '12 Trading Sessions';
+      if (style === 'intraday_orb') { timeframeStr = '45 mins to 4 Hours'; invalidationStr = 'Same Day (3:15 PM Square-off)'; }
+      else if (style === 'swing_positional') { timeframeStr = '3 to 6 Weeks'; invalidationStr = '45 Calendar Days'; }
+      else if (style === 'longterm_quality') { timeframeStr = '6 to 18 Months'; invalidationStr = 'Quarterly Fundamentals Review'; }
+      else if (style === 'turnaround_spec') { timeframeStr = '2 to 4 Months'; invalidationStr = '60 Days'; }
+
+      let verdict = 'ENTER TRADE (High Conviction)';
+      let badgeColor = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40';
+      let commentary = `Favorable trade geometry. Minimum 1:${rrRatio} risk-reward confirmed for this timeframe.`;
+
+      if (rrRatio < 1.8 && style !== 'intraday_orb') {
+        verdict = 'AVOID / POOR RISK-REWARD';
+        badgeColor = 'bg-rose-500/20 text-rose-400 border-rose-500/40';
+        commentary = `Risk-to-Reward is only 1:${rrRatio}. Wait for a pullback closer to ₹${(sl + (reward/2.5)).toFixed(2)} to improve entry.`;
+      }
+
+      const card = document.getElementById('eval-result-card');
+      card.classList.remove('hidden');
+      card.innerHTML = `
+        <div class="flex flex-wrap justify-between items-center gap-2">
+          <span class="text-base font-bold text-white">${ticker} Multi-Horizon Matrix</span>
+          <span class="px-3 py-1 rounded-lg text-xs font-bold border ${badgeColor}">${verdict}</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs pt-1">
+          <div class="p-3 bg-slate-900 rounded-xl">
+            <span class="text-slate-400 block">Risk Per Share</span>
+            <b class="text-rose-400 text-sm">₹${risk.toFixed(2)} (${((risk/entry)*100).toFixed(1)}%)</b>
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl">
+            <span class="text-slate-400 block">Target 1 Upside</span>
+            <b class="text-emerald-400 text-sm">₹${reward.toFixed(2)} (+${((reward/entry)*100).toFixed(1)}%)</b>
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl">
+            <span class="text-slate-400 block">R:R Ratio</span>
+            <b class="text-blue-400 text-sm">1 : ${rrRatio}</b>
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl">
+            <span class="text-slate-400 block">Target Time Horizon</span>
+            <b class="text-amber-400 text-sm">${timeframeStr}</b>
+          </div>
+        </div>
+
+        <div class="p-4 bg-slate-900/90 rounded-xl border border-slate-700/60 space-y-2 text-xs">
+          <div class="flex justify-between items-center">
+            <span class="text-slate-300 font-semibold">Execution Blueprint</span>
+            <span class="text-slate-400">Time Limit: <b class="text-slate-200">${invalidationStr}</b></span>
+          </div>
+          <p class="text-slate-400">• <b>Entry Point:</b> Buy at or near <b class="text-white">₹${entry}</b>.</p>
+          <p class="text-slate-400">• <b>Profit Booking:</b> Sell 50% at <b class="text-emerald-400">₹${t1}</b> within <b>${timeframeStr}</b>, move SL to breakeven, and let the rest run to <b class="text-emerald-300">₹${t2}</b>.</p>
+          <p class="text-slate-400">• <b>Risk Invalidation:</b> Exit immediately if price hits <b class="text-rose-400">₹${sl}</b>.</p>
+        </div>
+      `;
     }
 
     // --- TRADINGVIEW ENGINE ---
@@ -886,10 +986,64 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- DATA MUTATIONS ---
+    // --- CURATED RECOMMENDATIONS ---
+    function filterRecs(cat) {
+      ['all', 'large', 'mid', 'small', 'penny', 'swing'].forEach(c => {
+        const btn = document.getElementById(`rec-btn-${c}`);
+        btn.classList.remove('rec-filter-active');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      document.getElementById(`rec-btn-${cat}`).classList.add('rec-filter-active');
+      renderRecommendations(cat);
+    }
+
+    function renderRecommendations(filterCategory) {
+      const container = document.getElementById('recs-grid');
+      container.innerHTML = '';
+
+      const list = filterCategory === 'all' 
+        ? MASTER_RECOMMENDATIONS 
+        : MASTER_RECOMMENDATIONS.filter(r => r.cat === filterCategory);
+
+      list.forEach(r => {
+        container.innerHTML += `
+          <div class="bg-slate-800/40 border border-slate-700/60 p-4 rounded-xl flex flex-col justify-between hover:border-slate-600 transition">
+            <div>
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm">${r.ticker}</h4>
+                  <p class="text-[11px] text-slate-400">${r.name}</p>
+                </div>
+                <div class="text-right">
+                  <span class="text-[10px] px-2 py-0.5 rounded font-semibold uppercase bg-blue-500/20 text-blue-400">${r.cat}</span>
+                  <span class="block text-[10px] text-amber-400 font-semibold mt-1">⏱ ${r.timeframe}</span>
+                </div>
+              </div>
+              <div class="mt-3 space-y-1 text-xs">
+                <div class="text-slate-300"><b>Entry Zone:</b> ₹${r.entry}</div>
+                <div class="text-slate-400"><b>Targets:</b> ₹${r.t1} / ₹${r.t2} | <b>SL:</b> ₹${r.sl}</div>
+                <p class="text-[11px] text-slate-400 mt-2 italic">${r.thesis}</p>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-4">
+              <button onclick="inspectSymbolInTV('NSE:${r.ticker}')" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
+                <i data-lucide="line-chart" class="w-3.5 h-3.5"></i> View Chart
+              </button>
+              <button onclick="addRecToPortfolio('${r.ticker}', ${r.t1}, ${r.t2}, ${r.sl}, '${r.horizon}')" class="w-1/2 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Track
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      lucide.createIcons();
+    }
+
+    // --- DATA MUTATIONS & ENGINE ---
     function saveStock() {
       const name = document.getElementById('input-stock-name').value.trim().toUpperCase();
       const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
+      const horizon = document.getElementById('input-stock-horizon').value;
       const buy = parseFloat(document.getElementById('input-stock-buy').value) || 0;
       const cur = parseFloat(document.getElementById('input-stock-current').value) || buy;
       const t1 = parseFloat(document.getElementById('input-stock-t1').value) || null;
@@ -897,12 +1051,12 @@
       const sl = parseFloat(document.getElementById('input-stock-sl').value) || null;
       if (!name || qty <= 0) return alert('Enter valid stock ticker & quantity');
 
-      state.stocks.push({ id: Date.now(), name, qty, buy, cur, t1, t2, sl });
+      state.stocks.push({ id: Date.now(), name, qty, horizon, buy, cur, t1, t2, sl });
       saveState();
       closeModal('modal-add-stock');
     }
 
-    function addRecToPortfolio(ticker, t1, t2, sl) {
+    function addRecToPortfolio(ticker, t1, t2, sl, horizon = 'Swing (3-8D)') {
       const buyPrice = prompt(`Enter Buy Price for ${ticker}:`, t1 ? (t1 * 0.85).toFixed(1) : '100');
       if (!buyPrice) return;
       const qty = prompt(`Enter Quantity for ${ticker}:`, '50');
@@ -911,6 +1065,7 @@
       state.stocks.push({
         id: Date.now(),
         name: ticker,
+        horizon: horizon,
         qty: parseFloat(qty) || 1,
         buy: parseFloat(buyPrice) || 1,
         cur: parseFloat(buyPrice) || 1,
@@ -919,7 +1074,7 @@
         sl: sl || null
       });
       saveState();
-      alert(`${ticker} added to your active holdings!`);
+      alert(`${ticker} added to active portfolio under ${horizon}!`);
       switchTab('stocks');
       switchStockSubTab('holdings');
     }
@@ -978,55 +1133,6 @@
       saveState();
     }
 
-    // --- "SHOULD I ENTER?" QUANT EVALUATOR ---
-    function evaluateTradeEntry() {
-      const ticker = document.getElementById('eval-ticker').value.trim().toUpperCase() || 'STOCK';
-      const entry = parseFloat(document.getElementById('eval-entry').value) || 0;
-      const sl = parseFloat(document.getElementById('eval-sl').value) || 0;
-      const t1 = parseFloat(document.getElementById('eval-t1').value) || 0;
-      const ema = document.getElementById('eval-ema').value;
-      const vol = document.getElementById('eval-vol').value;
-
-      if (entry <= 0 || sl <= 0 || t1 <= 0 || sl >= entry || t1 <= entry) {
-        return alert('Please enter valid Entry, Target (above entry), and Stop Loss (below entry).');
-      }
-
-      const risk = entry - sl;
-      const reward = t1 - entry;
-      const rrRatio = (reward / risk).toFixed(2);
-
-      let verdict = 'ENTER TRADE (High Conviction)';
-      let badgeColor = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40';
-      let commentary = `Solid setup. Risk-to-Reward is 1:${rrRatio} with EMA and volume breakout confirmation.`;
-
-      if (rrRatio < 2.5) {
-        verdict = 'AVOID / DO NOT ENTER (Poor Risk-Reward)';
-        badgeColor = 'bg-rose-500/20 text-rose-400 border-rose-500/40';
-        commentary = `Risk-to-Reward is only 1:${rrRatio}. We require at least 1:2.5 to justify capital risk.`;
-      } else if (ema === 'no' || vol === 'no') {
-        verdict = 'CAUTION / REDUCE POSITION SIZE';
-        badgeColor = 'bg-amber-500/20 text-amber-400 border-amber-500/40';
-        commentary = `R:R is 1:${rrRatio}, but lacks EMA alignment or volume breakout. High fakeout risk.`;
-      }
-
-      const card = document.getElementById('eval-result-card');
-      card.classList.remove('hidden');
-      card.innerHTML = `
-        <div class="flex flex-wrap justify-between items-center gap-2">
-          <span class="text-base font-bold text-white">${ticker} Evaluation Matrix</span>
-          <span class="px-3 py-1 rounded-lg text-xs font-bold border ${badgeColor}">${verdict}</span>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs pt-2">
-          <div class="p-2.5 bg-slate-900 rounded-xl">Risk/Share: <b class="text-rose-400">₹${risk.toFixed(2)}</b></div>
-          <div class="p-2.5 bg-slate-900 rounded-xl">Target Gain: <b class="text-emerald-400">₹${reward.toFixed(2)}</b></div>
-          <div class="p-2.5 bg-slate-900 rounded-xl">R:R Ratio: <b class="text-blue-400">1 : ${rrRatio}</b></div>
-          <div class="p-2.5 bg-slate-900 rounded-xl">Checks: <b class="text-slate-300">${ema === 'yes' ? 'EMA ✓' : 'EMA ✗'} | ${vol === 'yes' ? 'Vol ✓' : 'Vol ✗'}</b></div>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 font-medium">${commentary}</p>
-      `;
-    }
-
-    // --- INTRADAY ORB CALCULATOR ---
     function calcORB() {
       const ticker = document.getElementById('orb-ticker').value.trim().toUpperCase() || 'INDEX';
       const high = parseFloat(document.getElementById('orb-high').value) || 0;
@@ -1051,7 +1157,7 @@
             <span class="text-[11px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Buy above ₹${high}</span>
           </div>
           <p class="text-xs text-slate-300"><b>Trigger Entry:</b> ₹${longEntry.toFixed(1)} (15m close above)</p>
-          <p class="text-xs text-slate-300"><b>Target:</b> ₹${longT1.toFixed(1)}</p>
+          <p class="text-xs text-slate-300"><b>Target:</b> ₹${longT1.toFixed(1)} (Timeframe: 1 to 3 Hours)</p>
           <p class="text-xs text-slate-300"><b>Stop Loss:</b> ₹${longSL.toFixed(1)}</p>
         </div>
         <div class="p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl space-y-2">
@@ -1060,63 +1166,13 @@
             <span class="text-[11px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded">Sell below ₹${low}</span>
           </div>
           <p class="text-xs text-slate-300"><b>Trigger Entry:</b> ₹${shortEntry.toFixed(1)} (15m close below)</p>
-          <p class="text-xs text-slate-300"><b>Target:</b> ₹${shortT1.toFixed(1)}</p>
+          <p class="text-xs text-slate-300"><b>Target:</b> ₹${shortT1.toFixed(1)} (Timeframe: 1 to 3 Hours)</p>
           <p class="text-xs text-slate-300"><b>Stop Loss:</b> ₹${shortSL.toFixed(1)}</p>
         </div>
       `;
     }
 
-    // --- CURATED RECOMMENDATIONS ---
-    function filterRecs(cat) {
-      ['all', 'large', 'mid', 'small', 'penny', 'swing'].forEach(c => {
-        const btn = document.getElementById(`rec-btn-${c}`);
-        btn.classList.remove('rec-filter-active');
-        btn.classList.add('bg-slate-800', 'text-slate-300');
-      });
-      document.getElementById(`rec-btn-${cat}`).classList.add('rec-filter-active');
-      renderRecommendations(cat);
-    }
-
-    function renderRecommendations(filterCategory) {
-      const container = document.getElementById('recs-grid');
-      container.innerHTML = '';
-
-      const list = filterCategory === 'all' 
-        ? MASTER_RECOMMENDATIONS 
-        : MASTER_RECOMMENDATIONS.filter(r => r.cat === filterCategory);
-
-      list.forEach(r => {
-        container.innerHTML += `
-          <div class="bg-slate-800/40 border border-slate-700/60 p-4 rounded-xl flex flex-col justify-between hover:border-slate-600 transition">
-            <div>
-              <div class="flex justify-between items-start">
-                <div>
-                  <h4 class="font-bold text-white text-sm">${r.ticker}</h4>
-                  <p class="text-[11px] text-slate-400">${r.name}</p>
-                </div>
-                <span class="text-[10px] px-2 py-0.5 rounded font-semibold uppercase bg-blue-500/20 text-blue-400">${r.cat}</span>
-              </div>
-              <div class="mt-3 space-y-1 text-xs">
-                <div class="text-slate-300"><b>Entry Zone:</b> ₹${r.entry}</div>
-                <div class="text-slate-400"><b>Targets:</b> ₹${r.t1} / ₹${r.t2} | <b>SL:</b> ₹${r.sl}</div>
-                <p class="text-[11px] text-slate-400 mt-2 italic">${r.thesis}</p>
-              </div>
-            </div>
-            <div class="flex gap-2 mt-4">
-              <button onclick="inspectSymbolInTV('NSE:${r.ticker}')" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
-                <i data-lucide="line-chart" class="w-3.5 h-3.5"></i> View Chart
-              </button>
-              <button onclick="addRecToPortfolio('${r.ticker}', ${r.t1}, ${r.t2}, ${r.sl})" class="w-1/2 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Track
-              </button>
-            </div>
-          </div>
-        `;
-      });
-      lucide.createIcons();
-    }
-
-    // --- KEEP / SELL SIGNALS ENGINE ---
+    // --- TIMEFRAME-AWARE SIGNAL ENGINE ---
     function renderAdvisorSignals() {
       const container = document.getElementById('advisor-cards-container');
       container.innerHTML = '';
@@ -1130,15 +1186,16 @@
         const invested = s.qty * s.buy;
         const currentVal = s.qty * s.cur;
         const plPercent = ((currentVal - invested) / (invested || 1)) * 100;
+        const horizon = s.horizon || 'Swing (3-8D)';
         
         let signal = 'KEEP (Holding Strong)';
         let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-        let actionNote = 'Position is within healthy risk-reward boundaries. Maintain trailing stop loss.';
+        let actionNote = `Position is within healthy ${horizon} boundaries. Maintain defined stop loss.`;
 
         if (s.sl && s.cur <= s.sl) {
           signal = 'EXIT (Stop-Loss Breached)';
           badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
-          actionNote = `LTP (₹${s.cur}) breached Stop Loss of ₹${s.sl}. Cut trade immediately to protect capital.`;
+          actionNote = `LTP (₹${s.cur}) breached strict Stop Loss of ₹${s.sl}. Cut trade immediately to protect capital.`;
         } else if (s.t2 && s.cur >= s.t2) {
           signal = 'SELL ALL (Target 2 Hit)';
           badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
@@ -1147,10 +1204,12 @@
           signal = 'BOOK 50% (Target 1 Hit)';
           badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
           actionNote = `Target 1 (₹${s.t1}) reached! Sell 50% quantity and shift Stop Loss to Breakeven (₹${s.buy}).`;
-        } else if (plPercent >= 40) {
+        } else if (horizon.includes('Intraday')) {
+          actionNote = `Intraday trade: Ensure full position is closed before 3:15 PM today regardless of P&L.`;
+        } else if (plPercent >= 40 && !horizon.includes('Long-Term')) {
           signal = 'TRIM / REBALANCE (+40% Run)';
           badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-          actionNote = `Up +${plPercent.toFixed(1)}%. Trim 25% to lock gains into liquid cash or debt.`;
+          actionNote = `Up +${plPercent.toFixed(1)}% on a short-term trade. Trim 25% to lock gains into liquid cash or debt.`;
         } else if (plPercent <= -15 && !s.sl) {
           signal = 'REVIEW (Drawdown Alert)';
           badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
@@ -1161,7 +1220,10 @@
           <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-start">
-                <h4 class="font-bold text-white text-base">${s.name}</h4>
+                <div>
+                  <h4 class="font-bold text-white text-base">${s.name}</h4>
+                  <span class="text-[10px] text-blue-400 font-semibold uppercase">${horizon}</span>
+                </div>
                 <span class="text-xs px-2.5 py-1 rounded border font-semibold ${badgeClass}">${signal}</span>
               </div>
               <div class="mt-3 space-y-1.5 text-xs text-slate-400">
@@ -1181,9 +1243,7 @@
       });
     }
 
-    // --- MAIN RENDER ENGINE ---
     function renderAll() {
-      // 1. Stocks Table
       let totalStockInv = 0, totalStockCur = 0;
       const stockBody = document.getElementById('stocks-table-body');
       stockBody.innerHTML = '';
@@ -1196,7 +1256,10 @@
         totalStockCur += cur;
         stockBody.innerHTML += `
           <tr class="hover:bg-slate-800/30">
-            <td class="p-4 font-semibold text-white cursor-pointer hover:text-blue-400" onclick="inspectSymbolInTV('NSE:${s.name}')" title="Click to view Live Chart">${s.name}</td>
+            <td class="p-4 font-semibold text-white cursor-pointer hover:text-blue-400" onclick="inspectSymbolInTV('NSE:${s.name}')" title="Click to view Live Chart">
+              <div>${s.name}</div>
+              <span class="text-[10px] text-blue-400 font-medium">${s.horizon || 'Swing (3-8D)'}</span>
+            </td>
             <td class="p-4">${s.qty}</td>
             <td class="p-4">₹${s.buy}</td>
             <td class="p-4">₹${s.cur}</td>
@@ -1213,7 +1276,6 @@
         `;
       });
 
-      // 2. F&O Desk
       const fnoBody = document.getElementById('fno-table-body');
       fnoBody.innerHTML = '';
       state.fno.forEach(f => {
@@ -1234,7 +1296,6 @@
         `;
       });
 
-      // 3. Mutual Funds
       let totalMFInv = 0, totalMFCur = 0;
       const mfBody = document.getElementById('mf-table-body');
       mfBody.innerHTML = '';
@@ -1257,7 +1318,6 @@
         `;
       });
 
-      // 4. Fixed Deposits
       let totalFD = 0;
       const fdBody = document.getElementById('fd-table-body');
       fdBody.innerHTML = '';
@@ -1278,7 +1338,6 @@
         `;
       });
 
-      // 5. Cash
       let totalCash = 0;
       const cashBody = document.getElementById('cash-table-body');
       cashBody.innerHTML = '';
@@ -1296,7 +1355,6 @@
         `;
       });
 
-      // Global Totals
       const netWorth = totalStockCur + totalMFCur + totalFD + totalCash;
       document.getElementById('global-net-worth').innerText = formatINR(netWorth);
       document.getElementById('dash-stocks-val').innerText = formatINR(totalStockCur);
@@ -1312,7 +1370,6 @@
       lucide.createIcons();
     }
 
-    // Doughnut Chart
     function updateChart(stocks = 0, mf = 0, fd = 0, cash = 0) {
       const ctx = document.getElementById('allocationChart');
       if (!ctx) return;
@@ -1338,7 +1395,6 @@
       });
     }
 
-    // Backup & Restore
     function exportData() {
       const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
