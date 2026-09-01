@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OmniWealth | Portfolio & Intelligence Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .tab-active { border-bottom: 2px solid #3b82f6; color: #3b82f6; font-weight: 600; }
+    .subtab-active { background-color: #1e293b; color: #60a5fa; font-weight: 600; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <header class="border-b border-slate-800 bg-slate-900/70 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="p-2 bg-blue-600 rounded-xl shadow-lg shadow-blue-500/20">
+          <i data-lucide="line-chart" class="w-6 h-6 text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+            OmniWealth OS
+          </h1>
+          <p class="text-xs text-slate-400">100% GitHub-Hosted Private Terminal</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <div class="text-right">
+          <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Net Worth</div>
+          <div class="text-2xl font-bold text-emerald-400" id="global-net-worth">₹0.00</div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="exportData()" title="Backup Data" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 transition">
+            <i data-lucide="download" class="w-4 h-4"></i>
+          </button>
+          <label title="Import Backup" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 transition cursor-pointer">
+            <i data-lucide="upload" class="w-4 h-4"></i>
+            <input type="file" id="import-file" class="hidden" onchange="importData(event)" accept=".json" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 flex space-x-8 text-sm overflow-x-auto border-t border-slate-800/60">
+      <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="py-3 px-1 text-slate-400 hover:text-slate-200 tab-active flex items-center gap-2">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+      </button>
+      <button onclick="switchTab('stocks')" id="tab-btn-stocks" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="trending-up" class="w-4 h-4"></i> Stocks Hub
+      </button>
+      <button onclick="switchTab('mf')" id="tab-btn-mf" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds
+      </button>
+      <button onclick="switchTab('fd')" id="tab-btn-fd" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="landmark" class="w-4 h-4"></i> Fixed Deposits
+      </button>
+      <button onclick="switchTab('cash')" id="tab-btn-cash" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="wallet" class="w-4 h-4"></i> Cash & Liquid
+      </button>
+      <button onclick="switchTab('advisor')" id="tab-btn-advisor" class="py-3 px-1 text-amber-400 hover:text-amber-300 flex items-center gap-2 font-semibold">
+        <i data-lucide="zap" class="w-4 h-4"></i> Keep / Sell Signals
+      </button>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+
+    <section id="view-dashboard" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs text-slate-400 font-semibold uppercase">Stocks Portfolio</div>
+          <div class="text-xl font-bold text-blue-400 mt-2" id="dash-stocks-val">₹0.00</div>
+          <div class="text-xs text-slate-500 mt-1" id="dash-stocks-pl">P&L: ₹0.00</div>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs text-slate-400 font-semibold uppercase">Mutual Funds</div>
+          <div class="text-xl font-bold text-indigo-400 mt-2" id="dash-mf-val">₹0.00</div>
+          <div class="text-xs text-slate-500 mt-1" id="dash-mf-pl">P&L: ₹0.00</div>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs text-slate-400 font-semibold uppercase">Fixed Deposits</div>
+          <div class="text-xl font-bold text-purple-400 mt-2" id="dash-fd-val">₹0.00</div>
+          <div class="text-xs text-slate-500 mt-1" id="dash-fd-count">0 Active Deposits</div>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs text-slate-400 font-semibold uppercase">Cash & Liquid</div>
+          <div class="text-xl font-bold text-emerald-400 mt-2" id="dash-cash-val">₹0.00</div>
+          <div class="text-xs text-slate-500 mt-1">Available for Deployment</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+          <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
+            <i data-lucide="layers" class="w-5 h-5 text-blue-400"></i> Asset Allocation
+          </h3>
+          <div class="h-64 flex items-center justify-center">
+            <canvas id="allocationChart"></canvas>
+          </div>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i> Portfolio Health Check
+            </h3>
+            <ul class="space-y-3 text-sm text-slate-300" id="portfolio-health-insights">
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                <span>Add your holdings across tabs to calculate live risk exposure.</span>
+              </li>
+            </ul>
+          </div>
+          <button onclick="switchTab('advisor')" class="w-full mt-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
+            View Sell / Rebalance Signals <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-stocks" class="hidden space-y-6">
+      <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
+        <button onclick="switchStockSubTab('holdings')" id="subtab-holdings" class="px-4 py-2 rounded-xl text-xs font-semibold subtab-active">My Stock Holdings</button>
+        <button onclick="switchStockSubTab('analyse')" id="subtab-analyse" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Stock Analyzer & Valuation</button>
+        <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Futures & Options (F&O)</button>
+        <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Top Recommendations</button>
+      </div>
+
+      <div id="stock-sub-holdings" class="space-y-4">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold">Equity Portfolio</h2>
+          <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Stock
+          </button>
+        </div>
+        <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+              <tr>
+                <th class="p-4">Ticker / Company</th>
+                <th class="p-4">Qty</th>
+                <th class="p-4">Avg Buy (₹)</th>
+                <th class="p-4">Current Price (₹)</th>
+                <th class="p-4">Invested</th>
+                <th class="p-4">Current Value</th>
+                <th class="p-4">P&L (%)</th>
+                <th class="p-4">Target / SL</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="stocks-table-body" class="divide-y divide-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="stock-sub-analyse" class="hidden space-y-6">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+          <h3 class="text-base font-bold text-slate-200 flex items-center gap-2">
+            <i data-lucide="cpu" class="w-5 h-5 text-blue-400"></i> Fundamental & Valuation Screener
+          </h3>
+          <p class="text-xs text-slate-400">Input quick financial ratios to calculate intrinsic health, margin of safety, and quality scores.</p>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+            <input type="text" id="calc-ticker" placeholder="Stock Name (e.g. RELIANCE)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-blue-500" />
+            <input type="number" id="calc-pe" placeholder="Stock P/E Ratio" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-blue-500" />
+            <input type="number" id="calc-roe" placeholder="ROE (%)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-blue-500" />
+            <input type="number" id="calc-de" placeholder="Debt to Equity (e.g. 0.3)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-blue-500" />
+          </div>
+          <button onclick="runStockAnalysis()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold">Run Valuation Matrix</button>
+          <div id="analysis-result" class="hidden mt-4 p-4 rounded-xl border border-slate-700 bg-slate-800/70"></div>
+        </div>
+      </div>
+
+      <div id="stock-sub-fno" class="hidden space-y-4">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold">Futures & Options Positions Desk</h2>
+          <button onclick="openModal('modal-add-fno')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Derivative Contract
+          </button>
+        </div>
+        <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+              <tr>
+                <th class="p-4">Instrument / Strike</th>
+                <th class="p-4">Type (CE/PE/FUT)</th>
+                <th class="p-4">Expiry</th>
+                <th class="p-4">Lots / Qty</th>
+                <th class="p-4">Buy Premium (₹)</th>
+                <th class="p-4">LTP (₹)</th>
+                <th class="p-4">P&L</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fno-table-body" class="divide-y divide-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="stock-sub-recs" class="hidden space-y-4">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+          <h3 class="text-base font-bold text-slate-200 mb-2">High-Conviction Watchlist & Top Setups</h3>
+          <p class="text-xs text-slate-400 mb-6">Curated strategic focus list based on standard market screening filters.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 bg-slate-800/50 border border-slate-700/70 rounded-xl">
+              <div class="flex justify-between items-start">
+                <span class="font-bold text-blue-400">Large Cap Quality</span>
+                <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Accumulate</span>
+              </div>
+              <p class="text-sm font-semibold mt-2">HDFC Bank / ICICI Bank</p>
+              <p class="text-xs text-slate-400 mt-1">Key trigger: Strong credit growth, attractive valuation below 10-year average P/E.</p>
+            </div>
+            <div class="p-4 bg-slate-800/50 border border-slate-700/70 rounded-xl">
+              <div class="flex justify-between items-start">
+                <span class="font-bold text-purple-400">Capex & Infra</span>
+                <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Breakout</span>
+              </div>
+              <p class="text-sm font-semibold mt-2">L&T / Siemens</p>
+              <p class="text-xs text-slate-400 mt-1">Key trigger: Multidecade high order books and domestic manufacturing push.</p>
+            </div>
+            <div class="p-4 bg-slate-800/50 border border-slate-700/70 rounded-xl">
+              <div class="flex justify-between items-start">
+                <span class="font-bold text-emerald-400">Defensive Growth</span>
+                <span class="text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">SIP Mode</span>
+              </div>
+              <p class="text-sm font-semibold mt-2">Sun Pharma / Cipla</p>
+              <p class="text-xs text-slate-400 mt-1">Key trigger: High US-market generic pricing resilience and robust domestic margins.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-mf" class="hidden space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-bold">Mutual Funds & SIPs</h2>
+        <button onclick="openModal('modal-add-mf')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
+          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund
+        </button>
+      </div>
+      <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+            <tr>
+              <th class="p-4">Fund Name</th>
+              <th class="p-4">Category</th>
+              <th class="p-4">Invested Amount (₹)</th>
+              <th class="p-4">Current Value (₹)</th>
+              <th class="p-4">P&L (%)</th>
+              <th class="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="mf-table-body" class="divide-y divide-slate-800"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="view-fd" class="hidden space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-bold">Fixed Deposits & Term Schemes</h2>
+        <button onclick="openModal('modal-add-fd')" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
+          <i data-lucide="plus" class="w-4 h-4"></i> Add FD
+        </button>
+      </div>
+      <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+            <tr>
+              <th class="p-4">Bank / Institution</th>
+              <th class="p-4">Principal (₹)</th>
+              <th class="p-4">Interest Rate (%)</th>
+              <th class="p-4">Maturity Date</th>
+              <th class="p-4">Estimated Maturity Value</th>
+              <th class="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="fd-table-body" class="divide-y divide-slate-800"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="view-cash" class="hidden space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-bold">Cash, Savings & Liquid Accounts</h2>
+        <button onclick="openModal('modal-add-cash')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
+          <i data-lucide="plus" class="w-4 h-4"></i> Add Account
+        </button>
+      </div>
+      <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+            <tr>
+              <th class="p-4">Account / Source Name</th>
+              <th class="p-4">Account Type</th>
+              <th class="p-4">Available Balance (₹)</th>
+              <th class="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cash-table-body" class="divide-y divide-slate-800"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="view-advisor" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+        <div class="flex items-center gap-3">
+          <div class="p-3 bg-amber-500/20 text-amber-400 rounded-xl">
+            <i data-lucide="scale" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold text-white">Automated Portfolio Doctor & Signals</h2>
+            <p class="text-xs text-slate-400">Algorithm evaluating profit-targets, stop-loss limits, and portfolio allocation triggers.</p>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="advisor-cards-container"></div>
+    </section>
+  </main>
+
+  <div id="modal-add-stock" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+      <h3 class="text-lg font-bold">Add / Update Stock Holding</h3>
+      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. INFY)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-stock-buy" placeholder="Average Buy Price (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-stock-current" placeholder="Current Price / LTP (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-stock-sl" placeholder="Stop Loss Price (Optional)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-stock-target" placeholder="Profit Target Price (Optional)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-add-stock')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveStock()" class="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold">Save Stock</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-add-mf" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+      <h3 class="text-lg font-bold">Add Mutual Fund</h3>
+      <input type="text" id="input-mf-name" placeholder="Fund Name (e.g. Parag Parikh Flexi Cap)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <select id="input-mf-cat" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
+        <option>Flexi Cap / Large Cap</option>
+        <option>Mid & Small Cap</option>
+        <option>Debt & Liquid</option>
+        <option>Hybrid / Arbitrage</option>
+      </select>
+      <input type="number" id="input-mf-invested" placeholder="Total Invested Amount (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-mf-current" placeholder="Current Value (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold">Save Fund</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-add-fd" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+      <h3 class="text-lg font-bold">Add Fixed Deposit</h3>
+      <input type="text" id="input-fd-bank" placeholder="Bank Name (e.g. HDFC Bank)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-fd-principal" placeholder="Principal Amount (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-fd-rate" step="0.1" placeholder="Interest Rate % (e.g. 7.5)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="date" id="input-fd-date" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-add-fd')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveFD()" class="px-4 py-2 bg-purple-600 text-white rounded-xl text-sm font-semibold">Save FD</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-add-cash" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+      <h3 class="text-lg font-bold">Add Cash / Bank Balance</h3>
+      <input type="text" id="input-cash-name" placeholder="Account Name (e.g. Salary Account / Emergency Fund)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <select id="input-cash-type" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
+        <option>Savings Bank Account</option>
+        <option>Emergency Fund</option>
+        <option>Liquid Brokerage Balance</option>
+        <option>Physical Cash</option>
+      </select>
+      <input type="number" id="input-cash-amount" placeholder="Amount (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-add-cash')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveCash()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold">Save Balance</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-add-fno" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+      <h3 class="text-lg font-bold">Add Derivative Contract</h3>
+      <input type="text" id="input-fno-name" placeholder="Contract Name (e.g. NIFTY 25000 CE)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <select id="input-fno-type" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
+        <option>Call Option (CE)</option>
+        <option>Put Option (PE)</option>
+        <option>Futures (FUT)</option>
+      </select>
+      <input type="date" id="input-fno-expiry" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-fno-qty" placeholder="Quantity (e.g. 50)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-fno-buy" placeholder="Buy Premium (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <input type="number" id="input-fno-ltp" placeholder="LTP Premium (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-add-fno')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveFNO()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold">Save Position</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State Store (Persisted to localStorage)
+    let state = {
+      stocks: [],
+      mf: [],
+      fd: [],
+      cash: [],
+      fno: []
+    };
+
+    let chartInstance = null;
+
+    function init() {
+      lucide.createIcons();
+      const saved = localStorage.getItem('omniwealth_db');
+      if (saved) {
+        try { state = JSON.parse(saved); } catch(e) { console.error(e); }
+      }
+      renderAll();
+    }
+
+    function saveState() {
+      localStorage.setItem('omniwealth_db', JSON.stringify(state));
+      renderAll();
+    }
+
+    function formatINR(val) {
+      return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(val || 0);
+    }
+
+    // Tab Navigation Switcher
+    function switchTab(tabId) {
+      ['dashboard', 'stocks', 'mf', 'fd', 'cash', 'advisor'].forEach(id => {
+        document.getElementById(`view-${id}`).classList.add('hidden');
+        document.getElementById(`tab-btn-${id}`).classList.remove('tab-active');
+      });
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      document.getElementById(`tab-btn-${tabId}`).classList.add('tab-active');
+      if (tabId === 'dashboard') updateChart();
+      lucide.createIcons();
+    }
+
+    // Stocks Sub-Tabs Switcher
+    function switchStockSubTab(subId) {
+      ['holdings', 'analyse', 'fno', 'recs'].forEach(id => {
+        document.getElementById(`stock-sub-${id}`).classList.add('hidden');
+        document.getElementById(`subtab-${id}`).classList.remove('subtab-active');
+        document.getElementById(`subtab-${id}`).classList.add('bg-slate-900', 'text-slate-400');
+      });
+      document.getElementById(`stock-sub-${subId}`).classList.remove('hidden');
+      document.getElementById(`subtab-${subId}`).classList.add('subtab-active');
+      document.getElementById(`subtab-${subId}`).classList.remove('bg-slate-900', 'text-slate-400');
+      lucide.createIcons();
+    }
+
+    // Modal Helpers
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+
+    // --- CRUD OPERATIONS ---
+    function saveStock() {
+      const name = document.getElementById('input-stock-name').value.trim();
+      const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
+      const buy = parseFloat(document.getElementById('input-stock-buy').value) || 0;
+      const cur = parseFloat(document.getElementById('input-stock-current').value) || buy;
+      const sl = parseFloat(document.getElementById('input-stock-sl').value) || null;
+      const target = parseFloat(document.getElementById('input-stock-target').value) || null;
+      if (!name || qty <= 0) return alert('Enter valid stock name & qty');
+
+      state.stocks.push({ id: Date.now(), name, qty, buy, cur, sl, target });
+      saveState();
+      closeModal('modal-add-stock');
+    }
+
+    function saveMF() {
+      const name = document.getElementById('input-mf-name').value.trim();
+      const cat = document.getElementById('input-mf-cat').value;
+      const invested = parseFloat(document.getElementById('input-mf-invested').value) || 0;
+      const current = parseFloat(document.getElementById('input-mf-current').value) || invested;
+      if (!name) return alert('Enter fund name');
+
+      state.mf.push({ id: Date.now(), name, cat, invested, current });
+      saveState();
+      closeModal('modal-add-mf');
+    }
+
+    function saveFD() {
+      const bank = document.getElementById('input-fd-bank').value.trim();
+      const principal = parseFloat(document.getElementById('input-fd-principal').value) || 0;
+      const rate = parseFloat(document.getElementById('input-fd-rate').value) || 0;
+      const date = document.getElementById('input-fd-date').value;
+      if (!bank || principal <= 0) return alert('Enter valid FD details');
+
+      state.fd.push({ id: Date.now(), bank, principal, rate, date });
+      saveState();
+      closeModal('modal-add-fd');
+    }
+
+    function saveCash() {
+      const name = document.getElementById('input-cash-name').value.trim();
+      const type = document.getElementById('input-cash-type').value;
+      const amount = parseFloat(document.getElementById('input-cash-amount').value) || 0;
+      if (!name || amount < 0) return alert('Enter valid account details');
+
+      state.cash.push({ id: Date.now(), name, type, amount });
+      saveState();
+      closeModal('modal-add-cash');
+    }
+
+    function saveFNO() {
+      const name = document.getElementById('input-fno-name').value.trim();
+      const type = document.getElementById('input-fno-type').value;
+      const expiry = document.getElementById('input-fno-expiry').value;
+      const qty = parseFloat(document.getElementById('input-fno-qty').value) || 0;
+      const buy = parseFloat(document.getElementById('input-fno-buy').value) || 0;
+      const ltp = parseFloat(document.getElementById('input-fno-ltp').value) || buy;
+      if (!name || qty <= 0) return alert('Enter valid F&O details');
+
+      state.fno.push({ id: Date.now(), name, type, expiry, qty, buy, ltp });
+      saveState();
+      closeModal('modal-add-fno');
+    }
+
+    function deleteItem(category, id) {
+      state[category] = state[category].filter(i => i.id !== id);
+      saveState();
+    }
+
+    // --- STOCK ANALYZER SCREENER ---
+    function runStockAnalysis() {
+      const ticker = document.getElementById('calc-ticker').value.toUpperCase() || 'STOCK';
+      const pe = parseFloat(document.getElementById('calc-pe').value) || 0;
+      const roe = parseFloat(document.getElementById('calc-roe').value) || 0;
+      const de = parseFloat(document.getElementById('calc-de').value) || 0;
+      
+      let verdict = 'Neutral / Fairly Valued';
+      let color = 'text-amber-400';
+
+      if (pe > 0 && pe < 22 && roe > 15 && de < 0.6) {
+        verdict = 'Strong Value & High Quality Compounder';
+        color = 'text-emerald-400';
+      } else if (pe > 50 || de > 1.8) {
+        verdict = 'Overvalued or High Debt Risk (Caution)';
+        color = 'text-rose-400';
+      }
+
+      const resDiv = document.getElementById('analysis-result');
+      resDiv.classList.remove('hidden');
+      resDiv.innerHTML = `
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-white text-base">${ticker} Screener Output</span>
+          <span class="text-xs px-2.5 py-1 rounded bg-slate-900 ${color} font-semibold border border-slate-700">${verdict}</span>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">P/E: ${pe} | ROE: ${roe}% | Debt-to-Equity: ${de}</p>
+      `;
+    }
+
+    // --- DECISION ENGINE (KEEP / SELL / TRIM SIGNALS) ---
+    function renderAdvisorSignals() {
+      const container = document.getElementById('advisor-cards-container');
+      container.innerHTML = '';
+
+      if (state.stocks.length === 0) {
+        container.innerHTML = `<div class="col-span-3 text-center text-slate-500 py-10">Add stocks in the Stock Hub to generate automated signals.</div>`;
+        return;
+      }
+
+      state.stocks.forEach(s => {
+        const invested = s.qty * s.buy;
+        const currentVal = s.qty * s.cur;
+        const plPercent = ((currentVal - invested) / (invested || 1)) * 100;
+        
+        let signal = 'KEEP (Hold)';
+        let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        let reason = 'Holding inside standard risk-reward boundaries.';
+
+        if (s.sl && s.cur <= s.sl) {
+          signal = 'SELL (Stop Loss Triggered)';
+          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+          reason = `LTP (₹${s.cur}) breached strict Stop-Loss limit of ₹${s.sl}. Exit to preserve capital.`;
+        } else if (s.target && s.cur >= s.target) {
+          signal = 'BOOK PROFIT (Target Reached)';
+          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+          reason = `Target ₹${s.target} hit. Consider booking at least 50% profits or trailing stop loss.`;
+        } else if (plPercent >= 40) {
+          signal = 'TRIM / REBALANCE';
+          badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+          reason = `Massive run-up (+${plPercent.toFixed(1)}%). Rebalance into debt/cash to lock in gains.`;
+        } else if (plPercent <= -15 && !s.sl) {
+          signal = 'REVIEW (Deep Drawdown)';
+          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+          reason = `Down ${plPercent.toFixed(1)}% without active Stop Loss. Check fundamentals.`;
+        }
+
+        container.innerHTML += `
+          <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start">
+                <h4 class="font-bold text-white text-base">${s.name}</h4>
+                <span class="text-xs px-2.5 py-1 rounded border font-semibold ${badgeClass}">${signal}</span>
+              </div>
+              <div class="mt-3 space-y-1 text-xs text-slate-400">
+                <p>Buy: ₹${s.buy} | LTP: ₹${s.cur} | P&L: <span class="${plPercent >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${plPercent.toFixed(2)}%</span></p>
+                <p class="mt-2 text-slate-300 font-medium">${reason}</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-500 flex justify-between">
+              <span>Target: ${s.target ? '₹' + s.target : 'None'}</span>
+              <span>SL: ${s.sl ? '₹' + s.sl : 'None'}</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // --- MAIN RENDER ENGINE ---
+    function renderAll() {
+      // 1. Stocks Table
+      let totalStockInv = 0, totalStockCur = 0;
+      const stockBody = document.getElementById('stocks-table-body');
+      stockBody.innerHTML = '';
+      state.stocks.forEach(s => {
+        const inv = s.qty * s.buy;
+        const cur = s.qty * s.cur;
+        const pl = cur - inv;
+        const plPct = (pl / (inv || 1)) * 100;
+        totalStockInv += inv;
+        totalStockCur += cur;
+        stockBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${s.name}</td>
+            <td class="p-4">${s.qty}</td>
+            <td class="p-4">₹${s.buy}</td>
+            <td class="p-4">₹${s.cur}</td>
+            <td class="p-4">${formatINR(inv)}</td>
+            <td class="p-4 font-medium text-white">${formatINR(cur)}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
+            <td class="p-4 text-xs text-slate-400">T: ${s.target || '-'} | SL: ${s.sl || '-'}</td>
+            <td class="p-4 text-right">
+              <button onclick="deleteItem('stocks', ${s.id})" class="text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // 2. F&O Table
+      const fnoBody = document.getElementById('fno-table-body');
+      fnoBody.innerHTML = '';
+      state.fno.forEach(f => {
+        const pl = (f.ltp - f.buy) * f.qty;
+        fnoBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${f.name}</td>
+            <td class="p-4 text-xs font-semibold uppercase text-indigo-400">${f.type}</td>
+            <td class="p-4 text-xs text-slate-400">${f.expiry || 'N/A'}</td>
+            <td class="p-4">${f.qty}</td>
+            <td class="p-4">₹${f.buy}</td>
+            <td class="p-4">₹${f.ltp}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${formatINR(pl)}</td>
+            <td class="p-4 text-right">
+              <button onclick="deleteItem('fno', ${f.id})" class="text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // 3. Mutual Funds
+      let totalMFInv = 0, totalMFCur = 0;
+      const mfBody = document.getElementById('mf-table-body');
+      mfBody.innerHTML = '';
+      state.mf.forEach(m => {
+        const pl = m.current - m.invested;
+        const plPct = (pl / (m.invested || 1)) * 100;
+        totalMFInv += m.invested;
+        totalMFCur += m.current;
+        mfBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${m.name}</td>
+            <td class="p-4 text-xs text-slate-400">${m.cat}</td>
+            <td class="p-4">${formatINR(m.invested)}</td>
+            <td class="p-4 font-medium text-white">${formatINR(m.current)}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
+            <td class="p-4 text-right">
+              <button onclick="deleteItem('mf', ${m.id})" class="text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // 4. Fixed Deposits
+      let totalFD = 0;
+      const fdBody = document.getElementById('fd-table-body');
+      fdBody.innerHTML = '';
+      state.fd.forEach(d => {
+        totalFD += d.principal;
+        const maturityVal = d.principal * (1 + (d.rate / 100)); // Simple 1yr indicative compounding
+        fdBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${d.bank}</td>
+            <td class="p-4">${formatINR(d.principal)}</td>
+            <td class="p-4 text-purple-400 font-semibold">${d.rate}%</td>
+            <td class="p-4 text-xs text-slate-400">${d.date || 'N/A'}</td>
+            <td class="p-4 font-medium text-slate-200">~ ${formatINR(maturityVal)}</td>
+            <td class="p-4 text-right">
+              <button onclick="deleteItem('fd', ${d.id})" class="text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // 5. Cash
+      let totalCash = 0;
+      const cashBody = document.getElementById('cash-table-body');
+      cashBody.innerHTML = '';
+      state.cash.forEach(c => {
+        totalCash += c.amount;
+        cashBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${c.name}</td>
+            <td class="p-4 text-xs text-slate-400">${c.type}</td>
+            <td class="p-4 font-medium text-emerald-400">${formatINR(c.amount)}</td>
+            <td class="p-4 text-right">
+              <button onclick="deleteItem('cash', ${c.id})" class="text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // Global Summary Aggregation
+      const netWorth = totalStockCur + totalMFCur + totalFD + totalCash;
+      document.getElementById('global-net-worth').innerText = formatINR(netWorth);
+      document.getElementById('dash-stocks-val').innerText = formatINR(totalStockCur);
+      document.getElementById('dash-stocks-pl').innerText = `P&L: ${formatINR(totalStockCur - totalStockInv)}`;
+      document.getElementById('dash-mf-val').innerText = formatINR(totalMFCur);
+      document.getElementById('dash-mf-pl').innerText = `P&L: ${formatINR(totalMFCur - totalMFInv)}`;
+      document.getElementById('dash-fd-val').innerText = formatINR(totalFD);
+      document.getElementById('dash-fd-count').innerText = `${state.fd.length} Active Deposits`;
+      document.getElementById('dash-cash-val').innerText = formatINR(totalCash);
+
+      renderAdvisorSignals();
+      updateChart(totalStockCur, totalMFCur, totalFD, totalCash);
+      lucide.createIcons();
+    }
+
+    // Chart.js Asset Breakdown
+    function updateChart(stocks = 0, mf = 0, fd = 0, cash = 0) {
+      const ctx = document.getElementById('allocationChart');
+      if (!ctx) return;
+      if (chartInstance) chartInstance.destroy();
+
+      chartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Stocks', 'Mutual Funds', 'Fixed Deposits', 'Cash'],
+          datasets: [{
+            data: [stocks || 1, mf, fd, cash],
+            backgroundColor: ['#3b82f6', '#6366f1', '#a855f7', '#10b981'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans' } } }
+          }
+        }
+      });
+    }
+
+    // Backup & Restore
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `omniwealth_backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          state = JSON.parse(e.target.result);
+          saveState();
+          alert('Data successfully imported!');
+        } catch (err) {
+          alert('Invalid backup JSON file');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
