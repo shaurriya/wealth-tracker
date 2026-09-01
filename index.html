@@ -586,8 +586,6 @@
 
   <!-- ================= APPLICATION SCRIPTS ================= -->
   <script>
-    const MASTER_PASS = "S.j.@$10";
-
     // Master Curated Watchlists (All 45 Setups with Penny Stocks Included)
     const MASTER_RECOMMENDATIONS = [
       // 1. Penny / Turnaround Stocks (Sub-₹100)
@@ -748,7 +746,7 @@
         .replace(' INDUSTRIES', '')
         .replace(' POWER', '');
       
-      clean = clean.split(' ')[0]; // Pick primary symbol token
+      clean = clean.split(' ')[0];
       return clean;
     }
 
@@ -757,7 +755,7 @@
       return clean.includes(':') ? clean : `NSE:${clean}`;
     }
 
-    // --- SIMPLIFIED SAVE STOCK (NO TARGET TYPING NEEDED) ---
+    // --- SIMPLIFIED SAVE STOCK ---
     function saveStockSimple() {
       const rawName = document.getElementById('input-stock-name').value;
       const name = cleanTickerSymbol(rawName);
@@ -768,7 +766,6 @@
         return alert('Please enter valid Stock Ticker, Quantity, and Bought Price.');
       }
 
-      // Automatically compute target, stop loss, and horizon
       const riskPct = (buy < 100) ? 0.10 : 0.05;
       const sl = parseFloat((buy * (1 - riskPct)).toFixed(2));
       const t1 = parseFloat((buy * (1 + (riskPct * 2.5))).toFixed(2));
@@ -828,7 +825,6 @@
       const timeframe = existing ? existing.timeframe : ((estCMP < 100) ? '2 - 4 Months' : '3 - 8 Trading Days');
       const thesis = existing ? existing.thesis : 'Technical momentum breakout setup with favorable risk-reward geometry.';
 
-      // 1. Render Analysis Card
       const levelsCard = document.getElementById('analyzer-levels-card');
       levelsCard.innerHTML = `
         <div class="flex flex-wrap justify-between items-center gap-4">
@@ -865,7 +861,6 @@
         </div>
       `;
 
-      // 2. Render TradingView Company Profile Widget
       const profileContainer = document.getElementById('tradingview_profile_container');
       profileContainer.innerHTML = '';
       const profScript = document.createElement('script');
@@ -882,7 +877,6 @@
       });
       profileContainer.appendChild(profScript);
 
-      // 3. Render Technical Gauge Widget
       const taContainer = document.getElementById('tradingview_ta_container');
       taContainer.innerHTML = '';
       const taScript = document.createElement('script');
@@ -902,7 +896,6 @@
       });
       taContainer.appendChild(taScript);
 
-      // 4. Render Interactive Chart
       const chartContainer = document.getElementById('tradingview_chart_container');
       chartContainer.innerHTML = '';
       document.getElementById('chart-symbol-label').innerText = `${fullSymbol} Interactive Chart`;
