@@ -1,6 +1,6 @@
 {
-  "last_updated": "01 Sep 2026, 04:51 PM IST",
-  "count": 41,
+  "last_updated": "02 Sep 2026, 03:07 AM IST",
+  "count": 40,
   "data": [
     {
       "ticker": "SUZLON",
@@ -112,11 +112,11 @@
       "cat": "penny",
       "horizon": "Turnaround / Penny (2-4M)",
       "timeframe": "3 - 5 Months",
-      "cmp": 24.14,
+      "cmp": 24.18,
       "entry": "23.7 - 24.4",
       "t1": 31.4,
-      "t2": 35.0,
-      "sl": 21.7,
+      "t2": 35.1,
+      "sl": 21.8,
       "thesis": "US textile export demand revival."
     },
     {
@@ -151,11 +151,11 @@
       "cat": "large",
       "horizon": "Long-Term (6-18M)",
       "timeframe": "6 - 12 Months",
-      "cmp": 1438.0,
-      "entry": "1409.2 - 1452.4",
-      "t1": 1790.3,
-      "t2": 1941.3,
-      "sl": 1337.3,
+      "cmp": 1454.0,
+      "entry": "1424.9 - 1468.5",
+      "t1": 1810.2,
+      "t2": 1962.9,
+      "sl": 1352.2,
       "thesis": "Top RoA and low credit cost among peers."
     },
     {
@@ -216,11 +216,11 @@
       "cat": "large",
       "horizon": "Long-Term (6-18M)",
       "timeframe": "6 - 12 Months",
-      "cmp": 1929.0,
-      "entry": "1890.4 - 1948.3",
-      "t1": 2401.6,
-      "t2": 2604.2,
-      "sl": 1794.0,
+      "cmp": 1984.8,
+      "entry": "1945.1 - 2004.6",
+      "t1": 2471.1,
+      "t2": 2679.5,
+      "sl": 1845.9,
       "thesis": "Global specialty pharma margin resilience."
     },
     {
@@ -242,11 +242,11 @@
       "cat": "large",
       "horizon": "Long-Term (6-18M)",
       "timeframe": "6 - 12 Months",
-      "cmp": 327.5,
-      "entry": "320.9 - 330.8",
-      "t1": 419.2,
-      "t2": 458.5,
-      "sl": 301.3,
+      "cmp": 324.0,
+      "entry": "317.5 - 327.2",
+      "t1": 414.7,
+      "t2": 453.6,
+      "sl": 298.1,
       "thesis": "Green hydrogen & renewable expansion."
     },
     {
@@ -268,11 +268,11 @@
       "cat": "mid",
       "horizon": "Positional (3-6W)",
       "timeframe": "4 - 8 Months",
-      "cmp": 20060.0,
-      "entry": "19658.8 - 20260.6",
-      "t1": 23430.1,
-      "t2": 25235.5,
-      "sl": 18856.4,
+      "cmp": 20108.0,
+      "entry": "19705.8 - 20309.1",
+      "t1": 23486.1,
+      "t2": 25295.9,
+      "sl": 18901.5,
       "thesis": "Pinaka rockets & global defense export orders."
     },
     {
@@ -398,11 +398,11 @@
       "cat": "small",
       "horizon": "Swing (3-8D)",
       "timeframe": "2 - 4 Months",
-      "cmp": 412.25,
-      "entry": "404.0 - 416.4",
-      "t1": 463.8,
-      "t2": 494.7,
-      "sl": 391.6,
+      "cmp": 411.85,
+      "entry": "403.6 - 416.0",
+      "t1": 463.3,
+      "t2": 494.2,
+      "sl": 391.3,
       "thesis": "Global industrial gear market share expansion."
     },
     {
@@ -437,11 +437,11 @@
       "cat": "small",
       "horizon": "Positional (3-6W)",
       "timeframe": "3 - 6 Months",
-      "cmp": 5717.5,
-      "entry": "5603.1 - 5774.7",
-      "t1": 6678.0,
-      "t2": 7192.6,
-      "sl": 5374.4,
+      "cmp": 5730.5,
+      "entry": "5615.9 - 5787.8",
+      "t1": 6693.2,
+      "t2": 7209.0,
+      "sl": 5386.7,
       "thesis": "Premium housing renovation demand."
     },
     {
@@ -521,19 +521,6 @@
       "t2": 465.9,
       "sl": 385.5,
       "thesis": "20-EMA pullback support with high dividend yield."
-    },
-    {
-      "ticker": "BSE",
-      "name": "BSE Ltd",
-      "cat": "swing",
-      "horizon": "Swing (3-8D)",
-      "timeframe": "4 - 9 Trading Days",
-      "cmp": 3242.0,
-      "entry": "3177.2 - 3274.4",
-      "t1": 3566.2,
-      "t2": 3760.7,
-      "sl": 3112.3,
-      "thesis": "Ascending triangle breakout on derivatives volumes."
     }
   ]
 }
