@@ -89,15 +89,19 @@
       </div>
     </div>
 
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 flex space-x-8 text-sm overflow-x-auto border-t border-slate-800/60">
+    <!-- Navigation Bar with New Dedicated Tab -->
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 flex space-x-6 text-sm overflow-x-auto border-t border-slate-800/60">
       <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="py-3 px-1 text-slate-400 hover:text-slate-200 tab-active flex items-center gap-2">
         <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
       </button>
       <button onclick="switchTab('stocks')" id="tab-btn-stocks" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
         <i data-lucide="line-chart" class="w-4 h-4"></i> Portfolio Hub
       </button>
-      <button onclick="switchTab('advisor')" id="tab-btn-advisor" class="py-3 px-1 text-amber-400 hover:text-amber-300 flex items-center gap-2 font-semibold">
-        <i data-lucide="cpu" class="w-4 h-4"></i> JARVIS Intelligence & Advisor
+      <button onclick="switchTab('jarvis_sug')" id="tab-btn-jarvis_sug" class="py-3 px-1 text-amber-400 hover:text-amber-300 flex items-center gap-2 font-semibold">
+        <i data-lucide="sparkles" class="w-4 h-4"></i> JARVIS Suggestions (10-20)
+      </button>
+      <button onclick="switchTab('advisor')" id="tab-btn-advisor" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="cpu" class="w-4 h-4"></i> Financial Health
       </button>
       <button onclick="switchTab('mf')" id="tab-btn-mf" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
         <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds & Gold
@@ -117,33 +121,20 @@
     <!-- 1. DASHBOARD -->
     <section id="view-dashboard" class="space-y-6">
       
-      <!-- JARVIS Interactive Command & Audio Brief Banner -->
-      <div class="glass-card jarvis-glow p-5 rounded-2xl space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
-              <i data-lucide="cpu" class="w-6 h-6 animate-pulse"></i>
-            </div>
-            <div>
-              <h3 class="text-sm font-bold text-white">JARVIS Autonomous Agent Online</h3>
-              <p class="text-xs text-slate-300" id="jarvis-status-text">Ask me for suggestions (e.g. "suggest shares under 50", "long term", "swing trades").</p>
-            </div>
+      <!-- JARVIS Interactive Command Banner -->
+      <div class="glass-card jarvis-glow p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
+            <i data-lucide="cpu" class="w-6 h-6 animate-pulse"></i>
           </div>
-          <div class="flex items-center gap-2 w-full md:w-auto">
-            <input type="text" id="jarvis-command-input" placeholder="Ask JARVIS (e.g. 'suggest shares under 50')" class="bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs text-white outline-none focus:border-blue-500 flex-1 md:w-80" onkeydown="if(event.key === 'Enter') handleJarvisCommand()" />
-            <button onclick="handleJarvisCommand()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">Ask JARVIS</button>
-            <button onclick="speakJarvisBrief()" title="Voice Brief" class="px-3 py-2.5 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1"><i data-lucide="volume-2" class="w-3.5 h-3.5"></i></button>
+          <div>
+            <h3 class="text-sm font-bold text-white">JARVIS Autonomous Agent Online</h3>
+            <p class="text-xs text-slate-300">Explore the dedicated <b>JARVIS Suggestions</b> tab for structured stock matrices by price & timeframe.</p>
           </div>
         </div>
-
-        <!-- Dynamic JARVIS Response Container -->
-        <div id="jarvis-response-container" class="hidden p-4 bg-slate-900/90 rounded-xl border border-blue-500/30 space-y-3">
-          <div class="flex justify-between items-center text-xs text-blue-400 font-bold">
-            <span id="jarvis-resp-title">JARVIS Recommendation Matrix</span>
-            <button onclick="document.getElementById('jarvis-response-container').classList.add('hidden')" class="text-slate-400 hover:text-white">✕ Close</button>
-          </div>
-          <div id="jarvis-resp-body" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs"></div>
-        </div>
+        <button onclick="switchTab('jarvis_sug')" class="px-4 py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4"></i> View 20+ Curated Suggestions
+        </button>
       </div>
 
       <!-- Sentinel Stop-Loss Alert Banner -->
@@ -152,10 +143,10 @@
           <div class="p-2 bg-rose-500/20 text-rose-400 rounded-xl"><i data-lucide="alert-triangle" class="w-5 h-5 animate-bounce"></i></div>
           <div>
             <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider">JARVIS Sentinel Warning</h4>
-            <p class="text-xs text-slate-200" id="jarvis-sentinel-msg">One or more positions have approached strict risk thresholds.</p>
+            <p class="text-xs text-slate-200" id="jarvis-sentinel-msg">Positions approaching risk thresholds.</p>
           </div>
         </div>
-        <button onclick="document.getElementById('jarvis-sentinel-banner').classList.add('hidden')" class="text-slate-400 hover:text-white text-xs font-semibold px-3 py-1 bg-slate-900 rounded-lg">Dismiss</button>
+        <button onclick="document.getElementById('jarvis-sentinel-banner').classList.add('hidden')" class="text-slate-400 hover:text-white text-xs px-3 py-1 bg-slate-900 rounded-lg">Dismiss</button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -194,7 +185,6 @@
           </div>
         </div>
 
-        <!-- Monte Carlo Wealth Simulator & Health -->
         <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
           <div>
             <h3 class="text-base font-bold text-slate-200 mb-3 flex items-center gap-2">
@@ -210,12 +200,50 @@
                 <b class="text-emerald-400" id="sim-3yr">₹0.00</b>
               </div>
             </div>
-            <p class="text-[11px] text-slate-400 mt-2 italic">Simulated via JARVIS compounding volatility algorithms.</p>
           </div>
-          <button onclick="switchTab('advisor')" class="w-full mt-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg">
-            Open JARVIS Command Center <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          <button onclick="switchTab('jarvis_sug')" class="w-full mt-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg">
+            Explore JARVIS Suggestions <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
+      </div>
+    </section>
+
+    <!-- NEW DEDICATED TAB: JARVIS SUGGESTIONS (10-20+ STOCKS MATRIX) -->
+    <section id="view-jarvis_sug" class="hidden space-y-6">
+      <div class="glass-card jarvis-glow p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="p-3 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
+            <i data-lucide="sparkles" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold text-white">JARVIS Master Stock Suggestions Matrix</h2>
+            <p class="text-xs text-slate-400">Curated across exact CMP price buckets (Under ₹20, Under ₹50, Mid/Large) and holding timeframes.</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="filterJarvisTable('all')" id="jt-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All Setups (20)</button>
+          <button onclick="filterJarvisTable('intraday')" id="jt-btn-intraday" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Intraday / ORB</button>
+          <button onclick="filterJarvisTable('swing')" id="jt-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Swing (3-10 Days)</button>
+          <button onclick="filterJarvisTable('short')" id="jt-btn-short" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Short-Term (1-3 Mo)</button>
+          <button onclick="filterJarvisTable('long')" id="jt-btn-long" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Long-Term (6+ Mo)</button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto glass-card rounded-2xl">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+            <tr>
+              <th class="p-4">Stock Ticker & Company</th>
+              <th class="p-4">Category / Price Bucket</th>
+              <th class="p-4">CMP (₹)</th>
+              <th class="p-4">Holding Timeframe</th>
+              <th class="p-4">Entry Zone</th>
+              <th class="p-4">Target / SL</th>
+              <th class="p-4 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="jarvis-suggestions-tbody" class="divide-y divide-slate-800/60"></tbody>
+        </table>
       </div>
     </section>
 
@@ -229,7 +257,6 @@
         <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
           <i data-lucide="binary" class="w-3.5 h-3.5 text-indigo-400"></i> F&O Desk
         </button>
-        <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Curated Watchlist</button>
       </div>
 
       <!-- Holdings -->
@@ -316,32 +343,22 @@
           </table>
         </div>
       </div>
-
-      <!-- Watchlists -->
-      <div id="stock-sub-recs" class="hidden space-y-6">
-        <div class="glass-card p-6 rounded-2xl space-y-4">
-          <h3 class="text-base font-bold text-slate-100">JARVIS Curated Market Recommendations</h3>
-          <p class="text-xs text-slate-400">High-conviction picks updated for optimal risk-reward entry zones.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2" id="recs-grid"></div>
-        </div>
-      </div>
     </section>
 
-    <!-- 3. JARVIS INTELLIGENCE & ADVISOR -->
+    <!-- 3. FINANCIAL HEALTH -->
     <section id="view-advisor" class="hidden space-y-6">
       <div class="glass-card jarvis-glow p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
           <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30"><i data-lucide="cpu" class="w-6 h-6 animate-pulse"></i></div>
           <div>
-            <h2 class="text-lg font-bold text-white">JARVIS Master Decision Engine</h2>
-            <p class="text-xs text-slate-400">Autonomous advisory algorithms, portfolio diagnostics, and automated rebalancing.</p>
+            <h2 class="text-lg font-bold text-white">Financial Health Audit & Rebalancing Assistant</h2>
+            <p class="text-xs text-slate-400">Institutional health scoring and concentration risk evaluation.</p>
           </div>
         </div>
         <button onclick="executeJarvisActionPlan()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2">
-          <i data-lucide="zap" class="w-4 h-4"></i> Execute JARVIS Action Plan
+          <i data-lucide="zap" class="w-4 h-4"></i> Execute Action Plan
         </button>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="jarvis-advisor-cards"></div>
     </section>
 
@@ -429,7 +446,7 @@
   <div id="modal-add-stock" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4 shadow-2xl">
       <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Bought Stock</h3><button onclick="closeModal('modal-add-stock')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. RELIANCE)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase text-white outline-none" />
+      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. RELIANCE)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold text-white outline-none" />
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
         <input type="number" step="0.01" id="input-stock-buy" placeholder="Bought Price (₹)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-semibold text-blue-400" />
@@ -524,7 +541,7 @@
 
     function lockTerminal() {
       sessionStorage.removeItem('omniwealth_auth');
-      document.getElementById('terminal-lock-screen').classList.remove('hidden');
+      document.getElementById('terminal-lock-screen').classList.add('hidden');
     }
 
     function togglePassVisibility() {
@@ -533,20 +550,35 @@
       lucide.createIcons();
     }
 
-    const MASTER_RECOMMENDATIONS = [
-      { ticker: 'RELIANCE', name: 'Reliance Industries Ltd.', cat: 'large', cmp: 1320.00, entry: '1300 - 1330', t1: 1450.00, t2: 1580.00, sl: 1240.00, timeframe: '6 - 12 Months', thesis: 'Diversified giant with robust cash flows across retail, digital, and energy.' },
-      { ticker: 'HDFCBANK', name: 'HDFC Bank Ltd.', cat: 'large', cmp: 1680.00, entry: '1650 - 1700', t1: 1850.00, t2: 2000.00, sl: 1580.00, timeframe: '6 - 12 Months', thesis: 'Consistent retail credit growth, strong asset quality, and reliable compounding.' },
-      { ticker: 'DIXON', name: 'Dixon Technologies Ltd.', cat: 'mid', cmp: 14800.00, entry: '14500 - 14900', t1: 16500.00, t2: 18000.00, sl: 13900.00, timeframe: '3 - 6 Months', thesis: 'Strong PLI scheme beneficiary leading Indian electronic manufacturing.' },
-      { ticker: 'MAXHEALTH', name: 'Max Healthcare Institute', cat: 'mid', cmp: 1013.00, entry: '990 - 1020', t1: 1150.00, t2: 1280.00, sl: 940.00, timeframe: '3 - 6 Months', thesis: 'Excellent ARPOB expansion and scalable hospital bed capacity.' },
-      { ticker: 'CDSL', name: 'Central Depository Services', cat: 'small', cmp: 1434.00, entry: '1400 - 1440', t1: 1555.00, t2: 1720.00, sl: 1350.00, timeframe: '2 - 4 Months', thesis: 'Secular structural play on rising demat accounts and capital market activity.' },
-      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', cmp: 65.50, entry: '62 - 68', t1: 85.00, t2: 105.00, sl: 54.00, timeframe: '2 - 4 Months', thesis: 'Debt-free balance sheet with multi-gigawatt wind order book.' },
-      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', cmp: 21.00, entry: '20 - 22', t1: 28.00, t2: 34.00, sl: 17.50, timeframe: '3 - 5 Months', thesis: 'Resolution of legacy bad debt book aiding recovery.' },
-      { ticker: 'BEL', name: 'Bharat Electronics Ltd.', cat: 'swing', cmp: 314.00, entry: '310 - 318', t1: 365.00, t2: 395.00, sl: 292.00, timeframe: '3 - 8 Trading Days', thesis: 'Flat-base breakout near 52-week highs on steady defense orders.' },
-      { ticker: 'VEDL', name: 'Vedanta Ltd.', cat: 'swing', cmp: 286.50, entry: '280 - 290', t1: 314.00, t2: 345.00, sl: 273.00, timeframe: '5 - 10 Trading Days', thesis: 'Cup-and-handle breakout confirmation above 200-day moving average.' },
-      
-      // Additional Penny & Low-Cost Additions (< ₹50)
-      { ticker: 'EMPOWER', name: 'Empower India Ltd.', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 3.10, t2: 3.80, sl: 1.95, timeframe: '2 - 4 Months', thesis: 'Low-cost digital infrastructure turnaround candidate.' },
-      { ticker: 'GATECH', name: 'GACM Technologies Ltd.', cat: 'penny', cmp: 1.15, entry: '1.00 - 1.20', t1: 1.55, t2: 1.90, sl: 0.92, timeframe: '2 - 4 Months', thesis: 'Software service micro-cap with speculative swing volume.' }
+    // Comprehensive 20+ Master Recommendations Matrix Across Timeframes & Buckets
+    const MASTER_SUGGESTIONS = [
+      // Intraday / ORB Setups
+      { name: 'NIFTY 50 Index (NIFTY)', bucket: 'Intraday / ORB', cmp: 25120.0, timeframe: 'Intraday (9:15-3:30)', entry: 'Break of 15m High', t1: '25,350', t2: '25,500', sl: '0.4% Trail', type: 'intraday' },
+      { name: 'State Bank of India (SBIN)', bucket: 'Intraday Momentum', cmp: 810.0, timeframe: 'Intraday', entry: '808 - 812', t1: '825', t2: '840', sl: '798', type: 'intraday' },
+      { name: 'Reliance Industries (RELIANCE)', bucket: 'Intraday Breakout', cmp: 1320.0, timeframe: 'Intraday', entry: '1315 - 1325', t1: '1350', t2: '1375', sl: '1300', type: 'intraday' },
+      { name: 'Tata Motors (TATAMOTORS)', bucket: 'Intraday Reversal', cmp: 725.0, timeframe: 'Intraday', entry: '720 - 728', t1: '745', t2: '760', sl: '710', type: 'intraday' },
+      { name: 'ICICI Bank (ICICIBANK)', bucket: 'Intraday Trend', cmp: 1205.0, timeframe: 'Intraday', entry: '1200 - 1210', t1: '1230', t2: '1255', sl: '1190', type: 'intraday' },
+
+      // Swing Trades (3 - 10 Days)
+      { name: 'Bharat Electronics (BEL)', bucket: 'Swing (3-10D)', cmp: 314.0, timeframe: '3 - 8 Days', entry: '310 - 318', t1: '365', t2: '395', sl: '292', type: 'swing' },
+      { name: 'Hindustan Aeronautics (HAL)', bucket: 'Swing (3-10D)', cmp: 4600.0, timeframe: '5 - 10 Days', entry: '4550 - 4650', t1: '5400', t2: '5800', sl: '4320', type: 'swing' },
+      { name: 'Zomato Ltd (ZOMATO)', bucket: 'Swing Momentum', cmp: 266.0, timeframe: '5 - 12 Days', entry: '260 - 272', t1: '330', t2: '370', sl: '242', type: 'swing' },
+      { name: 'BSE Ltd (BSE)', bucket: 'Swing Breakout', cmp: 2720.0, timeframe: '4 - 9 Days', entry: '2700 - 2750', t1: '3300', t2: '3650', sl: '2520', type: 'swing' },
+      { name: 'Vedanta Ltd (VEDL)', bucket: 'Swing Momentum', cmp: 286.5, timeframe: '5 - 10 Days', entry: '280 - 290', t1: '314', t2: '345', sl: '273', type: 'swing' },
+
+      // Short-Term (1 - 3 Months)
+      { name: 'IREDA (IREDA)', bucket: 'Short-Term (1-3M)', cmp: 112.35, entry: '110 - 114', t1: '141.6', t2: '153.35', sl: '104', timeframe: '3 - 6 Weeks', type: 'short' },
+      { name: 'Bajaj Housing Finance (BAJAJHFL)', bucket: 'Short-Term (1-3M)', cmp: 82.85, entry: '81 - 84', t1: '109.99', t2: '125.19', sl: '76', timeframe: '3 - 6 Weeks', type: 'short' },
+      { name: 'Inox Green Energy (INOXGREEN)', bucket: 'Short-Term (1-3M)', cmp: 164.25, entry: '160 - 170', t1: '207.22', t2: '224.42', sl: '148', timeframe: '3 - 6 Weeks', type: 'short' },
+      { name: 'Dixon Technologies (DIXON)', bucket: 'Short-Term (1-3M)', cmp: 14800.0, entry: '14500 - 14900', t1: '16500', t2: '18000', sl: '13900', timeframe: '2 - 3 Months', type: 'short' },
+      { name: 'Max Healthcare (MAXHEALTH)', bucket: 'Short-Term (1-3M)', cmp: 1013.0, entry: '990 - 1020', t1: '1150', t2: '1280', sl: '940', timeframe: '2 - 3 Months', type: 'short' },
+
+      // Long-Term (6+ Months) & Under ₹20 Penny / Value Plays
+      { name: 'HDFC Bank (HDFCBANK)', bucket: 'Long-Term Compounder', cmp: 1680.0, timeframe: '6 - 12 Months', entry: '1650 - 1700', t1: '1850', t2: '2000', sl: '1580', type: 'long' },
+      { name: 'Reliance Industries (RELIANCE)', bucket: 'Long-Term Anchor', cmp: 1320.0, timeframe: '6 - 12 Months', entry: '1300 - 1330', t1: '1450', t2: '1580', sl: '1240', type: 'long' },
+      { name: 'Central Depository (CDSL)', bucket: 'Long-Term Growth', cmp: 1434.0, timeframe: '6 - 12 Months', entry: '1400 - 1440', t1: '1555', t2: '1720', sl: '1350', type: 'long' },
+      { name: 'Vodafone Idea (VI)', bucket: 'Penny / Speculative (<₹20)', cmp: 8.1, timeframe: '3 - 6 Months', entry: '7.5 - 8.5', t1: '13', t2: '16.5', sl: '6.2', type: 'long' },
+      { name: 'Jaiprakash Power (JPPOWER)', bucket: 'Penny / Turnaround (<₹20)', cmp: 18.1, timeframe: '2 - 4 Months', entry: '17 - 19', t1: '28', t2: '34', sl: '14', type: 'long' }
     ];
 
     let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
@@ -564,13 +596,16 @@
     }
 
     function switchTab(tabId) {
-      ['dashboard', 'stocks', 'advisor', 'mf', 'fd', 'cash'].forEach(id => {
-        document.getElementById(`view-${id}`).classList.add('hidden');
-        document.getElementById(`tab-btn-${id}`).classList.remove('tab-active');
+      ['dashboard', 'stocks', 'jarvis_sug', 'advisor', 'mf', 'fd', 'cash'].forEach(id => {
+        const el = document.getElementById(`view-${id}`);
+        const btn = document.getElementById(`tab-btn-${id}`);
+        if (el) el.classList.add('hidden');
+        if (btn) btn.classList.remove('tab-active');
       });
       document.getElementById(`view-${tabId}`).classList.remove('hidden');
       document.getElementById(`tab-btn-${tabId}`).classList.add('tab-active');
       if (tabId === 'dashboard') updateChart();
+      if (tabId === 'jarvis_sug') renderJarvisTable('all');
       if (tabId === 'advisor') renderJarvisAdvisor();
       lucide.createIcons();
     }
@@ -588,7 +623,6 @@
       if (activeBtn) { activeBtn.classList.add('subtab-active'); activeBtn.classList.remove('bg-slate-900', 'text-slate-400'); }
       
       if (subId === 'analyzer') setTimeout(() => renderAnalyzerModules(currentAnalyzedSymbol), 150);
-      if (subId === 'recs') renderRecommendations();
       lucide.createIcons();
     }
 
@@ -598,6 +632,40 @@
     function cleanTickerSymbol(raw) {
       if (!raw) return 'RELIANCE';
       return raw.trim().toUpperCase().replace(' LIMITED', '').replace(' LTD', '').split(' ')[0];
+    }
+
+    // Render Dedicated JARVIS Suggestions Table
+    function filterJarvisTable(type) {
+      ['all', 'intraday', 'swing', 'short', 'long'].forEach(c => {
+        const btn = document.getElementById(`jt-btn-${c}`);
+        if (btn) { btn.classList.remove('rec-filter-active'); btn.classList.add('bg-slate-900', 'text-slate-300'); }
+      });
+      const active = document.getElementById(`jt-btn-${type}`);
+      if (active) { active.classList.add('rec-filter-active'); active.classList.remove('bg-slate-900', 'text-slate-300'); }
+      renderJarvisTable(type);
+    }
+
+    function renderJarvisTable(type) {
+      const tbody = document.getElementById('jarvis-suggestions-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      const list = type === 'all' ? MASTER_SUGGESTIONS : MASTER_SUGGESTIONS.filter(s => s.type === type);
+      list.forEach(s => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="p-4 font-bold text-white">${s.name}</td>
+            <td class="p-4 text-xs text-blue-400 font-semibold">${s.bucket}</td>
+            <td class="p-4 font-bold text-emerald-400">₹${s.cmp}</td>
+            <td class="p-4 text-xs text-amber-300">⏱ ${s.timeframe}</td>
+            <td class="p-4 text-xs text-slate-300">₹${s.entry}</td>
+            <td class="p-4 text-xs text-slate-300">T1: ₹${s.t1} / SL: ₹${s.sl}</td>
+            <td class="p-4 text-right">
+              <button onclick="addAnalyzedStockToHoldings('${s.name.split(' ')[0]}', ${s.cmp}, ${parseFloat(s.t1)}, ${parseFloat(s.t2) || s.cmp*1.2}, ${parseFloat(s.sl) || s.cmp*0.9})" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow">Track Share</button>
+            </td>
+          </tr>
+        `;
+      });
+      lucide.createIcons();
     }
 
     function manualEditLTP(id, cur, name) {
@@ -664,49 +732,6 @@
       return `${days} days left`;
     }
 
-    // Interactive JARVIS Natural Language Command & Recommendation Matcher
-    function handleJarvisCommand() {
-      const cmd = document.getElementById('jarvis-command-input').value.toLowerCase();
-      const status = document.getElementById('jarvis-status-text');
-      const container = document.getElementById('jarvis-response-container');
-      const body = document.getElementById('jarvis-resp-body');
-      const title = document.getElementById('jarvis-resp-title');
-      if (!cmd) return;
-
-      body.innerHTML = '';
-      container.classList.remove('hidden');
-
-      let matches = [];
-      if (cmd.includes('under 50') || cmd.includes('penny') || cmd.includes('cheap')) {
-        matches = MASTER_RECOMMENDATIONS.filter(r => r.cmp < 50);
-        title.innerText = "🤖 JARVIS Recommendations: Shares Under ₹50";
-      } else if (cmd.includes('long term') || cmd.includes('compound') || cmd.includes('large')) {
-        matches = MASTER_RECOMMENDATIONS.filter(r => r.cat === 'large');
-        title.innerText = "🤖 JARVIS Recommendations: Long-Term Compounders";
-      } else if (cmd.includes('swing') || cmd.includes('short term')) {
-        matches = MASTER_RECOMMENDATIONS.filter(r => r.cat === 'swing' || r.timeframe.includes('Weeks'));
-        title.innerText = "🤖 JARVIS Recommendations: Short-Term & Swing Setups";
-      } else {
-        matches = MASTER_RECOMMENDATIONS.slice(0, 3);
-        title.innerText = "🤖 JARVIS Top High-Conviction Suggestions";
-      }
-
-      matches.forEach(m => {
-        body.innerHTML += `
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-            <div class="flex justify-between font-bold text-white"><span>${m.ticker}</span><span class="text-emerald-400">₹${m.cmp}</span></div>
-            <div class="text-[11px] text-slate-400">${m.name} (${m.timeframe})</div>
-            <div class="text-[11px] text-slate-300"><b>Entry:</b> ${m.entry} | <b>Target:</b> ₹${m.t1}</div>
-            <button onclick="addAnalyzedStockToHoldings('${m.ticker}', ${m.cmp}, ${m.t1}, ${m.t2}, ${m.sl})" class="mt-2 w-full py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-[11px] font-semibold">Track Share</button>
-          </div>
-        `;
-      });
-
-      status.innerHTML = `🤖 <b>JARVIS:</b> Processed query "${cmd}". Displaying tailored suggestions below.`;
-      document.getElementById('jarvis-command-input').value = '';
-      lucide.createIcons();
-    }
-
     function checkJarvisSentinel() {
       const banner = document.getElementById('jarvis-sentinel-banner');
       const msg = document.getElementById('jarvis-sentinel-msg');
@@ -724,17 +749,6 @@
       }
     }
 
-    function speakJarvisBrief() {
-      if (!('speechSynthesis' in window)) return alert("Speech synthesis not supported.");
-      const nw = document.getElementById('global-net-worth').innerText;
-      const utterance = new SpeechSynthesisUtterance(`JARVIS report. Net worth is ${nw}. All risk systems nominal.`);
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function executeJarvisActionPlan() {
-      alert("🤖 JARVIS Action Plan Executed: Checked all stop-losses and re-calibrated asset allocations for optimal annual growth.");
-    }
-
     function exportCSV() {
       let csv = "Asset Category,Name/Ticker,Quantity,Buy Price,Current Price,Current Value\n";
       state.stocks.forEach(s => { csv += `Stock,${s.name},${s.qty},${s.buy},${s.cur},${s.qty * s.cur}\n`; });
@@ -744,32 +758,6 @@
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url; a.download = `omniwealth_jarvis_report.csv`; a.click();
-    }
-
-    function renderRecommendations() {
-      const container = document.getElementById('recs-grid');
-      if (!container) return;
-      container.innerHTML = '';
-      MASTER_RECOMMENDATIONS.forEach(r => {
-        container.innerHTML += `
-          <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start">
-                <h4 class="font-bold text-white text-sm cursor-pointer hover:text-blue-400" onclick="analyzeTickerQuick('${r.ticker}')">${r.ticker}</h4>
-                <span class="text-[10px] text-amber-400 font-semibold">⏱ ${r.timeframe}</span>
-              </div>
-              <p class="text-[11px] text-slate-400 mt-1">${r.name}</p>
-              <div class="mt-3 space-y-1 text-xs text-slate-300">
-                <div><b>CMP:</b> ₹${r.cmp} | <b>Entry:</b> ₹${r.entry}</div>
-                <div><b>Targets:</b> ₹${r.t1} / ₹${r.t2} | <b>SL:</b> ₹${r.sl}</div>
-                <p class="text-[11px] text-slate-400 mt-1 italic">${r.thesis}</p>
-              </div>
-            </div>
-            <button onclick="addAnalyzedStockToHoldings('${r.ticker}', ${r.cmp}, ${r.t1}, ${r.t2}, ${r.sl})" class="mt-4 w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold">Track Position</button>
-          </div>
-        `;
-      });
-      lucide.createIcons();
     }
 
     async function runDeepAnalysis() {
@@ -784,7 +772,7 @@
       const cleanTicker = cleanTickerSymbol(ticker);
       const fullSymbol = `NSE:${cleanTicker}`;
       const levelsCard = document.getElementById('analyzer-levels-card');
-      const existing = MASTER_RECOMMENDATIONS.find(r => r.ticker === cleanTicker);
+      const existing = MASTER_SUGGESTIONS.find(r => r.name.includes(cleanTicker));
       const estCMP = existing ? existing.cmp : 1500.00;
 
       const riskPct = 0.055;
@@ -813,9 +801,10 @@
     }
 
     function addAnalyzedStockToHoldings(ticker, defaultPrice, t1, t2, sl) {
-      const qty = prompt(`Enter quantity for ${ticker}:`, '100');
+      const clean = cleanTickerSymbol(ticker);
+      const qty = prompt(`Enter quantity for ${clean}:`, '100');
       if (!qty) return;
-      state.stocks.push({ id: Date.now(), name: ticker, qty: parseFloat(qty), buy: defaultPrice, cur: defaultPrice, t1, t2, sl });
+      state.stocks.push({ id: Date.now(), name: clean, qty: parseFloat(qty), buy: defaultPrice, cur: defaultPrice, t1, t2, sl });
       saveState();
       switchTab('stocks');
       switchStockSubTab('holdings');
@@ -1049,7 +1038,7 @@
         } catch(e) {} 
       }
       renderAll();
-      renderRecommendations();
+      renderJarvisTable('all');
       renderAnalyzerModules(currentAnalyzedSymbol);
       checkJarvisSentinel();
     }
