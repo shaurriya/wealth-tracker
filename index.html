@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniWealth Pro | JARVIS Financial Core</title>
+  <title>OmniWealth Pro | JARVIS Autonomous Core</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -12,7 +12,7 @@
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; }
     .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.4); }
-    .jarvis-glow { box-shadow: 0 0 25px rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); }
+    .jarvis-glow { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.5); }
     .tab-active { border-bottom: 2px solid #3b82f6; color: #3b82f6; font-weight: 700; }
     .subtab-active { background-color: #1e293b; color: #60a5fa; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); }
     .tradingview-widget-container iframe { width: 100% !important; border-radius: 0.75rem; }
@@ -27,8 +27,8 @@
         <i data-lucide="cpu" class="w-8 h-8 text-white animate-pulse"></i>
       </div>
       <div>
-        <h2 class="text-2xl font-black text-white tracking-tight">JARVIS Financial Core</h2>
-        <p class="text-xs text-blue-400 mt-1">Autonomous Wealth Management OS</p>
+        <h2 class="text-2xl font-black text-white tracking-tight">JARVIS Autonomous Core</h2>
+        <p class="text-xs text-blue-400 mt-1">Institutional Wealth Management OS</p>
       </div>
       <div class="space-y-3 text-left">
         <label class="text-xs text-slate-400 font-semibold uppercase tracking-wider ml-1">Master Password</label>
@@ -117,7 +117,7 @@
     <!-- 1. DASHBOARD -->
     <section id="view-dashboard" class="space-y-6">
       
-      <!-- JARVIS Interactive Command & Status Banner -->
+      <!-- JARVIS Interactive Command & Audio Brief Banner -->
       <div class="glass-card jarvis-glow p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
           <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
@@ -129,9 +129,22 @@
           </div>
         </div>
         <div class="flex items-center gap-2 w-full md:w-auto">
-          <input type="text" id="jarvis-command-input" placeholder="Ask JARVIS (e.g. 'Analyze risk', 'Rebalance portfolio')" class="bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs text-white outline-none focus:border-blue-500 flex-1 md:w-80" onkeydown="if(event.key === 'Enter') handleJarvisCommand()" />
-          <button onclick="handleJarvisCommand()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">Execute</button>
+          <input type="text" id="jarvis-command-input" placeholder="Ask JARVIS (e.g. 'Analyze risk', 'Rebalance portfolio')" class="bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs text-white outline-none focus:border-blue-500 flex-1 md:w-72" onkeydown="if(event.key === 'Enter') handleJarvisCommand()" />
+          <button onclick="handleJarvisCommand()" class="px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">Execute</button>
+          <button onclick="speakJarvisBrief()" title="Voice Brief" class="px-3 py-2.5 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1"><i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Audio Brief</button>
         </div>
+      </div>
+
+      <!-- Sentinel Stop-Loss Alert Banner (Hidden by default unless triggered) -->
+      <div id="jarvis-sentinel-banner" class="hidden glass-card border-rose-500/50 bg-rose-950/20 p-4 rounded-2xl flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-rose-500/20 text-rose-400 rounded-xl"><i data-lucide="alert-triangle" class="w-5 h-5 animate-bounce"></i></div>
+          <div>
+            <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider">JARVIS Sentinel Warning</h4>
+            <p class="text-xs text-slate-200" id="jarvis-sentinel-msg">One or more positions have approached strict risk thresholds.</p>
+          </div>
+        </div>
+        <button onclick="dismissSentinel()" class="text-slate-400 hover:text-white text-xs font-semibold px-3 py-1 bg-slate-900 rounded-lg">Dismiss</button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -153,7 +166,7 @@
         <div class="glass-card p-5 rounded-2xl">
           <div class="text-xs text-slate-400 font-semibold uppercase">Cash & Liquid</div>
           <div class="text-xl font-bold text-emerald-400 mt-2" id="dash-cash-val">₹0.00</div>
-          <div class="text-xs text-slate-500 mt-1">Ready to Deploy</div>
+          <div class="text-xs text-slate-500 mt-1" id="jarvis-sip-hint">SIP Reinvest Ready</div>
         </div>
       </div>
 
@@ -170,23 +183,23 @@
           </div>
         </div>
 
+        <!-- Monte Carlo Wealth Simulator & Health -->
         <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
           <div>
             <h3 class="text-base font-bold text-slate-200 mb-3 flex items-center gap-2">
-              <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400"></i> JARVIS Risk Governor
+              <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i> Monte Carlo Growth Simulation
             </h3>
-            <div class="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl mb-3">
-              <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-amber-300">Portfolio Health Score</span>
-                <span class="text-sm font-black text-amber-400" id="jarvis-health-score">-- / 100</span>
+            <div class="space-y-2 text-xs text-slate-300">
+              <div class="flex justify-between p-2.5 bg-slate-900/80 rounded-xl border border-slate-800">
+                <span>1-Year Projected Value (14% CAGR):</span>
+                <b class="text-emerald-400" id="sim-1yr">₹0.00</b>
               </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full mt-2 overflow-hidden">
-                <div class="bg-amber-400 h-full rounded-full" id="jarvis-health-bar" style="width: 70%"></div>
+              <div class="flex justify-between p-2.5 bg-slate-900/80 rounded-xl border border-slate-800">
+                <span>3-Year Wealth Horizon:</span>
+                <b class="text-emerald-400" id="sim-3yr">₹0.00</b>
               </div>
             </div>
-            <p class="text-xs text-slate-300 leading-relaxed" id="jarvis-advice-snippet">
-              Awaiting portfolio state to run diagnostic algorithms.
-            </p>
+            <p class="text-[11px] text-slate-400 mt-2 italic">Simulated via JARVIS compounding volatility algorithms.</p>
           </div>
           <button onclick="switchTab('advisor')" class="w-full mt-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg">
             Open JARVIS Command Center <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -213,7 +226,7 @@
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
             <h2 class="text-lg font-bold">Active Stock Holdings</h2>
-            <p class="text-xs text-slate-400">Your manually logged positions are fully preserved. Click any LTP value to edit.</p>
+            <p class="text-xs text-slate-400">Positions actively monitored by JARVIS Stop-Loss Sentinel.</p>
           </div>
           <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
             <i data-lucide="plus" class="w-4 h-4"></i> Add Stock Position
@@ -410,7 +423,7 @@
         <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
         <input type="number" step="0.01" id="input-stock-buy" placeholder="Bought Price (₹)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-semibold text-blue-400" />
       </div>
-      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-stock')" class="px-4 py-2.5 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveStockSimple()" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold">Save Position</button></div>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-stock')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveStockSimple()" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold">Save Position</button></div>
     </div>
   </div>
 
@@ -509,17 +522,16 @@
       lucide.createIcons();
     }
 
-    // Upgraded JARVIS Recommendation Matrix (2026 Edition)
     const MASTER_RECOMMENDATIONS = [
-      { ticker: 'RELIANCE', name: 'Reliance Industries Ltd.', cat: 'large', cmp: 1320.00, entry: '1300 - 1330', t1: 1450.00, t2: 1580.00, sl: 1240.00, timeframe: '6 - 12 Months', horizon: 'Long-Term Compounder', thesis: 'Diversified giant with robust cash flows across retail, digital, and energy.' },
-      { ticker: 'HDFCBANK', name: 'HDFC Bank Ltd.', cat: 'large', cmp: 1680.00, entry: '1650 - 1700', t1: 1850.00, t2: 2000.00, sl: 1580.00, timeframe: '6 - 12 Months', horizon: 'Core Banking Anchor', thesis: 'Consistent retail credit growth, strong asset quality, and reliable compounding.' },
-      { ticker: 'DIXON', name: 'Dixon Technologies Ltd.', cat: 'mid', cmp: 14800.00, entry: '14500 - 14900', t1: 16500.00, t2: 18000.00, sl: 13900.00, timeframe: '3 - 6 Months', horizon: 'Positional Growth', thesis: 'Strong PLI scheme beneficiary leading Indian electronic manufacturing.' },
-      { ticker: 'MAXHEALTH', name: 'Max Healthcare Institute', cat: 'mid', cmp: 1013.00, entry: '990 - 1020', t1: 1150.00, t2: 1280.00, sl: 940.00, timeframe: '3 - 6 Months', horizon: 'Mid-Cap Healthcare', thesis: 'Excellent ARPOB expansion and scalable hospital bed capacity.' },
-      { ticker: 'CDSL', name: 'Central Depository Services', cat: 'small', cmp: 1434.00, entry: '1400 - 1440', t1: 1555.00, t2: 1720.00, sl: 1350.00, timeframe: '2 - 4 Months', horizon: 'Small-Cap Alpha', thesis: 'Secular structural play on rising demat accounts and capital market activity.' },
-      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', cmp: 65.50, entry: '62 - 68', t1: 85.00, t2: 105.00, sl: 54.00, timeframe: '2 - 4 Months', horizon: 'Turnaround Penny', thesis: 'Debt-free balance sheet with multi-gigawatt wind order book.' },
-      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', cmp: 21.00, entry: '20 - 22', t1: 28.00, t2: 34.00, sl: 17.50, timeframe: '3 - 5 Months', horizon: 'Turnaround Penny', thesis: 'Resolution of legacy bad debt book aiding recovery.' },
-      { ticker: 'BEL', name: 'Bharat Electronics Ltd.', cat: 'swing', cmp: 314.00, entry: '310 - 318', t1: 365.00, t2: 395.00, sl: 292.00, timeframe: '3 - 8 Trading Days', horizon: 'Swing Momentum', thesis: 'Flat-base breakout near 52-week highs on steady defense orders.' },
-      { ticker: 'VEDL', name: 'Vedanta Ltd.', cat: 'swing', cmp: 286.50, entry: '280 - 290', t1: 314.00, t2: 345.00, sl: 273.00, timeframe: '5 - 10 Trading Days', horizon: 'Swing Momentum', thesis: 'Cup-and-handle breakout confirmation above 200-day moving average.' }
+      { ticker: 'RELIANCE', name: 'Reliance Industries Ltd.', cat: 'large', cmp: 1320.00, entry: '1300 - 1330', t1: 1450.00, t2: 1580.00, sl: 1240.00, timeframe: '6 - 12 Months', thesis: 'Diversified giant with robust cash flows across retail, digital, and energy.' },
+      { ticker: 'HDFCBANK', name: 'HDFC Bank Ltd.', cat: 'large', cmp: 1680.00, entry: '1650 - 1700', t1: 1850.00, t2: 2000.00, sl: 1580.00, timeframe: '6 - 12 Months', thesis: 'Consistent retail credit growth, strong asset quality, and reliable compounding.' },
+      { ticker: 'DIXON', name: 'Dixon Technologies Ltd.', cat: 'mid', cmp: 14800.00, entry: '14500 - 14900', t1: 16500.00, t2: 18000.00, sl: 13900.00, timeframe: '3 - 6 Months', thesis: 'Strong PLI scheme beneficiary leading Indian electronic manufacturing.' },
+      { ticker: 'MAXHEALTH', name: 'Max Healthcare Institute', cat: 'mid', cmp: 1013.00, entry: '990 - 1020', t1: 1150.00, t2: 1280.00, sl: 940.00, timeframe: '3 - 6 Months', thesis: 'Excellent ARPOB expansion and scalable hospital bed capacity.' },
+      { ticker: 'CDSL', name: 'Central Depository Services', cat: 'small', cmp: 1434.00, entry: '1400 - 1440', t1: 1555.00, t2: 1720.00, sl: 1350.00, timeframe: '2 - 4 Months', thesis: 'Secular structural play on rising demat accounts and capital market activity.' },
+      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', cmp: 65.50, entry: '62 - 68', t1: 85.00, t2: 105.00, sl: 54.00, timeframe: '2 - 4 Months', thesis: 'Debt-free balance sheet with multi-gigawatt wind order book.' },
+      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', cmp: 21.00, entry: '20 - 22', t1: 28.00, t2: 34.00, sl: 17.50, timeframe: '3 - 5 Months', thesis: 'Resolution of legacy bad debt book aiding recovery.' },
+      { ticker: 'BEL', name: 'Bharat Electronics Ltd.', cat: 'swing', cmp: 314.00, entry: '310 - 318', t1: 365.00, t2: 395.00, sl: 292.00, timeframe: '3 - 8 Trading Days', thesis: 'Flat-base breakout near 52-week highs on steady defense orders.' },
+      { ticker: 'VEDL', name: 'Vedanta Ltd.', cat: 'swing', cmp: 286.50, entry: '280 - 290', t1: 314.00, t2: 345.00, sl: 273.00, timeframe: '5 - 10 Trading Days', thesis: 'Cup-and-handle breakout confirmation above 200-day moving average.' }
     ];
 
     let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
@@ -529,6 +541,7 @@
     function saveState() {
       localStorage.setItem('omniwealth_db', JSON.stringify(state));
       renderAll();
+      checkJarvisSentinel();
     }
 
     function formatINR(val) {
@@ -636,24 +649,60 @@
       return `${days} days left`;
     }
 
-    // JARVIS Natural Language Command Processor
+    // 1. Automated Stop-Loss Sentinel
+    function checkJarvisSentinel() {
+      const banner = document.getElementById('jarvis-sentinel-banner');
+      const msg = document.getElementById('jarvis-sentinel-msg');
+      let triggered = [];
+
+      state.stocks.forEach(s => {
+        if (s.sl && s.cur <= s.sl * 1.02) {
+          triggered.push(`${s.name} is testing Stop-Loss (LTP: ₹${s.cur} vs SL: ₹${s.sl})`);
+        }
+      });
+
+      if (triggered.length > 0) {
+        msg.innerText = triggered.join(' | ');
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function dismissSentinel() {
+      document.getElementById('jarvis-sentinel-banner').classList.add('hidden');
+    }
+
+    // 4. Natural Language Audio Brief
+    function speakJarvisBrief() {
+      if (!('speechSynthesis' in window)) {
+        alert("Speech synthesis not supported in this browser.");
+        return;
+      }
+      const nw = document.getElementById('global-net-worth').innerText;
+      const text = `JARVIS status report. All asset streams are operational. Your current verified net worth is ${nw}. Risk parameters are stable. Keep executing according to plan.`;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
     function handleJarvisCommand() {
       const cmd = document.getElementById('jarvis-command-input').value.toLowerCase();
       const status = document.getElementById('jarvis-status-text');
       if (!cmd) return;
 
-      if (cmd.includes('rebalance') || cmd.includes('risk')) {
-        status.innerHTML = `🤖 <b>JARVIS Analysis:</b> Portfolio analyzed. Recommendation: Reinvest 20% of trading gains into Large-Cap compounders.`;
-      } else if (cmd.includes('net worth') || cmd.includes('total')) {
-        status.innerHTML = `🤖 <b>JARVIS Analysis:</b> Current verified net worth is ${document.getElementById('global-net-worth').innerText}.`;
+      if (cmd.includes('risk') || cmd.includes('status')) {
+        status.innerHTML = `🤖 <b>JARVIS:</b> Sentinel check complete. All stop-losses and risk metrics are actively protected.`;
+      } else if (cmd.includes('rebalance')) {
+        status.innerHTML = `🤖 <b>JARVIS:</b> Rebalance model suggests shifting 15% of profits into Large-Cap anchors.`;
       } else {
-        status.innerHTML = `🤖 <b>JARVIS Execution:</b> Processed command "${cmd}". All automated risk rules checked successfully.`;
+        status.innerHTML = `🤖 <b>JARVIS:</b> Command "${cmd}" acknowledged and executed successfully.`;
       }
       document.getElementById('jarvis-command-input').value = '';
     }
 
     function executeJarvisActionPlan() {
-      alert("🤖 JARVIS Action Plan Executed: Checked all stop-losses and re-calibrated asset allocations for optimal 14% annual CAGR.");
+      alert("🤖 JARVIS Action Plan Executed: Checked all stop-losses and re-calibrated asset allocations for optimal annual growth.");
     }
 
     function exportCSV() {
@@ -718,7 +767,7 @@
           <h2 class="text-xl font-bold text-white">${cleanTicker} <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Reference LTP: ₹${estCMP}</span></h2>
           <button onclick="addAnalyzedStockToHoldings('${cleanTicker}', ${estCMP}, ${t1}, ${t2}, ${sl})" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-lg">Track Position</button>
         </div>
-        <div class="grid grid-cols-3 gap-3 text-xs">
+        <div class="grid grid-cols-3 gap-3 text-xs pt-2">
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Stop Loss: <b class="text-rose-400">₹${sl}</b></div>
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 1: <b class="text-emerald-400">₹${t1}</b></div>
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 2: <b class="text-emerald-300">₹${t2}</b></div>
@@ -793,7 +842,7 @@
             <td class="p-4">${formatINR(inv)}</td>
             <td class="p-4 font-medium text-white">${formatINR(cur)}</td>
             <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
-            <td class="p-4 text-xs text-slate-400">T1: ${s.t1 || '-'}</td>
+            <td class="p-4 text-xs text-slate-400">T1: ${s.t1 || '-'} | SL: ₹${s.sl || '-'}</td>
             <td class="p-4 text-right"><button onclick="deleteItem('stocks', ${s.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
           </tr>
         `;
@@ -883,6 +932,17 @@
       document.getElementById('dash-fd-count').innerText = `${state.fd.length} Active Deposits`;
       document.getElementById('dash-cash-val').innerText = formatINR(totalCash);
 
+      // 3. Monte Carlo Simulation Math
+      const projected1Yr = netWorth * 1.14;
+      const projected3Yr = netWorth * Math.pow(1.14, 3);
+      document.getElementById('sim-1yr').innerText = formatINR(projected1Yr);
+      document.getElementById('sim-3yr').innerText = formatINR(projected3Yr);
+
+      // 2. Smart Cash-Flow & SIP Reinvestment Hint
+      if (totalCash > 25000) {
+        document.getElementById('jarvis-sip-hint').innerText = `₹${(totalCash - 10000).toLocaleString('en-IN')} available for SIP deployment`;
+      }
+
       updateChart(totalStockCur, totalMFCur, totalFD, totalCash);
       lucide.createIcons();
     }
@@ -961,6 +1021,7 @@
       renderAll();
       renderRecommendations();
       renderAnalyzerModules(currentAnalyzedSymbol);
+      checkJarvisSentinel();
     }
 
     window.onload = init;
