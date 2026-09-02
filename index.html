@@ -546,4 +546,492 @@
     const MASTER_RECOMMENDATIONS = [
       { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction.' },
       { ticker: 'BHARATCOAL', name: 'Bharat Coal', cat: 'penny', cmp: 38.82, entry: '37 - 40', t1: 47.75, t2: 54.0, sl: 34.94, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Energy distribution.' },
-      { ticker: 'EMPOWER', name: 'Empower India Ltd', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 2.68, t2: 3.10, sl: 1.9
+      { ticker: 'EMPOWER', name: 'Empower India Ltd', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 2.68, t2: 3.10, sl: 1.96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Digital IT infra.' },
+      { ticker: 'INOXGREEN', name: 'Inox Green Energy Services', cat: 'small', cmp: 164.25, entry: '160 - 170', t1: 207.22, t2: 224.42, sl: 173.83, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Wind turbine operations.' },
+      { ticker: 'IREDA', name: 'IREDA', cat: 'mid', cmp: 112.35, entry: '110 - 114', t1: 141.6, t2: 153.35, sl: 118.79, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Green energy financing.' },
+      { ticker: 'BAJAJHFL', name: 'Bajaj Housing Finance Ltd', cat: 'mid', cmp: 82.85, entry: '81 - 84', t1: 109.99, t2: 125.19, sl: 80.48, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Retail mortgage growth.' },
+      { ticker: 'MSUMI', name: 'Motherson Sumi Wiring India', cat: 'small', cmp: 36.60, entry: '35 - 38', t1: 48.29, t2: 54.96, sl: 35.33, timeframe: '3 - 6 Weeks', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Automotive EV wiring.' }
+    ];
+
+    // EXACT RESTORED PERMANENT STATE WITH ALL YOUR 7 STOCKS
+    let state = { 
+      stocks: [
+        { id: 1, name: 'VASCONEQ', qty: 500, buy: 35.0, cur: 35.0, t1: 43.05, t2: 49.0, sl: 31.5 },
+        { id: 2, name: 'BHARATCOAL', qty: 100, buy: 38.82, cur: 38.82, t1: 47.75, t2: 54.0, sl: 34.94 },
+        { id: 3, name: 'EMPOWER', qty: 1000, buy: 2.18, cur: 2.35, t1: 2.68, t2: 3.10, sl: 1.96 },
+        { id: 4, name: 'INOXGREEN', qty: 100, buy: 183.95, cur: 164.25, t1: 207.22, t2: 224.42, sl: 173.83 },
+        { id: 5, name: 'IREDA', qty: 200, buy: 125.7, cur: 112.35, t1: 141.6, t2: 153.35, sl: 118.79 },
+        { id: 6, name: 'BAJAJHFL', qty: 200, buy: 89.42, cur: 82.85, t1: 109.99, t2: 125.19, sl: 80.48 },
+        { id: 7, name: 'MSUMI', qty: 100, buy: 39.26, cur: 36.60, t1: 48.29, t2: 54.96, sl: 35.33 }
+      ], 
+      mf: [{ id: 201, name: 'SBI Gold Direct Plan Growth', cat: 'Commodities (Gold & Silver)', invested: 50000, current: 54500 }], 
+      fd: [{ id: 101, bank: 'ICICI BANK', principal: 150000, rate: 7.0, date: '2028-02-15', maturity: 185000 }], 
+      cash: [{ id: 301, name: 'Liquid Brokerage Margin', type: 'Liquid Brokerage Balance', amount: 15000 }], 
+      fno: [{ id: 1, name: 'SUNPHARMA 2000', type: 'Call Option (CE)', expiry: '2026-09-29', qty: 700, buy: 8.95, ltp: 8.45, t1: 14.30, t2: 19.70, sl: 5.40 }] 
+    };
+
+    let chartInstance = null;
+    let currentAnalyzedSymbol = 'IREDA';
+
+    function saveState() {
+      localStorage.setItem('omniwealth_db', JSON.stringify(state));
+      renderAll();
+    }
+
+    function formatINR(val) {
+      return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(val || 0);
+    }
+
+    function switchTab(tabId) {
+      ['dashboard', 'stocks', 'advisor', 'mf', 'fd', 'cash'].forEach(id => {
+        document.getElementById(`view-${id}`).classList.add('hidden');
+        document.getElementById(`tab-btn-${id}`).classList.remove('tab-active');
+      });
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      document.getElementById(`tab-btn-${tabId}`).classList.add('tab-active');
+      if (tabId === 'dashboard') updateChart();
+      lucide.createIcons();
+    }
+
+    function switchStockSubTab(subId) {
+      ['holdings', 'analyzer', 'fno', 'recs'].forEach(id => {
+        const el = document.getElementById(`stock-sub-${id}`);
+        const btn = document.getElementById(`subtab-${id}`);
+        if (el) el.classList.add('hidden');
+        if (btn) { btn.classList.remove('subtab-active'); btn.classList.add('bg-slate-900', 'text-slate-400'); }
+      });
+      const activeEl = document.getElementById(`stock-sub-${subId}`);
+      const activeBtn = document.getElementById(`subtab-${subId}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+      if (activeBtn) { activeBtn.classList.add('subtab-active'); activeBtn.classList.remove('bg-slate-900', 'text-slate-400'); }
+      
+      if (subId === 'analyzer') setTimeout(() => renderAnalyzerModules(currentAnalyzedSymbol), 150);
+      if (subId === 'recs') renderRecommendations('all');
+      lucide.createIcons();
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+
+    function cleanTickerSymbol(raw) {
+      if (!raw) return 'IREDA';
+      return raw.trim().toUpperCase().replace(' LIMITED', '').replace(' LTD', '').split(' ')[0];
+    }
+
+    function manualEditLTP(id, cur, name) {
+      const val = prompt(`Update LTP for ${name}:`, cur);
+      if (val && !isNaN(val)) {
+        const found = state.stocks.find(s => s.id === id);
+        if (found) { found.cur = parseFloat(val); saveState(); }
+      }
+    }
+
+    function manualEditFDMaturity(id, cur, bank) {
+      const val = prompt(`Update maturity value for ${bank}:`, cur);
+      if (val && !isNaN(val)) {
+        const found = state.fd.find(d => d.id === id);
+        if (found) { found.maturity = parseFloat(val); saveState(); }
+      }
+    }
+
+    function computePositionSize() {
+      const budget = parseFloat(document.getElementById('calc-risk-budget').value) || 2000;
+      const buy = parseFloat(document.getElementById('input-stock-buy').value) || 100;
+      const qty = Math.floor(budget / (buy * 0.055));
+      document.getElementById('calc-suggested-qty').innerText = qty > 0 ? `${qty} shares` : '--';
+    }
+
+    function saveStockSimple() {
+      const name = cleanTickerSymbol(document.getElementById('input-stock-name').value);
+      const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
+      const buy = parseFloat(document.getElementById('input-stock-buy').value) || 0;
+      if (!name || qty <= 0 || buy <= 0) return alert('Enter valid stock details.');
+
+      const sl = parseFloat((buy * 0.945).toFixed(2));
+      const t1 = parseFloat((buy * 1.15).toFixed(2));
+      const t2 = parseFloat((buy * 1.30).toFixed(2));
+
+      state.stocks.push({ id: Date.now(), name, qty, buy, cur: buy, t1, t2, sl });
+      saveState();
+      closeModal('modal-add-stock');
+    }
+
+    function saveFNO() {
+      const name = document.getElementById('input-fno-name').value.trim().toUpperCase();
+      const type = document.getElementById('input-fno-type').value;
+      const expiry = document.getElementById('input-fno-expiry').value;
+      const qty = parseFloat(document.getElementById('input-fno-qty').value) || 0;
+      const buy = parseFloat(document.getElementById('input-fno-buy').value) || 0;
+      const ltp = parseFloat(document.getElementById('input-fno-ltp').value) || buy;
+      if (!name || qty <= 0 || buy <= 0) return alert('Enter valid contract details.');
+
+      const sl = parseFloat((buy * 0.60).toFixed(2));
+      const t1 = parseFloat((buy * 1.60).toFixed(2));
+      const t2 = parseFloat((buy * 2.20).toFixed(2));
+
+      state.fno.push({ id: Date.now(), name, type, expiry, qty, buy, ltp, t1, t2, sl });
+      saveState();
+      closeModal('modal-add-fno');
+    }
+
+    function getFNODecision(f) {
+      const pnlPct = ((f.ltp - f.buy) / (f.buy || 1)) * 100;
+      let signal = 'KEEP / HOLD';
+      let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      const sl = f.sl || (f.buy * 0.6);
+      const t1 = f.t1 || (f.buy * 1.6);
+      const t2 = f.t2 || (f.buy * 2.2);
+
+      if (f.ltp <= sl) { signal = 'EXIT (SL)'; badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/40'; }
+      else if (f.ltp >= t2) { signal = 'SELL ALL (T2)'; badgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'; }
+      else if (f.ltp >= t1) { signal = 'BOOK 50% (T1)'; badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'; }
+      return { signal, badgeClass, pnlPct, sl, t1, t2 };
+    }
+
+    function getExpiryCountdown(expiryDateStr) {
+      if (!expiryDateStr) return 'Active';
+      const diff = new Date(expiryDateStr) - new Date();
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      if (days < 0) return 'Expired';
+      if (days === 0) return 'Expires Today!';
+      return `${days} days left`;
+    }
+
+    function executeSmartRebalance() {
+      alert("💡 Smart Rebalancing Blueprint: Shift 15% of high-beta speculative holdings into Nifty 50 Index core to optimize your health score to 85/100.");
+    }
+
+    function exportCSV() {
+      let csv = "Asset Category,Name/Ticker,Quantity,Buy Price,Current Price,Current Value\n";
+      state.stocks.forEach(s => { csv += `Stock,${s.name},${s.qty},${s.buy},${s.cur},${s.qty * s.cur}\n`; });
+      state.mf.forEach(m => { csv += `Mutual Fund,${m.name},1,${m.invested},${m.current},${m.current}\n`; });
+      state.fd.forEach(d => { csv += `Fixed Deposit,${d.bank},1,${d.principal},${d.maturity},${d.maturity}\n`; });
+      
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `omniwealth_report_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+    }
+
+    function filterRecs(cat) {
+      ['all', 'penny', 'large'].forEach(c => {
+        const btn = document.getElementById(`rec-btn-${c}`);
+        if (btn) { btn.classList.remove('rec-filter-active'); btn.classList.add('bg-slate-800', 'text-slate-300'); }
+      });
+      const active = document.getElementById(`rec-btn-${cat}`);
+      if (active) { active.classList.add('rec-filter-active'); active.classList.remove('bg-slate-800', 'text-slate-300'); }
+      renderRecommendations(cat);
+    }
+
+    function renderRecommendations(cat) {
+      const container = document.getElementById('recs-grid');
+      if (!container) return;
+      container.innerHTML = '';
+      const list = MASTER_RECOMMENDATIONS;
+      list.forEach(r => {
+        container.innerHTML += `
+          <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start">
+                <h4 class="font-bold text-white text-sm cursor-pointer hover:text-blue-400" onclick="analyzeTickerQuick('${r.ticker}')">${r.ticker}</h4>
+                <span class="text-[10px] text-amber-400 font-semibold">⏱ ${r.timeframe || 'Positional'}</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1">${r.name || ''}</p>
+              <div class="mt-3 space-y-1 text-xs text-slate-300">
+                <div><b>CMP:</b> ₹${r.cmp} | <b>Entry:</b> ₹${r.entry}</div>
+                <div><b>Targets:</b> ₹${r.t1} / ₹${r.t2} | <b>SL:</b> ₹${r.sl}</div>
+                <p class="text-[11px] text-slate-400 mt-1 italic">${r.thesis}</p>
+              </div>
+            </div>
+            <button onclick="addAnalyzedStockToHoldings('${r.ticker}', ${r.cmp}, ${r.t1}, ${r.t2}, ${r.sl})" class="mt-4 w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold">Track Position</button>
+          </div>
+        `;
+      });
+      lucide.createIcons();
+    }
+
+    async function runDeepAnalysis() {
+      const input = document.getElementById('analyzer-symbol-input').value;
+      if (!input) return;
+      currentAnalyzedSymbol = cleanTickerSymbol(input);
+      document.getElementById('analyzer-symbol-input').value = currentAnalyzedSymbol;
+      await renderAnalyzerModules(currentAnalyzedSymbol);
+    }
+
+    async function renderAnalyzerModules(ticker) {
+      const cleanTicker = cleanTickerSymbol(ticker);
+      const fullSymbol = `NSE:${cleanTicker}`;
+      const levelsCard = document.getElementById('analyzer-levels-card');
+      const existing = MASTER_RECOMMENDATIONS.find(r => r.ticker === cleanTicker);
+      const estCMP = existing ? existing.cmp : 112.35;
+
+      const riskPct = estCMP < 100 ? 0.10 : 0.055;
+      const sl = parseFloat((estCMP * (1 - riskPct)).toFixed(2));
+      const t1 = parseFloat((estCMP * (1 + (riskPct * 2.3))).toFixed(2));
+      const t2 = parseFloat((estCMP * (1 + (riskPct * 4.0))).toFixed(2));
+
+      levelsCard.innerHTML = `
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold text-white">${cleanTicker} <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Reference LTP: ₹${estCMP}</span></h2>
+          <button onclick="addAnalyzedStockToHoldings('${cleanTicker}', ${estCMP}, ${t1}, ${t2}, ${sl})" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-lg">Track Position</button>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-xs">
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Stop Loss: <b class="text-rose-400">₹${sl}</b></div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 1: <b class="text-emerald-400">₹${t1}</b></div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 2: <b class="text-emerald-300">₹${t2}</b></div>
+        </div>
+      `;
+
+      document.getElementById('tradingview_profile_container').innerHTML = '';
+      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "width": "100%", "height": 380, "colorTheme": "dark", "isTransparent": true, "container_id": "tradingview_profile_container" });
+      document.getElementById('tradingview_ta_container').innerHTML = '';
+      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "width": "100%", "height": 380, "colorTheme": "dark", "isTransparent": true, "container_id": "tradingview_ta_container" });
+      document.getElementById('tradingview_chart_container').innerHTML = '';
+      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "interval": "15", "theme": "dark", "style": "1", "container_id": "tradingview_chart_container" });
+    }
+
+    function addAnalyzedStockToHoldings(ticker, defaultPrice, t1, t2, sl) {
+      const qty = prompt(`Enter quantity for ${ticker}:`, '100');
+      if (!qty) return;
+      state.stocks.push({ id: Date.now(), name: ticker, qty: parseFloat(qty), buy: defaultPrice, cur: defaultPrice, t1, t2, sl });
+      saveState();
+      switchTab('stocks');
+      switchStockSubTab('holdings');
+    }
+
+    function saveFD() {
+      const bank = document.getElementById('input-fd-bank').value.trim();
+      const principal = parseFloat(document.getElementById('input-fd-principal').value) || 0;
+      const rate = parseFloat(document.getElementById('input-fd-rate').value) || 0;
+      const date = document.getElementById('input-fd-date').value;
+      const maturity = parseFloat(document.getElementById('input-fd-maturity').value) || principal * (1 + rate/100);
+      if (!bank || principal <= 0) return alert('Enter valid FD details.');
+      state.fd.push({ id: Date.now(), bank, principal, rate, date, maturity });
+      saveState();
+      closeModal('modal-add-fd');
+    }
+
+    function saveMF() {
+      const name = document.getElementById('input-mf-name').value.trim();
+      const cat = document.getElementById('input-mf-cat').value;
+      const invested = parseFloat(document.getElementById('input-mf-invested').value) || 0;
+      const current = parseFloat(document.getElementById('input-mf-current').value) || invested;
+      if (!name) return alert('Enter fund name');
+      state.mf.push({ id: Date.now(), name, cat, invested, current });
+      saveState();
+      closeModal('modal-add-mf');
+    }
+
+    function saveCash() {
+      const name = document.getElementById('input-cash-name').value.trim();
+      const type = document.getElementById('input-cash-type').value;
+      const amount = parseFloat(document.getElementById('input-cash-amount').value) || 0;
+      if (!name) return alert('Enter account name');
+      state.cash.push({ id: Date.now(), name, type, amount });
+      saveState();
+      closeModal('modal-add-cash');
+    }
+
+    function deleteItem(cat, id) { state[cat] = state[cat].filter(i => i.id !== id); saveState(); }
+
+    function renderAll() {
+      let totalStockInv = 0, totalStockCur = 0;
+      const stockBody = document.getElementById('stocks-table-body');
+      stockBody.innerHTML = '';
+      state.stocks.forEach(s => {
+        const inv = s.qty * s.buy, cur = s.qty * s.cur, pl = cur - inv, plPct = pl / (inv || 1) * 100;
+        totalStockInv += inv; totalStockCur += cur;
+        stockBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${s.name}</td>
+            <td class="p-4">${s.qty}</td>
+            <td class="p-4">₹${s.buy}</td>
+            <td class="p-4"><span onclick="manualEditLTP(${s.id}, ${s.cur}, '${s.name}')" class="cursor-pointer font-bold px-2 py-1 rounded hover:bg-slate-800 text-emerald-400">₹${s.cur} ✎</span></td>
+            <td class="p-4">${formatINR(inv)}</td>
+            <td class="p-4 font-medium text-white">${formatINR(cur)}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
+            <td class="p-4 text-xs text-slate-400">T1: ${s.t1 || '-'}</td>
+            <td class="p-4 text-xs text-rose-400">₹${s.sl || '-'}</td>
+            <td class="p-4 text-right"><button onclick="deleteItem('stocks', ${s.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+          </tr>
+        `;
+      });
+
+      let totalFno = 0;
+      const fnoBody = document.getElementById('fno-table-body');
+      fnoBody.innerHTML = '';
+      state.fno.forEach(f => {
+        const pl = (f.ltp - f.buy) * f.qty;
+        totalFno += (f.qty * f.ltp);
+        const dec = getFNODecision(f);
+        const countdown = getExpiryCountdown(f.expiry);
+        fnoBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${f.name}</td>
+            <td class="p-4 text-xs text-indigo-400">${f.type}</td>
+            <td class="p-4 text-xs text-amber-400 font-medium">${countdown}</td>
+            <td class="p-4">${f.qty}</td>
+            <td class="p-4">₹${f.buy}</td>
+            <td class="p-4 font-bold">₹${f.ltp}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${formatINR(pl)}</td>
+            <td class="p-4 text-xs text-slate-300">₹${dec.t1} / ₹${dec.t2}</td>
+            <td class="p-4 text-xs text-rose-400 font-semibold">₹${dec.sl}</td>
+            <td class="p-4"><span class="px-2.5 py-1 rounded-lg text-xs font-bold border ${dec.badgeClass}">${dec.signal}</span></td>
+            <td class="p-4 text-right"><button onclick="deleteItem('fno', ${f.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+          </tr>
+        `;
+      });
+
+      let totalMFInv = 0, totalMFCur = 0;
+      const mfBody = document.getElementById('mf-table-body');
+      mfBody.innerHTML = '';
+      state.mf.forEach(m => {
+        const pl = m.current - m.invested, plPct = pl / (m.invested || 1) * 100;
+        totalMFInv += m.invested; totalMFCur += m.current;
+        mfBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${m.name}</td>
+            <td class="p-4 text-xs text-amber-300">${m.cat}</td>
+            <td class="p-4">${formatINR(m.invested)}</td>
+            <td class="p-4 font-medium text-white">${formatINR(m.current)}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
+            <td class="p-4 text-right"><button onclick="deleteItem('mf', ${m.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+          </tr>
+        `;
+      });
+
+      let totalFD = 0;
+      const fdBody = document.getElementById('fd-table-body');
+      fdBody.innerHTML = '';
+      state.fd.forEach(d => {
+        totalFD += d.principal;
+        const mat = d.maturity || d.principal * (1 + d.rate/100);
+        fdBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${d.bank}</td>
+            <td class="p-4">${formatINR(d.principal)}</td>
+            <td class="p-4 text-purple-400 font-semibold">${d.rate}%</td>
+            <td class="p-4 text-xs text-slate-400">${d.date || 'N/A'}</td>
+            <td class="p-4 font-medium"><span onclick="manualEditFDMaturity(${d.id}, ${mat}, '${d.bank}')" class="cursor-pointer font-bold px-2 py-1 rounded hover:bg-slate-800 text-purple-300">${formatINR(mat)} ✎</span></td>
+            <td class="p-4 text-right"><button onclick="deleteItem('fd', ${d.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+          </tr>
+        `;
+      });
+
+      let totalCash = 0;
+      const cashBody = document.getElementById('cash-table-body');
+      cashBody.innerHTML = '';
+      state.cash.forEach(c => {
+        totalCash += c.amount;
+        cashBody.innerHTML += `
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">${c.name}</td>
+            <td class="p-4 text-xs text-slate-400">${c.type}</td>
+            <td class="p-4 font-medium text-emerald-400">${formatINR(c.amount)}</td>
+            <td class="p-4 text-right"><button onclick="deleteItem('cash', ${c.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+          </tr>
+        `;
+      });
+
+      const netWorth = totalStockCur + totalMFCur + totalFD + totalCash + totalFno;
+      document.getElementById('global-net-worth').innerText = formatINR(netWorth);
+      document.getElementById('dash-stocks-val').innerText = formatINR(totalStockCur);
+      document.getElementById('dash-stocks-pl').innerText = `P&L: ${formatINR(totalStockCur - totalStockInv)}`;
+      document.getElementById('dash-mf-val').innerText = formatINR(totalMFCur);
+      document.getElementById('dash-mf-pl').innerText = `P&L: ${formatINR(totalMFCur - totalMFInv)}`;
+      document.getElementById('dash-fd-val').innerText = formatINR(totalFD);
+      document.getElementById('dash-fd-count').innerText = `${state.fd.length} Active Deposits`;
+      document.getElementById('dash-cash-val').innerText = formatINR(totalCash);
+
+      renderAdvisorSignals();
+      updateChart(totalStockCur, totalMFCur, totalFD, totalCash);
+      lucide.createIcons();
+    }
+
+    function renderAdvisorSignals() {
+      const container = document.getElementById('advisor-cards-container');
+      container.innerHTML = '';
+      state.fno.forEach(f => {
+        const dec = getFNODecision(f);
+        container.innerHTML += `
+          <div class="glass-card border-indigo-500/30 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start">
+                <h4 class="font-bold text-white text-base">${f.name}</h4>
+                <span class="text-xs px-2.5 py-1 rounded border font-bold ${dec.badgeClass}">${dec.signal}</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-2">Buy: ₹${f.buy} | LTP: <b>₹${f.ltp}</b></p>
+            </div>
+          </div>
+        `;
+      });
+      state.stocks.forEach(s => {
+        container.innerHTML += `
+          <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+            <h4 class="font-bold text-white text-base">${s.name}</h4>
+            <p class="text-xs text-slate-400 mt-2">Avg: ₹${s.buy} | LTP: <b>₹${s.cur}</b></p>
+          </div>
+        `;
+      });
+    }
+
+    function updateChart(stocks = 0, mf = 0, fd = 0, cash = 0) {
+      const ctx = document.getElementById('allocationChart');
+      if (!ctx) return;
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Stocks', 'Mutual Funds & Gold', 'Fixed Deposits', 'Cash'],
+          datasets: [{ data: [stocks || 1, mf, fd, cash], backgroundColor: ['#3b82f6', '#6366f1', '#a855f7', '#10b981'], borderWidth: 0 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } } }
+      });
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `omniwealth_backup_${new Date().toISOString().slice(0, 10)}.json`; a.click();
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try { 
+          const parsed = JSON.parse(e.target.result);
+          if (parsed.stocks) state.stocks = parsed.stocks;
+          if (parsed.mf) state.mf = parsed.mf;
+          if (parsed.fd) state.fd = parsed.fd;
+          if (parsed.cash) state.cash = parsed.cash;
+          if (parsed.fno) state.fno = parsed.fno;
+          saveState(); 
+          alert('Imported successfully!'); 
+        } catch (err) { alert('Invalid JSON'); }
+      };
+      reader.readAsText(file);
+    }
+
+    function init() {
+      lucide.createIcons();
+      checkAuth();
+      const saved = localStorage.getItem('omniwealth_db');
+      if (saved) { 
+        try { 
+          const parsed = JSON.parse(saved); 
+          if (parsed.stocks && parsed.stocks.length > 0) state.stocks = parsed.stocks;
+          if (parsed.mf) state.mf = parsed.mf;
+          if (parsed.fd) state.fd = parsed.fd;
+          if (parsed.cash) state.cash = parsed.cash;
+          if (parsed.fno) state.fno = parsed.fno;
+        } catch(e) {} 
+      }
+      renderAll();
+      renderAnalyzerModules(currentAnalyzedSymbol);
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
