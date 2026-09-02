@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniWealth Pro | Institutional Autonomous Terminal</title>
+  <title>OmniWealth Pro | Private Financial Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -14,10 +14,7 @@
     .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.4); }
     .tab-active { border-bottom: 2px solid #3b82f6; color: #3b82f6; font-weight: 700; }
     .subtab-active { background-color: #1e293b; color: #60a5fa; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); }
-    .rec-filter-active { background-color: #2563eb; color: #ffffff; }
     .tradingview-widget-container iframe { width: 100% !important; border-radius: 0.75rem; }
-    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
-    .animate-marquee { display: flex; width: max-content; animation: marquee 35s linear infinite; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased relative selection:bg-blue-600 selection:text-white">
@@ -30,7 +27,7 @@
       </div>
       <div>
         <h2 class="text-2xl font-black text-white tracking-tight">OmniWealth Security Gate</h2>
-        <p class="text-xs text-slate-400 mt-1">Institutional Autonomous Terminal</p>
+        <p class="text-xs text-slate-400 mt-1">Private Financial Terminal</p>
       </div>
       <div class="space-y-3 text-left">
         <label class="text-xs text-slate-400 font-semibold uppercase tracking-wider ml-1">Master Password</label>
@@ -61,21 +58,7 @@
     </div>
   </div>
 
-  <!-- Live Macro Ticker Bar -->
-  <div class="bg-slate-900/90 border-b border-slate-800 text-xs py-2 overflow-hidden whitespace-nowrap z-50">
-    <div class="animate-marquee flex gap-12 text-slate-400 font-medium">
-      <span>🟢 <b class="text-white">NIFTY 50:</b> 25,120.40 (+0.45%)</span>
-      <span>🟢 <b class="text-white">BANKNIFTY:</b> 52,110.80 (+0.62%)</span>
-      <span>🟡 <b class="text-white">USD/INR:</b> 83.92 (-0.02%)</span>
-      <span>🥇 <b class="text-white">GOLD SPOT:</b> ₹75,410/10g (+0.85%)</span>
-      <span>🥈 <b class="text-white">SILVER SPOT:</b> ₹89,200/kg (+1.10%)</span>
-      <span>⚡ <b class="text-emerald-400">System Status:</b> Dual-Exchange Feeds Online</span>
-      <span>🟢 <b class="text-white">NIFTY 50:</b> 25,120.40 (+0.45%)</span>
-      <span>🟢 <b class="text-white">BANKNIFTY:</b> 52,110.80 (+0.62%)</span>
-    </div>
-  </div>
-
-  <!-- Header -->
+  <!-- Header (Cleaned of Marquee Bar) -->
   <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <div class="flex items-center space-x-3">
@@ -86,7 +69,7 @@
           <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
             OmniWealth Pro OS
           </h1>
-          <p class="text-xs text-slate-400">Institutional Autonomous Terminal & Health Auditor</p>
+          <p class="text-xs text-slate-400">Private Financial Terminal & Health Auditor</p>
         </div>
       </div>
       <div class="flex items-center gap-4 sm:gap-6">
@@ -198,31 +181,22 @@
       <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
         <button onclick="switchStockSubTab('holdings')" id="subtab-holdings" class="px-4 py-2 rounded-xl text-xs font-semibold subtab-active">My Stock Holdings</button>
         <button onclick="switchStockSubTab('analyzer')" id="subtab-analyzer" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-          <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-400"></i> Autonomous Stock Analyzer
+          <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-400"></i> Stock Analyzer
         </button>
         <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
           <i data-lucide="binary" class="w-3.5 h-3.5 text-indigo-400"></i> Futures & Options (F&O)
         </button>
         <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Curated Watchlists (47+)</button>
-        <button onclick="switchStockSubTab('intraday')" id="subtab-intraday" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Intraday ORB Scanner</button>
       </div>
 
       <!-- Holdings -->
       <div id="stock-sub-holdings" class="space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <div class="flex items-center gap-3">
-              <h2 class="text-lg font-bold">Active Stock Holdings</h2>
-              <span id="holdings-sync-badge" class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 flex items-center gap-1.5 font-medium">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Dual-Exchange Sync Active
-              </span>
-            </div>
-            <p class="text-xs text-slate-400 mt-0.5">Click any LTP value to edit manually.</p>
+            <h2 class="text-lg font-bold">Active Stock Holdings</h2>
+            <p class="text-xs text-slate-400">Click any LTP value to edit manually. Your entered prices and quantities are strictly preserved.</p>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="refreshHoldingsPrices(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-slate-700">
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-blue-400"></i> Sync Now
-            </button>
             <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
               <i data-lucide="plus" class="w-4 h-4"></i> Add Bought Stock
             </button>
@@ -255,14 +229,14 @@
         <div class="glass-card p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
           <div>
             <h3 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i> Autonomous Company Intelligence & Valuation Engine
+              <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i> Stock Valuation & Chart Engine
             </h3>
-            <p class="text-xs text-slate-400">Type any Indian stock ticker to calculate risk-reward zones instantly.</p>
+            <p class="text-xs text-slate-400">Type any Indian stock ticker to inspect charts and technicals.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <input type="text" id="analyzer-symbol-input" value="IREDA" class="bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs uppercase outline-none font-bold text-white w-56" onkeydown="if(event.key === 'Enter') runDeepAnalysis()" />
             <button onclick="runDeepAnalysis()" id="btn-run-analysis" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center gap-2">
-              <i data-lucide="search" class="w-3.5 h-3.5"></i> Run Live Analysis
+              <i data-lucide="search" class="w-3.5 h-3.5"></i> Inspect Stock
             </button>
           </div>
         </div>
@@ -318,42 +292,21 @@
         </div>
       </div>
 
-      <!-- Curated Watchlists (Restored in Full) -->
+      <!-- Curated Watchlists -->
       <div id="stock-sub-recs" class="hidden space-y-6">
         <div class="glass-card p-6 rounded-2xl space-y-4">
           <div class="flex flex-wrap justify-between items-center gap-4">
             <div>
-              <div class="flex items-center gap-3">
-                <h3 class="text-base font-bold text-slate-100">Curated Multi-Cap Watchlists & Actionable Triggers</h3>
-                <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">⚡ 47+ Core Setups Active</span>
-              </div>
-              <p class="text-xs text-slate-400 mt-0.5">Filter across all 5 time horizons to select setups matching your strategy.</p>
+              <h3 class="text-base font-bold text-slate-100">Curated Multi-Cap Watchlists & Actionable Triggers</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Filter across time horizons to select setups matching your strategy.</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <button onclick="filterRecs('all')" id="rec-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All (47)</button>
-              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Penny / Sub-₹100 (12)</button>
+              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Penny (12)</button>
               <button onclick="filterRecs('large')" id="rec-btn-large" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Large-Cap (10)</button>
-              <button onclick="filterRecs('mid')" id="rec-btn-mid" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Mid-Cap (10)</button>
-              <button onclick="filterRecs('small')" id="rec-btn-small" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Small-Cap (10)</button>
-              <button onclick="filterRecs('swing')" id="rec-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Active Swing (5)</button>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2" id="recs-grid"></div>
-        </div>
-      </div>
-
-      <!-- Intraday ORB Scanner -->
-      <div id="stock-sub-intraday" class="hidden space-y-6">
-        <div class="glass-card p-6 rounded-2xl space-y-4">
-          <h3 class="text-base font-bold text-slate-100 flex items-center gap-2"><i data-lucide="clock" class="w-5 h-5 text-amber-400"></i> 15-Minute Opening Range Breakout (ORB) Calculator</h3>
-          <p class="text-xs text-slate-400">Enter the High and Low recorded between 9:15 AM and 9:30 AM to generate exact Long/Short triggers.</p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-            <input type="text" id="orb-ticker" placeholder="Index / Stock Name (e.g. NIFTY)" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase text-white" />
-            <input type="number" id="orb-high" placeholder="9:15-9:30 AM High (₹)" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-            <input type="number" id="orb-low" placeholder="9:15-9:30 AM Low (₹)" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-          </div>
-          <button onclick="calcORB()" class="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-sm font-semibold">Generate Intraday Levels</button>
-          <div id="orb-results" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"></div>
         </div>
       </div>
     </section>
@@ -365,42 +318,14 @@
           <div class="p-3 bg-amber-500/20 text-amber-400 rounded-xl"><i data-lucide="activity" class="w-6 h-6"></i></div>
           <div>
             <h2 class="text-lg font-bold text-white">Financial Health Audit & Rebalancing Assistant</h2>
-            <p class="text-xs text-slate-400">Institutional health scoring, concentration risk evaluation, and automated capital shifts.</p>
+            <p class="text-xs text-slate-400">Institutional health scoring and concentration risk evaluation.</p>
           </div>
         </div>
-        <button onclick="executeSmartRebalance()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transition">
-          <i data-lucide="refresh-cw" class="w-4 h-4"></i> Run Smart Rebalance Assistant
+        <button onclick="executeSmartRebalance()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2">
+          <i data-lucide="refresh-cw" class="w-4 h-4"></i> Run Rebalance Assistant
         </button>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass-card border-rose-500/30 p-5 rounded-2xl space-y-3">
-          <div class="flex items-center gap-2 text-rose-400 font-bold text-sm"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Micro-Cap Risk</div>
-          <p class="text-xs text-slate-300 leading-relaxed">Heavy exposure in ultra-micro stocks increases volatility.</p>
-          <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs text-slate-300">
-            <b>Action Plan:</b> Cap combined penny stock weight at &le; 10% of net worth.
-          </div>
-        </div>
-        <div class="glass-card border-blue-500/30 p-5 rounded-2xl space-y-3">
-          <div class="flex items-center gap-2 text-blue-400 font-bold text-sm"><i data-lucide="trending-up" class="w-4 h-4"></i> Large-Cap Deficiency</div>
-          <p class="text-xs text-slate-300 leading-relaxed">Lack of blue-chip compounders leaves the portfolio vulnerable to corrections.</p>
-          <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs text-slate-300">
-            <b>Action Plan:</b> Reinvest momentum profits into a Nifty 50 Index Fund core.
-          </div>
-        </div>
-        <div class="glass-card border-emerald-500/30 p-5 rounded-2xl space-y-3">
-          <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm"><i data-lucide="shield-check" class="w-4 h-4"></i> Capital Defense</div>
-          <p class="text-xs text-slate-300 leading-relaxed">Your ICICI Bank FD and Gold allocation provide solid baseline protection.</p>
-          <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs text-slate-300">
-            <b>Action Plan:</b> Keep at least ₹50,000 in liquid broker cash for dip-buying.
-          </div>
-        </div>
-      </div>
-
-      <div class="border-t border-slate-800 pt-4">
-        <h3 class="text-sm font-bold text-white mb-3">Active Position Health Cards</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="advisor-cards-container"></div>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="advisor-cards-container"></div>
     </section>
 
     <!-- 4. MUTUAL FUNDS & GOLD -->
@@ -490,7 +415,7 @@
         <h3 class="text-lg font-bold text-white flex items-center gap-2"><i data-lucide="plus-circle" class="w-5 h-5 text-blue-400"></i> Add Bought Stock</h3>
         <button onclick="closeModal('modal-add-stock')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. IREDA)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold text-white outline-none" />
+      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. VASCONEQ)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold text-white outline-none" />
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
         <input type="number" step="0.01" id="input-stock-buy" placeholder="Bought Price (₹)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-semibold text-blue-400" oninput="computePositionSize()" />
@@ -633,41 +558,26 @@
       lucide.createIcons();
     }
 
-    // Full 47+ Watchlist Restored
     const MASTER_RECOMMENDATIONS = [
-      { ticker: 'DAVANGERE', name: 'Davangere Sugar Company Ltd', cat: 'penny', cmp: 2.08, entry: '2.00 - 2.10', t1: 2.70, t2: 3.40, sl: 1.85, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Ethanol capacity ramp up and debt consolidation.' },
-      { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', cmp: 65.5, entry: '62 - 68', t1: 95, t2: 115, sl: 53, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
-      { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', cmp: 40.2, entry: '38 - 42', t1: 60, t2: 72, sl: 31, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt settlement and renewable power pivot.' },
-      { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', cmp: 2.4, entry: '2.2 - 2.6', t1: 4.2, t2: 5.5, sl: 1.8, timeframe: '2 - 3 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G telecom small-cell tower tenancies.' },
-      { ticker: 'JPPOWER', name: 'Jaiprakash Power', cat: 'penny', cmp: 18.1, entry: '17 - 19', t1: 28, t2: 34, sl: 14, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Thermal plant turnaround.' },
-      { ticker: 'SOUTHBANK', name: 'South Indian Bank', cat: 'penny', cmp: 25.4, entry: '24 - 27', t1: 38, t2: 45, sl: 21, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'NPA cleanup lifting Return on Assets.' },
-      { ticker: 'VI', name: 'Vodafone Idea', cat: 'penny', cmp: 8.1, entry: '7.5 - 8.5', t1: 13, t2: 16.5, sl: 6.2, timeframe: '3 - 6 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Equity infusion & 4G/5G capex.' },
-      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', cmp: 21.0, entry: '20 - 22', t1: 32, t2: 38, sl: 17, timeframe: '2 - 5 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Bad debt book resolution.' },
-      { ticker: 'HFCL', name: 'HFCL Ltd', cat: 'penny', cmp: 114.0, entry: '110 - 118', t1: 165, t2: 190, sl: 96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G optical fiber & defense exports.' },
-      { ticker: 'INFIBEAM', name: 'Infibeam Avenues', cat: 'penny', cmp: 29.5, entry: '28 - 31', t1: 44, t2: 52, sl: 24, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'AI payment fraud detection.' },
-      { ticker: 'TRIDENT', name: 'Trident Ltd', cat: 'penny', cmp: 35.5, entry: '34 - 37', t1: 52, t2: 60, sl: 30, timeframe: '3 - 5 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'US textile demand revival.' },
+      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction and real estate execution.' },
+      { ticker: 'BHARATCOAL', name: 'Bharat Coal', cat: 'penny', cmp: 42.0, entry: '40 - 43', t1: 52.0, t2: 60.0, sl: 36.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Energy distribution expansion.' },
       { ticker: 'EMPOWER', name: 'Empower India Ltd', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 3.10, t2: 3.80, sl: 1.95, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Digital IT infrastructure setup.' },
-      { ticker: 'GATECH', name: 'GACM Technologies Ltd', cat: 'penny', cmp: 1.15, entry: '1.00 - 1.20', t1: 1.55, t2: 1.90, sl: 0.92, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Software services pivot.' },
+      { ticker: 'INOXGREEN', name: 'Inox Green Energy Services', cat: 'small', cmp: 164.25, entry: '160 - 170', t1: 205.0, t2: 230.0, sl: 148.0, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Wind turbine operations.' },
       { ticker: 'IREDA', name: 'IREDA', cat: 'mid', cmp: 112.35, entry: '110 - 114', t1: 135.0, t2: 152.0, sl: 104.0, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Green energy financing book growth.' },
       { ticker: 'BAJAJHFL', name: 'Bajaj Housing Finance Ltd', cat: 'mid', cmp: 82.85, entry: '81 - 84', t1: 98.0, t2: 112.0, sl: 76.0, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Retail mortgage growth.' },
-      { ticker: 'HDFCBANK', name: 'HDFC Bank', cat: 'large', cmp: 1630.0, entry: '1600 - 1650', t1: 1920, t2: 2150, sl: 1490, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Post-merger loan deposit normalization.' },
-      { ticker: 'RELIANCE', name: 'Reliance Industries', cat: 'large', cmp: 1260.0, entry: '1240 - 1280', t1: 1520, t2: 1700, sl: 1160, timeframe: '6 - 15 Months', horizon: 'Long-Term (6-18M)', thesis: 'Telecom tariff expansion.' },
-      { ticker: 'ICICIBANK', name: 'ICICI Bank', cat: 'large', cmp: 1205.0, entry: '1180 - 1220', t1: 1450, t2: 1600, sl: 1090, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Top RoA among banking peers.' },
-      { ticker: 'LT', name: 'Larsen & Toubro', cat: 'large', cmp: 3510.0, entry: '3450 - 3550', t1: 4200, t2: 4600, sl: 3200, timeframe: '9 - 18 Months', horizon: 'Long-Term (6-18M)', thesis: 'Infrastructure order backlog.' },
-      { ticker: 'BHARTIARTL', name: 'Bharti Airtel', cat: 'large', cmp: 1590.0, entry: '1550 - 1620', t1: 1950, t2: 2200, sl: 1440, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'ARPU compounding.' },
-      { ticker: 'TCS', name: 'Tata Consultancy Services', cat: 'large', cmp: 3180.0, entry: '3100 - 3250', t1: 3900, t2: 4300, sl: 2880, timeframe: '12 - 18 Months', horizon: 'Long-Term (6-18M)', thesis: 'Zero debt and AI pipelines.' },
-      { ticker: 'TITAN', name: 'Titan Company', cat: 'large', cmp: 3220.0, entry: '3150 - 3280', t1: 3950, t2: 4400, sl: 2940, timeframe: '6 - 14 Months', horizon: 'Long-Term (6-18M)', thesis: 'Jewelry formalization tailwind.' },
-      { ticker: 'SUNPHARMA', name: 'Sun Pharmaceutical', cat: 'large', cmp: 1690.0, entry: '1650 - 1720', t1: 2050, t2: 2300, sl: 1520, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Specialty pharma margins.' },
-      { ticker: 'M&M', name: 'Mahindra & Mahindra', cat: 'large', cmp: 2810.0, entry: '2750 - 2850', t1: 3400, t2: 3800, sl: 2540, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'SUV market share leadership.' },
-      { ticker: 'NTPC', name: 'NTPC Ltd', cat: 'large', cmp: 370.0, entry: '360 - 380', t1: 470, t2: 530, sl: 330, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Green hydrogen expansion.' },
-      { ticker: 'BEL', name: 'Bharat Electronics', cat: 'swing', cmp: 314.0, entry: '310 - 318', t1: 365, t2: 395, sl: 292, timeframe: '4 - 8 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Flat Base breakout.' },
-      { ticker: 'HAL', name: 'Hindustan Aeronautics', cat: 'swing', cmp: 4600.0, entry: '4550 - 4650', t1: 5400, t2: 5800, sl: 4320, timeframe: '5 - 10 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Defense order momentum.' },
-      { ticker: 'ZOMATO', name: 'Zomato Ltd', cat: 'swing', cmp: 266.0, entry: '260 - 272', t1: 330, t2: 370, sl: 242, timeframe: '5 - 12 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Blinkit profitability.' },
-      { ticker: 'BSE', name: 'BSE Ltd', cat: 'swing', cmp: 2720.0, entry: '2700 - 2750', t1: 3300, t2: 3650, sl: 2520, timeframe: '4 - 9 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Derivatives volume expansion.' }
+      { ticker: 'MSUMI', name: 'Motherson Sumi Wiring India', cat: 'small', cmp: 36.60, entry: '35 - 38', t1: 45.0, t2: 52.0, sl: 32.5, timeframe: '3 - 6 Weeks', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Automotive EV wiring harness.' }
     ];
 
     let state = { 
-      stocks: [{ id: 10, name: 'IREDA', qty: 200, buy: 125.7, cur: 112.35, t1: 135, t2: 152, sl: 104 }], 
+      stocks: [
+        { id: 1, name: 'VASCONEQ', qty: 500, buy: 35.0, cur: 35.0, t1: 43.05, t2: 49.0, sl: 31.5 },
+        { id: 2, name: 'BHARATCOAL', qty: 100, buy: 38.82, cur: 38.82, t1: 47.75, t2: 54.0, sl: 34.94 },
+        { id: 3, name: 'EMPOWER', qty: 1000, buy: 2.18, cur: 2.35, t1: 2.68, t2: 3.10, sl: 1.96 },
+        { id: 4, name: 'INOXGREEN', qty: 100, buy: 183.95, cur: 164.25, t1: 207.22, t2: 224.42, sl: 173.83 },
+        { id: 5, name: 'IREDA', qty: 200, buy: 125.7, cur: 112.35, t1: 141.6, t2: 153.35, sl: 118.79 },
+        { id: 6, name: 'BAJAJHFL', qty: 200, buy: 89.42, cur: 82.85, t1: 109.99, t2: 125.19, sl: 80.48 },
+        { id: 7, name: 'MSUMI', qty: 100, buy: 39.26, cur: 36.6, t1: 48.29, t2: 54.96, sl: 35.33 }
+      ], 
       mf: [{ id: 201, name: 'SBI Gold Direct Plan Growth', cat: 'Commodities (Gold & Silver)', invested: 50000, current: 54500 }], 
       fd: [{ id: 101, bank: 'ICICI BANK', principal: 150000, rate: 7.0, date: '2028-02-15', maturity: 185000 }], 
       cash: [{ id: 301, name: 'Liquid Brokerage Margin', type: 'Liquid Brokerage Balance', amount: 15000 }], 
@@ -698,22 +608,17 @@
     }
 
     function switchStockSubTab(subId) {
-      ['holdings', 'analyzer', 'fno', 'recs', 'intraday'].forEach(id => {
+      ['holdings', 'analyzer', 'fno', 'recs'].forEach(id => {
         const el = document.getElementById(`stock-sub-${id}`);
         const btn = document.getElementById(`subtab-${id}`);
         if (el) el.classList.add('hidden');
-        if (btn) {
-          btn.classList.remove('subtab-active');
-          btn.classList.add('bg-slate-900', 'text-slate-400');
-        }
+        if (btn) { btn.classList.remove('subtab-active'); btn.classList.add('bg-slate-900', 'text-slate-400'); }
       });
       const activeEl = document.getElementById(`stock-sub-${subId}`);
       const activeBtn = document.getElementById(`subtab-${subId}`);
       if (activeEl) activeEl.classList.remove('hidden');
-      if (activeBtn) {
-        activeBtn.classList.add('subtab-active');
-        activeBtn.classList.remove('bg-slate-900', 'text-slate-400');
-      }
+      if (activeBtn) { activeBtn.classList.add('subtab-active'); activeBtn.classList.remove('bg-slate-900', 'text-slate-400'); }
+      
       if (subId === 'analyzer') setTimeout(() => renderAnalyzerModules(currentAnalyzedSymbol), 150);
       if (subId === 'recs') renderRecommendations('all');
       lucide.createIcons();
@@ -725,32 +630,6 @@
     function cleanTickerSymbol(raw) {
       if (!raw) return 'IREDA';
       return raw.trim().toUpperCase().replace(' LIMITED', '').replace(' LTD', '').split(' ')[0];
-    }
-
-    async function fetchLiveExchangeData(ticker) {
-      const clean = cleanTickerSymbol(ticker);
-      const cached = MASTER_RECOMMENDATIONS.find(r => r.ticker === clean);
-      try {
-        const res = await fetch(`https://corsproxy.io/?url=https://query1.finance.yahoo.com/v8/finance/chart/${clean}.NS?range=2d&interval=1d`);
-        if (res.ok) {
-          const data = await res.json();
-          const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice;
-          if (price) return { cmp: parseFloat(price.toFixed(2)) };
-        }
-      } catch (e) {}
-      return cached ? { cmp: cached.cmp } : { cmp: 100.0 };
-    }
-
-    async function refreshHoldingsPrices(manual = false) {
-      if (!state.stocks || state.stocks.length === 0) return;
-      let updated = false;
-      for (let s of state.stocks) {
-        const live = await fetchLiveExchangeData(s.name);
-        if (live && live.cmp && live.cmp !== s.cur) { s.cur = live.cmp; updated = true; }
-        await new Promise(r => setTimeout(r, 100));
-      }
-      if (updated) saveState();
-      lucide.createIcons();
     }
 
     function manualEditLTP(id, cur, name) {
@@ -776,21 +655,17 @@
       document.getElementById('calc-suggested-qty').innerText = qty > 0 ? `${qty} shares` : '--';
     }
 
-    async function saveStockSimple() {
+    function saveStockSimple() {
       const name = cleanTickerSymbol(document.getElementById('input-stock-name').value);
       const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
       const buy = parseFloat(document.getElementById('input-stock-buy').value) || 0;
       if (!name || qty <= 0 || buy <= 0) return alert('Enter valid stock details.');
 
-      let cur = buy;
-      const live = await fetchLiveExchangeData(name);
-      if (live && live.cmp) cur = live.cmp;
-
       const sl = parseFloat((buy * 0.945).toFixed(2));
       const t1 = parseFloat((buy * 1.15).toFixed(2));
       const t2 = parseFloat((buy * 1.30).toFixed(2));
 
-      state.stocks.push({ id: Date.now(), name, qty, buy, cur, t1, t2, sl });
+      state.stocks.push({ id: Date.now(), name, qty, buy, cur: buy, t1, t2, sl });
       saveState();
       closeModal('modal-add-stock');
     }
@@ -852,7 +727,7 @@
     }
 
     function filterRecs(cat) {
-      ['all', 'penny', 'large', 'mid', 'small', 'swing'].forEach(c => {
+      ['all', 'penny', 'large'].forEach(c => {
         const btn = document.getElementById(`rec-btn-${c}`);
         if (btn) { btn.classList.remove('rec-filter-active'); btn.classList.add('bg-slate-800', 'text-slate-300'); }
       });
@@ -900,11 +775,8 @@
       const cleanTicker = cleanTickerSymbol(ticker);
       const fullSymbol = `NSE:${cleanTicker}`;
       const levelsCard = document.getElementById('analyzer-levels-card');
-      levelsCard.innerHTML = `<div class="text-center py-4 text-slate-400 text-xs">Analyzing live stream for ${cleanTicker}...</div>`;
-
-      const live = await fetchLiveExchangeData(cleanTicker);
       const existing = MASTER_RECOMMENDATIONS.find(r => r.ticker === cleanTicker);
-      const estCMP = live ? live.cmp : (existing ? existing.cmp : 112.35);
+      const estCMP = existing ? existing.cmp : 112.35;
 
       const riskPct = estCMP < 100 ? 0.10 : 0.055;
       const sl = parseFloat((estCMP * (1 - riskPct)).toFixed(2));
@@ -913,7 +785,7 @@
 
       levelsCard.innerHTML = `
         <div class="flex justify-between items-center">
-          <h2 class="text-xl font-bold text-white">${cleanTicker} <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">LTP: ₹${estCMP}</span></h2>
+          <h2 class="text-xl font-bold text-white">${cleanTicker} <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Reference LTP: ₹${estCMP}</span></h2>
           <button onclick="addAnalyzedStockToHoldings('${cleanTicker}', ${estCMP}, ${t1}, ${t2}, ${sl})" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-lg">Track Position</button>
         </div>
         <div class="grid grid-cols-3 gap-3 text-xs">
@@ -1153,8 +1025,6 @@
       if (saved) { try { state = JSON.parse(saved); } catch(e) {} }
       renderAll();
       renderAnalyzerModules(currentAnalyzedSymbol);
-      refreshHoldingsPrices();
-      setInterval(refreshHoldingsPrices, 30000);
     }
 
     window.onload = init;
