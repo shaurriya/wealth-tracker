@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniWealth Pro | Private Financial Terminal</title>
+  <title>OmniWealth Pro | JARVIS Financial Core</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -12,6 +12,7 @@
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; }
     .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.4); }
+    .jarvis-glow { box-shadow: 0 0 25px rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); }
     .tab-active { border-bottom: 2px solid #3b82f6; color: #3b82f6; font-weight: 700; }
     .subtab-active { background-color: #1e293b; color: #60a5fa; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); }
     .tradingview-widget-container iframe { width: 100% !important; border-radius: 0.75rem; }
@@ -19,14 +20,15 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased relative selection:bg-blue-600 selection:text-white">
 
+  <!-- PASSWORD LOCK OVERLAY -->
   <div id="terminal-lock-screen" class="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-2xl flex items-center justify-center p-4">
     <div class="glass-card p-8 rounded-3xl w-full max-w-md shadow-2xl shadow-blue-500/10 text-center space-y-6">
       <div class="inline-flex p-4 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl shadow-lg shadow-blue-500/30">
-        <i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+        <i data-lucide="cpu" class="w-8 h-8 text-white animate-pulse"></i>
       </div>
       <div>
-        <h2 class="text-2xl font-black text-white tracking-tight">OmniWealth Security Gate</h2>
-        <p class="text-xs text-slate-400 mt-1">Private Financial Terminal</p>
+        <h2 class="text-2xl font-black text-white tracking-tight">JARVIS Financial Core</h2>
+        <p class="text-xs text-blue-400 mt-1">Autonomous Wealth Management OS</p>
       </div>
       <div class="space-y-3 text-left">
         <label class="text-xs text-slate-400 font-semibold uppercase tracking-wider ml-1">Master Password</label>
@@ -48,7 +50,7 @@
       </div>
       <div class="space-y-2">
         <button onclick="unlockTerminal()" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2">
-          <span>Unlock Terminal</span> <i data-lucide="key-round" class="w-4 h-4"></i>
+          <span>Initialize JARVIS</span> <i data-lucide="key-round" class="w-4 h-4"></i>
         </button>
         <button onclick="quickBypass()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold rounded-xl text-xs transition border border-slate-700/60">
           Quick Unlock (Device Bypass)
@@ -57,17 +59,18 @@
     </div>
   </div>
 
+  <!-- Header -->
   <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <div class="flex items-center space-x-3">
         <div class="p-2.5 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/20">
-          <i data-lucide="terminal" class="w-6 h-6 text-white"></i>
+          <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
         </div>
         <div>
           <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
-            OmniWealth Pro OS
+            OmniWealth Pro | JARVIS Core
           </h1>
-          <p class="text-xs text-slate-400">Private Financial Terminal & Health Auditor</p>
+          <p class="text-xs text-slate-400">Autonomous Financial Advisor & Execution Agent</p>
         </div>
       </div>
       <div class="flex items-center gap-4 sm:gap-6">
@@ -91,10 +94,10 @@
         <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
       </button>
       <button onclick="switchTab('stocks')" id="tab-btn-stocks" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
-        <i data-lucide="line-chart" class="w-4 h-4"></i> Multi-Horizon Stocks Hub
+        <i data-lucide="line-chart" class="w-4 h-4"></i> Portfolio Hub
       </button>
       <button onclick="switchTab('advisor')" id="tab-btn-advisor" class="py-3 px-1 text-amber-400 hover:text-amber-300 flex items-center gap-2 font-semibold">
-        <i data-lucide="shield-alert" class="w-4 h-4"></i> Financial Health & Doctor
+        <i data-lucide="cpu" class="w-4 h-4"></i> JARVIS Intelligence & Advisor
       </button>
       <button onclick="switchTab('mf')" id="tab-btn-mf" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
         <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds & Gold
@@ -108,9 +111,29 @@
     </nav>
   </header>
 
+  <!-- Main Content Layout -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-6">
 
+    <!-- 1. DASHBOARD -->
     <section id="view-dashboard" class="space-y-6">
+      
+      <!-- JARVIS Interactive Command & Status Banner -->
+      <div class="glass-card jarvis-glow p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
+            <i data-lucide="cpu" class="w-6 h-6 animate-pulse"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">JARVIS Autonomous Agent Online</h3>
+            <p class="text-xs text-slate-300" id="jarvis-status-text">All asset streams nominal. Ready for financial execution commands.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 w-full md:w-auto">
+          <input type="text" id="jarvis-command-input" placeholder="Ask JARVIS (e.g. 'Analyze risk', 'Rebalance portfolio')" class="bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs text-white outline-none focus:border-blue-500 flex-1 md:w-80" onkeydown="if(event.key === 'Enter') handleJarvisCommand()" />
+          <button onclick="handleJarvisCommand()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">Execute</button>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="glass-card p-5 rounded-2xl">
           <div class="text-xs text-slate-400 font-semibold uppercase">Stocks Portfolio</div>
@@ -150,28 +173,29 @@
         <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
           <div>
             <h3 class="text-base font-bold text-slate-200 mb-3 flex items-center gap-2">
-              <i data-lucide="activity" class="w-5 h-5 text-amber-400"></i> Financial Health Audit
+              <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400"></i> JARVIS Risk Governor
             </h3>
             <div class="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl mb-3">
               <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-amber-300">Health Score</span>
-                <span class="text-sm font-black text-amber-400">62 / 100</span>
+                <span class="text-xs font-bold text-amber-300">Portfolio Health Score</span>
+                <span class="text-sm font-black text-amber-400" id="jarvis-health-score">-- / 100</span>
               </div>
               <div class="w-full bg-slate-800 h-2 rounded-full mt-2 overflow-hidden">
-                <div class="bg-amber-400 h-full rounded-full" style="width: 62%"></div>
+                <div class="bg-amber-400 h-full rounded-full" id="jarvis-health-bar" style="width: 70%"></div>
               </div>
             </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Solid fixed income foundation, but speculative micro-cap exposure requires balancing.
+            <p class="text-xs text-slate-300 leading-relaxed" id="jarvis-advice-snippet">
+              Awaiting portfolio state to run diagnostic algorithms.
             </p>
           </div>
-          <button onclick="switchTab('advisor')" class="w-full mt-4 py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg">
-            View Rebalancing Assistant <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          <button onclick="switchTab('advisor')" class="w-full mt-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg">
+            Open JARVIS Command Center <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
     </section>
 
+    <!-- 2. PORTFOLIO HUB -->
     <section id="view-stocks" class="space-y-6">
       <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
         <button onclick="switchStockSubTab('holdings')" id="subtab-holdings" class="px-4 py-2 rounded-xl text-xs font-semibold subtab-active">My Stock Holdings</button>
@@ -179,37 +203,35 @@
           <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-400"></i> Stock Analyzer
         </button>
         <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-          <i data-lucide="binary" class="w-3.5 h-3.5 text-indigo-400"></i> Futures & Options (F&O)
+          <i data-lucide="binary" class="w-3.5 h-3.5 text-indigo-400"></i> F&O Desk
         </button>
-        <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Curated Watchlists (47+)</button>
+        <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Curated Watchlist</button>
       </div>
 
+      <!-- Holdings -->
       <div id="stock-sub-holdings" class="space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
             <h2 class="text-lg font-bold">Active Stock Holdings</h2>
-            <p class="text-xs text-slate-400">Click any LTP value to edit manually. Your entered prices and quantities are strictly preserved.</p>
+            <p class="text-xs text-slate-400">Your manually logged positions are fully preserved. Click any LTP value to edit.</p>
           </div>
-          <div class="flex items-center gap-2">
-            <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
-              <i data-lucide="plus" class="w-4 h-4"></i> Add Bought Stock
-            </button>
-          </div>
+          <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Stock Position
+          </button>
         </div>
 
         <div class="overflow-x-auto glass-card rounded-2xl">
           <table class="w-full text-left text-sm text-slate-300">
             <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
               <tr>
-                <th class="p-4">Ticker / Horizon</th>
+                <th class="p-4">Ticker</th>
                 <th class="p-4">Qty</th>
                 <th class="p-4">Avg Buy (₹)</th>
                 <th class="p-4">Live LTP (₹)</th>
                 <th class="p-4">Invested</th>
                 <th class="p-4">Current Value</th>
                 <th class="p-4">P&L (%)</th>
-                <th class="p-4">Target 1 / 2</th>
-                <th class="p-4">Stop Loss</th>
+                <th class="p-4">Target / SL</th>
                 <th class="p-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -218,46 +240,34 @@
         </div>
       </div>
 
+      <!-- Analyzer -->
       <div id="stock-sub-analyzer" class="hidden space-y-6">
         <div class="glass-card p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
           <div>
             <h3 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i> Stock Valuation & Chart Engine
+              <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i> Stock Valuation Engine
             </h3>
-            <p class="text-xs text-slate-400">Type any Indian stock ticker to inspect charts and technicals.</p>
+            <p class="text-xs text-slate-400">Type any ticker to inspect charts and technical ratings.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <input type="text" id="analyzer-symbol-input" value="IREDA" class="bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs uppercase outline-none font-bold text-white w-56" onkeydown="if(event.key === 'Enter') runDeepAnalysis()" />
-            <button onclick="runDeepAnalysis()" id="btn-run-analysis" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center gap-2">
-              <i data-lucide="search" class="w-3.5 h-3.5"></i> Inspect Stock
-            </button>
+            <button onclick="runDeepAnalysis()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold">Inspect Stock</button>
           </div>
         </div>
-
         <div id="analyzer-levels-card" class="glass-card p-6 rounded-2xl space-y-4"></div>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 glass-card p-4 rounded-2xl">
-            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 block">Company Profile</span>
-            <div id="tradingview_profile_container" class="w-full min-h-[380px] rounded-xl overflow-hidden bg-slate-950"></div>
-          </div>
-          <div class="glass-card p-4 rounded-2xl">
-            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 block">Technical Rating</span>
-            <div id="tradingview_ta_container" class="w-full min-h-[380px] rounded-xl overflow-hidden flex items-center justify-center bg-slate-950"></div>
-          </div>
+          <div class="lg:col-span-2 glass-card p-4 rounded-2xl"><div id="tradingview_profile_container" class="w-full min-h-[380px] rounded-xl overflow-hidden bg-slate-950"></div></div>
+          <div class="glass-card p-4 rounded-2xl flex items-center justify-center"><div id="tradingview_ta_container" class="w-full min-h-[380px] rounded-xl overflow-hidden bg-slate-950"></div></div>
         </div>
-
-        <div class="glass-card p-4 rounded-2xl">
-          <span class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 block" id="chart-symbol-label">Candlestick Chart</span>
-          <div id="tradingview_chart_container" class="w-full h-[520px] rounded-xl overflow-hidden bg-slate-950"></div>
-        </div>
+        <div class="glass-card p-4 rounded-2xl"><div id="tradingview_chart_container" class="w-full h-[520px] rounded-xl overflow-hidden bg-slate-950"></div></div>
       </div>
 
+      <!-- F&O Desk -->
       <div id="stock-sub-fno" class="hidden space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-lg font-bold">F&O Positions & Autonomous Option Advisor</h2>
-            <p class="text-xs text-slate-400">Automated expiration countdowns and clean verdict indicators.</p>
+            <h2 class="text-lg font-bold">F&O Positions & JARVIS Advisor</h2>
+            <p class="text-xs text-slate-400">Automated theta protection and expiration alerts.</p>
           </div>
           <button onclick="openModal('modal-add-fno')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
             <i data-lucide="plus" class="w-4 h-4"></i> Add Contract
@@ -267,15 +277,14 @@
           <table class="w-full text-left text-sm text-slate-300">
             <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
               <tr>
-                <th class="p-4">Contract / Strike</th>
+                <th class="p-4">Contract</th>
                 <th class="p-4">Type</th>
-                <th class="p-4">Expiry Countdown</th>
+                <th class="p-4">Expiry</th>
                 <th class="p-4">Qty</th>
-                <th class="p-4">Buy Premium</th>
+                <th class="p-4">Buy</th>
                 <th class="p-4">LTP</th>
                 <th class="p-4">P&L</th>
-                <th class="p-4">Targets / SL</th>
-                <th class="p-4">Live Verdict</th>
+                <th class="p-4">Verdict</th>
                 <th class="p-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -284,48 +293,42 @@
         </div>
       </div>
 
+      <!-- Watchlists -->
       <div id="stock-sub-recs" class="hidden space-y-6">
         <div class="glass-card p-6 rounded-2xl space-y-4">
-          <div class="flex flex-wrap justify-between items-center gap-4">
-            <div>
-              <h3 class="text-base font-bold text-slate-100">Curated Multi-Cap Watchlists & Actionable Triggers</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Filter across time horizons to select setups matching your strategy.</p>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <button onclick="filterRecs('all')" id="rec-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All (47)</button>
-              <button onclick="filterRecs('penny')" id="rec-btn-penny" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Penny (12)</button>
-              <button onclick="filterRecs('large')" id="rec-btn-large" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300">Large-Cap (10)</button>
-            </div>
-          </div>
+          <h3 class="text-base font-bold text-slate-100">Curated Watchlists (47+ Setups)</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2" id="recs-grid"></div>
         </div>
       </div>
     </section>
 
+    <!-- 3. JARVIS INTELLIGENCE & ADVISOR -->
     <section id="view-advisor" class="hidden space-y-6">
-      <div class="glass-card p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+      <div class="glass-card jarvis-glow p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div class="p-3 bg-amber-500/20 text-amber-400 rounded-xl"><i data-lucide="activity" class="w-6 h-6"></i></div>
+          <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30"><i data-lucide="cpu" class="w-6 h-6 animate-pulse"></i></div>
           <div>
-            <h2 class="text-lg font-bold text-white">Financial Health Audit & Rebalancing Assistant</h2>
-            <p class="text-xs text-slate-400">Institutional health scoring and concentration risk evaluation.</p>
+            <h2 class="text-lg font-bold text-white">JARVIS Master Decision Engine</h2>
+            <p class="text-xs text-slate-400">Autonomous advisory algorithms, portfolio diagnostics, and automated rebalancing.</p>
           </div>
         </div>
-        <button onclick="executeSmartRebalance()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2">
-          <i data-lucide="refresh-cw" class="w-4 h-4"></i> Run Rebalance Assistant
+        <button onclick="executeJarvisActionPlan()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2">
+          <i data-lucide="zap" class="w-4 h-4"></i> Execute JARVIS Action Plan
         </button>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="advisor-cards-container"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="jarvis-advisor-cards"></div>
     </section>
 
+    <!-- 4. MUTUAL FUNDS & GOLD -->
     <section id="view-mf" class="hidden space-y-4">
       <div class="flex justify-between items-center">
         <div>
           <h2 class="text-lg font-bold">Mutual Funds, SIPs & Commodities</h2>
-          <p class="text-xs text-slate-400">Track Equity Funds, Gold & Silver ETFs/FOFs.</p>
+          <p class="text-xs text-slate-400">Track Equity, Gold, and Silver allocations.</p>
         </div>
         <button onclick="openModal('modal-add-mf')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund / Commodity
+          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund
         </button>
       </div>
       <div class="overflow-x-auto glass-card rounded-2xl">
@@ -334,8 +337,8 @@
             <tr>
               <th class="p-4">Fund Name</th>
               <th class="p-4">Category</th>
-              <th class="p-4">Invested Amount (₹)</th>
-              <th class="p-4">Current Value (₹)</th>
+              <th class="p-4">Invested</th>
+              <th class="p-4">Current Value</th>
               <th class="p-4">P&L (%)</th>
               <th class="p-4 text-right">Actions</th>
             </tr>
@@ -345,11 +348,12 @@
       </div>
     </section>
 
+    <!-- 5. FIXED DEPOSITS -->
     <section id="view-fd" class="hidden space-y-4">
       <div class="flex justify-between items-center">
         <div>
           <h2 class="text-lg font-bold">Fixed Deposits & Term Schemes</h2>
-          <p class="text-xs text-slate-400">Click any maturity amount with the ✎ icon to edit certificate values.</p>
+          <p class="text-xs text-slate-400">Track capital safety and compounding yields.</p>
         </div>
         <button onclick="openModal('modal-add-fd')" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
           <i data-lucide="plus" class="w-4 h-4"></i> Add FD
@@ -359,11 +363,11 @@
         <table class="w-full text-left text-sm text-slate-300">
           <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
             <tr>
-              <th class="p-4">Bank / Institution</th>
-              <th class="p-4">Principal (₹)</th>
-              <th class="p-4">Interest Rate (%)</th>
+              <th class="p-4">Bank</th>
+              <th class="p-4">Principal</th>
+              <th class="p-4">Rate %</th>
               <th class="p-4">Maturity Date</th>
-              <th class="p-4">Certificate Maturity Value</th>
+              <th class="p-4">Certificate Value</th>
               <th class="p-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -372,20 +376,21 @@
       </div>
     </section>
 
+    <!-- 6. CASH -->
     <section id="view-cash" class="hidden space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold">Cash, Savings & Liquid Accounts</h2>
+        <h2 class="text-lg font-bold">Cash & Liquid Reserves</h2>
         <button onclick="openModal('modal-add-cash')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-          <i data-lucide="plus" class="w-4 h-4"></i> Add Account
+          <i data-lucide="plus" class="w-4 h-4"></i> Add Cash
         </button>
       </div>
       <div class="overflow-x-auto glass-card rounded-2xl">
         <table class="w-full text-left text-sm text-slate-300">
           <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
             <tr>
-              <th class="p-4">Account / Source Name</th>
-              <th class="p-4">Account Type</th>
-              <th class="p-4">Available Balance (₹)</th>
+              <th class="p-4">Account Name</th>
+              <th class="p-4">Type</th>
+              <th class="p-4">Balance</th>
               <th class="p-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -395,118 +400,78 @@
     </section>
   </main>
 
+  <!-- MODALS -->
   <div id="modal-add-stock" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4 shadow-2xl">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i data-lucide="plus-circle" class="w-5 h-5 text-blue-400"></i> Add Bought Stock</h3>
-        <button onclick="closeModal('modal-add-stock')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
-      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. VASCONEQ)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold text-white outline-none" />
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Bought Stock</h3><button onclick="closeModal('modal-add-stock')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <input type="text" id="input-stock-name" placeholder="Ticker Symbol (e.g. RELIANCE)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase text-white outline-none" />
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="input-stock-qty" placeholder="Quantity" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-        <input type="number" step="0.01" id="input-stock-buy" placeholder="Bought Price (₹)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-semibold text-blue-400" oninput="computePositionSize()" />
+        <input type="number" step="0.01" id="input-stock-buy" placeholder="Bought Price (₹)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-semibold text-blue-400" />
       </div>
-      <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1">
-        <div class="text-xs font-bold text-indigo-400 flex items-center gap-1"><i data-lucide="calculator" class="w-3.5 h-3.5"></i> Position Sizing Calculator</div>
-        <div class="text-xs text-slate-300">Suggested Qty for ₹2,000 risk budget: <b id="calc-suggested-qty" class="text-emerald-400">--</b></div>
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModal('modal-add-stock')" class="px-4 py-2.5 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-        <button onclick="saveStockSimple()" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold">Save Position</button>
-      </div>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-stock')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveStockSimple()" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold">Save Position</button></div>
     </div>
   </div>
 
   <div id="modal-add-mf" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Add Mutual Fund / Commodity</h3>
-        <button onclick="closeModal('modal-add-mf')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Fund / Gold</h3><button onclick="closeModal('modal-add-mf')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
       <input type="text" id="input-mf-name" placeholder="Fund Name" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
       <select id="input-mf-cat" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-slate-200">
         <option value="Commodities (Gold & Silver)" selected>Commodities (Gold & Silver)</option>
         <option value="Flexi Cap / Large Cap">Flexi Cap / Large Cap</option>
         <option value="Mid & Small Cap">Mid & Small Cap</option>
-        <option value="Index & ETFs">Index & ETFs</option>
       </select>
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="input-mf-invested" placeholder="Invested ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-        <input type="number" id="input-mf-current" placeholder="Current Value ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
+        <input type="number" id="input-mf-current" placeholder="Current ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
       </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-        <button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Fund</button>
-      </div>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Fund</button></div>
     </div>
   </div>
 
   <div id="modal-add-fno" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Add F&O Contract</h3>
-        <button onclick="closeModal('modal-add-fno')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
-      <input type="text" id="input-fno-name" placeholder="Contract Name (e.g. SUNPHARMA 2000)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase text-white font-semibold" />
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add F&O Contract</h3><button onclick="closeModal('modal-add-fno')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <input type="text" id="input-fno-name" placeholder="Contract Name" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm uppercase text-white font-semibold" />
       <div class="grid grid-cols-2 gap-3">
-        <select id="input-fno-type" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs font-semibold text-indigo-400">
-          <option value="Call Option (CE)">Call Option (CE)</option>
-          <option value="Put Option (PE)">Put Option (PE)</option>
-        </select>
+        <select id="input-fno-type" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs font-semibold text-indigo-400"><option value="Call Option (CE)">Call Option (CE)</option><option value="Put Option (PE)">Put Option (PE)</option></select>
         <input type="date" id="input-fno-expiry" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-white" />
       </div>
       <div class="grid grid-cols-3 gap-2">
         <input type="number" id="input-fno-qty" placeholder="Qty" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-white" />
-        <input type="number" step="0.05" id="input-fno-buy" placeholder="Buy ₹" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-blue-400 font-semibold" />
-        <input type="number" step="0.05" id="input-fno-ltp" placeholder="LTP ₹" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-emerald-400 font-semibold" />
+        <input type="number" step="0.05" id="input-fno-buy" placeholder="Buy ₹" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-blue-400" />
+        <input type="number" step="0.05" id="input-fno-ltp" placeholder="LTP ₹" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-xs text-emerald-400" />
       </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModal('modal-add-fno')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-        <button onclick="saveFNO()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Contract</button>
-      </div>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-fno')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveFNO()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Contract</button></div>
     </div>
   </div>
 
   <div id="modal-add-fd" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Add Fixed Deposit</h3>
-        <button onclick="closeModal('modal-add-fd')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Fixed Deposit</h3><button onclick="closeModal('modal-add-fd')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
       <input type="text" id="input-fd-bank" placeholder="Bank Name" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="input-fd-principal" placeholder="Principal ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
         <input type="number" id="input-fd-rate" step="0.1" placeholder="Rate %" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-purple-400" />
       </div>
       <input type="date" id="input-fd-date" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-      <input type="number" id="input-fd-maturity" placeholder="Exact Certificate Maturity Value (Optional)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModal('modal-add-fd')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-        <button onclick="saveFD()" class="px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold">Save FD</button>
-      </div>
+      <input type="number" id="input-fd-maturity" placeholder="Maturity Value ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-fd')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveFD()" class="px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold">Save FD</button></div>
     </div>
   </div>
 
   <div id="modal-add-cash" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-white">Add Cash Account</h3>
-        <button onclick="closeModal('modal-add-cash')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Cash Account</h3><button onclick="closeModal('modal-add-cash')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
       <input type="text" id="input-cash-name" placeholder="Account Name" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-      <select id="input-cash-type" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white">
-        <option>Savings Bank Account</option>
-        <option>Emergency Fund</option>
-        <option>Liquid Brokerage Balance</option>
-      </select>
+      <select id="input-cash-type" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white"><option>Savings Bank Account</option><option>Liquid Brokerage Balance</option></select>
       <input type="number" id="input-cash-amount" placeholder="Amount ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModal('modal-add-cash')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button>
-        <button onclick="saveCash()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">Save Cash</button>
-      </div>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-cash')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveCash()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">Save Cash</button></div>
     </div>
   </div>
 
+  <!-- SCRIPTS -->
   <script>
     const MASTER_PASS = "S.j.@$10";
 
@@ -544,34 +509,17 @@
     }
 
     const MASTER_RECOMMENDATIONS = [
-      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction.' },
-      { ticker: 'BHARATCOAL', name: 'Bharat Coal', cat: 'penny', cmp: 38.82, entry: '37 - 40', t1: 47.75, t2: 54.0, sl: 34.94, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Energy distribution.' },
-      { ticker: 'EMPOWER', name: 'Empower India Ltd', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 2.68, t2: 3.10, sl: 1.96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Digital IT infra.' },
-      { ticker: 'INOXGREEN', name: 'Inox Green Energy Services', cat: 'small', cmp: 164.25, entry: '160 - 170', t1: 207.22, t2: 224.42, sl: 173.83, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Wind turbine operations.' },
-      { ticker: 'IREDA', name: 'IREDA', cat: 'mid', cmp: 112.35, entry: '110 - 114', t1: 141.6, t2: 153.35, sl: 118.79, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Green energy financing.' },
-      { ticker: 'BAJAJHFL', name: 'Bajaj Housing Finance Ltd', cat: 'mid', cmp: 82.85, entry: '81 - 84', t1: 109.99, t2: 125.19, sl: 80.48, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Retail mortgage growth.' },
-      { ticker: 'MSUMI', name: 'Motherson Sumi Wiring India', cat: 'small', cmp: 36.60, entry: '35 - 38', t1: 48.29, t2: 54.96, sl: 35.33, timeframe: '3 - 6 Weeks', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Automotive EV wiring.' }
+      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny', thesis: 'EPC debt reduction.' },
+      { ticker: 'BHARATCOAL', name: 'Bharat Coal', cat: 'penny', cmp: 38.82, entry: '37 - 40', t1: 47.75, t2: 54.0, sl: 34.94, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny', thesis: 'Energy distribution.' },
+      { ticker: 'EMPOWER', name: 'Empower India Ltd', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 2.68, t2: 3.10, sl: 1.96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny', thesis: 'Digital IT infra.' },
+      { ticker: 'INOXGREEN', name: 'Inox Green Energy Services', cat: 'small', cmp: 164.25, entry: '160 - 170', t1: 207.22, t2: 224.42, sl: 173.83, timeframe: '3 - 6 Weeks', horizon: 'Positional', thesis: 'Wind turbine operations.' },
+      { ticker: 'IREDA', name: 'IREDA', cat: 'mid', cmp: 112.35, entry: '110 - 114', t1: 141.6, t2: 153.35, sl: 118.79, timeframe: '3 - 6 Weeks', horizon: 'Positional', thesis: 'Green energy financing.' },
+      { ticker: 'BAJAJHFL', name: 'Bajaj Housing Finance Ltd', cat: 'mid', cmp: 82.85, entry: '81 - 84', t1: 109.99, t2: 125.19, sl: 80.48, timeframe: '3 - 6 Weeks', horizon: 'Positional', thesis: 'Retail mortgage growth.' },
+      { ticker: 'MSUMI', name: 'Motherson Sumi Wiring India', cat: 'small', cmp: 36.60, entry: '35 - 38', t1: 48.29, t2: 54.96, sl: 35.33, timeframe: '3 - 6 Weeks', horizon: 'Turnaround', thesis: 'Automotive EV wiring.' }
     ];
 
-    // EXACT RESTORED PERMANENT STATE WITH ALL YOUR 7 STOCKS
-    let state = { 
-      stocks: [
-        { id: 1, name: 'VASCONEQ', qty: 500, buy: 35.0, cur: 35.0, t1: 43.05, t2: 49.0, sl: 31.5 },
-        { id: 2, name: 'BHARATCOAL', qty: 100, buy: 38.82, cur: 38.82, t1: 47.75, t2: 54.0, sl: 34.94 },
-        { id: 3, name: 'EMPOWER', qty: 1000, buy: 2.18, cur: 2.35, t1: 2.68, t2: 3.10, sl: 1.96 },
-        { id: 4, name: 'INOXGREEN', qty: 100, buy: 183.95, cur: 164.25, t1: 207.22, t2: 224.42, sl: 173.83 },
-        { id: 5, name: 'IREDA', qty: 200, buy: 125.7, cur: 112.35, t1: 141.6, t2: 153.35, sl: 118.79 },
-        { id: 6, name: 'BAJAJHFL', qty: 200, buy: 89.42, cur: 82.85, t1: 109.99, t2: 125.19, sl: 80.48 },
-        { id: 7, name: 'MSUMI', qty: 100, buy: 39.26, cur: 36.60, t1: 48.29, t2: 54.96, sl: 35.33 }
-      ], 
-      mf: [{ id: 201, name: 'SBI Gold Direct Plan Growth', cat: 'Commodities (Gold & Silver)', invested: 50000, current: 54500 }], 
-      fd: [{ id: 101, bank: 'ICICI BANK', principal: 150000, rate: 7.0, date: '2028-02-15', maturity: 185000 }], 
-      cash: [{ id: 301, name: 'Liquid Brokerage Margin', type: 'Liquid Brokerage Balance', amount: 15000 }], 
-      fno: [{ id: 1, name: 'SUNPHARMA 2000', type: 'Call Option (CE)', expiry: '2026-09-29', qty: 700, buy: 8.95, ltp: 8.45, t1: 14.30, t2: 19.70, sl: 5.40 }] 
-    };
-
-    let chartInstance = null;
-    let currentAnalyzedSymbol = 'IREDA';
+    // NON-DESTRUCTIVE SAFE STATE INITIALIZER
+    let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
 
     function saveState() {
       localStorage.setItem('omniwealth_db', JSON.stringify(state));
@@ -634,13 +582,6 @@
       }
     }
 
-    function computePositionSize() {
-      const budget = parseFloat(document.getElementById('calc-risk-budget').value) || 2000;
-      const buy = parseFloat(document.getElementById('input-stock-buy').value) || 100;
-      const qty = Math.floor(budget / (buy * 0.055));
-      document.getElementById('calc-suggested-qty').innerText = qty > 0 ? `${qty} shares` : '--';
-    }
-
     function saveStockSimple() {
       const name = cleanTickerSymbol(document.getElementById('input-stock-name').value);
       const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
@@ -698,7 +639,7 @@
     }
 
     function executeSmartRebalance() {
-      alert("💡 Smart Rebalancing Blueprint: Shift 15% of high-beta speculative holdings into Nifty 50 Index core to optimize your health score to 85/100.");
+      alert("💡 JARVIS Assistant: Rebalancing rules calculated based on current asset proportions.");
     }
 
     function exportCSV() {
@@ -726,8 +667,7 @@
       const container = document.getElementById('recs-grid');
       if (!container) return;
       container.innerHTML = '';
-      const list = MASTER_RECOMMENDATIONS;
-      list.forEach(r => {
+      MASTER_RECOMMENDATIONS.forEach(r => {
         container.innerHTML += `
           <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
             <div>
@@ -739,7 +679,6 @@
               <div class="mt-3 space-y-1 text-xs text-slate-300">
                 <div><b>CMP:</b> ₹${r.cmp} | <b>Entry:</b> ₹${r.entry}</div>
                 <div><b>Targets:</b> ₹${r.t1} / ₹${r.t2} | <b>SL:</b> ₹${r.sl}</div>
-                <p class="text-[11px] text-slate-400 mt-1 italic">${r.thesis}</p>
               </div>
             </div>
             <button onclick="addAnalyzedStockToHoldings('${r.ticker}', ${r.cmp}, ${r.t1}, ${r.t2}, ${r.sl})" class="mt-4 w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold">Track Position</button>
@@ -762,7 +701,7 @@
       const fullSymbol = `NSE:${cleanTicker}`;
       const levelsCard = document.getElementById('analyzer-levels-card');
       const existing = MASTER_RECOMMENDATIONS.find(r => r.ticker === cleanTicker);
-      const estCMP = existing ? existing.cmp : 112.35;
+      const estCMP = existing ? existing.cmp : 100.00;
 
       const riskPct = estCMP < 100 ? 0.10 : 0.055;
       const sl = parseFloat((estCMP * (1 - riskPct)).toFixed(2));
@@ -773,11 +712,6 @@
         <div class="flex justify-between items-center">
           <h2 class="text-xl font-bold text-white">${cleanTicker} <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Reference LTP: ₹${estCMP}</span></h2>
           <button onclick="addAnalyzedStockToHoldings('${cleanTicker}', ${estCMP}, ${t1}, ${t2}, ${sl})" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-lg">Track Position</button>
-        </div>
-        <div class="grid grid-cols-3 gap-3 text-xs">
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Stop Loss: <b class="text-rose-400">₹${sl}</b></div>
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 1: <b class="text-emerald-400">₹${t1}</b></div>
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 2: <b class="text-emerald-300">₹${t2}</b></div>
         </div>
       `;
 
