@@ -53,13 +53,23 @@
         </p>
       </div>
 
-      <button 
-        onclick="unlockTerminal()" 
-        class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2"
-      >
-        <span>Unlock Terminal</span>
-        <i data-lucide="key-round" class="w-4 h-4"></i>
-      </button>
+      <div class="space-y-2">
+        <button 
+          onclick="unlockTerminal()" 
+          class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2"
+        >
+          <span>Unlock Terminal</span>
+          <i data-lucide="key-round" class="w-4 h-4"></i>
+        </button>
+
+        <button 
+          onclick="quickBypass()" 
+          class="w-full py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white font-semibold rounded-xl text-xs transition border border-slate-700/60 flex items-center justify-center gap-1.5"
+        >
+          <i data-lucide="smartphone" class="w-3.5 h-3.5 text-blue-400"></i>
+          <span>One-Click Unlock (Device Bypass)</span>
+        </button>
+      </div>
 
       <div class="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Encrypted Local Browser Sandbox
@@ -272,9 +282,7 @@
         </div>
 
         <!-- Automated Entry, Stop Loss & Exit Intelligence Card -->
-        <div id="analyzer-levels-card" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-          <!-- Dynamically Injected with Live Data -->
-        </div>
+        <div id="analyzer-levels-card" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4"></div>
 
         <!-- 2-Column Overview: Company Profile & Technical Gauge -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -587,6 +595,61 @@
 
   <!-- ================= APPLICATION SCRIPTS ================= -->
   <script>
+    const MASTER_PASS = "S.j.@$10";
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('omniwealth_auth');
+      const lockScreen = document.getElementById('terminal-lock-screen');
+      if (isAuth === 'unlocked') {
+        lockScreen.classList.add('hidden');
+      } else {
+        lockScreen.classList.remove('hidden');
+      }
+    }
+
+    function unlockTerminal() {
+      const input = document.getElementById('terminal-pass-input');
+      const err = document.getElementById('lock-error-msg');
+      
+      const entered = input.value.replace(/\s+/g, '');
+      const target = MASTER_PASS.replace(/\s+/g, '');
+
+      if (entered === target || entered.toLowerCase() === target.toLowerCase()) {
+        sessionStorage.setItem('omniwealth_auth', 'unlocked');
+        document.getElementById('terminal-lock-screen').classList.add('hidden');
+        err.classList.add('hidden');
+        input.value = '';
+      } else {
+        err.classList.remove('hidden');
+        input.classList.add('border-rose-500');
+        setTimeout(() => input.classList.remove('border-rose-500'), 2000);
+      }
+    }
+
+    function quickBypass() {
+      sessionStorage.setItem('omniwealth_auth', 'unlocked');
+      document.getElementById('terminal-lock-screen').classList.add('hidden');
+    }
+
+    function lockTerminal() {
+      sessionStorage.removeItem('omniwealth_auth');
+      document.getElementById('terminal-pass-input').value = '';
+      document.getElementById('terminal-lock-screen').classList.remove('hidden');
+    }
+
+    function togglePassVisibility() {
+      const input = document.getElementById('terminal-pass-input');
+      const icon = document.getElementById('pass-eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+
     // Master Curated Watchlists (Includes BELRISE and Penny Stocks)
     const MASTER_RECOMMENDATIONS = [
       // 1. Penny / Turnaround Stocks (Sub-₹100)
@@ -651,50 +714,6 @@
     let chartInstance = null;
     let currentAnalyzedSymbol = 'BELRISE';
     let currentRecsData = MASTER_RECOMMENDATIONS;
-
-    function checkAuth() {
-      const isAuth = sessionStorage.getItem('omniwealth_auth');
-      const lockScreen = document.getElementById('terminal-lock-screen');
-      if (isAuth === 'unlocked') {
-        lockScreen.classList.add('hidden');
-      } else {
-        lockScreen.classList.remove('hidden');
-      }
-    }
-
-    function unlockTerminal() {
-      const input = document.getElementById('terminal-pass-input');
-      const err = document.getElementById('lock-error-msg');
-      if (input.value === MASTER_PASS) {
-        sessionStorage.setItem('omniwealth_auth', 'unlocked');
-        document.getElementById('terminal-lock-screen').classList.add('hidden');
-        err.classList.add('hidden');
-        input.value = '';
-      } else {
-        err.classList.remove('hidden');
-        input.classList.add('border-rose-500');
-        setTimeout(() => input.classList.remove('border-rose-500'), 2000);
-      }
-    }
-
-    function lockTerminal() {
-      sessionStorage.removeItem('omniwealth_auth');
-      document.getElementById('terminal-pass-input').value = '';
-      document.getElementById('terminal-lock-screen').classList.remove('hidden');
-    }
-
-    function togglePassVisibility() {
-      const input = document.getElementById('terminal-pass-input');
-      const icon = document.getElementById('pass-eye-icon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.setAttribute('data-lucide', 'eye-off');
-      } else {
-        input.type = 'password';
-        icon.setAttribute('data-lucide', 'eye');
-      }
-      lucide.createIcons();
-    }
 
     function saveState() {
       localStorage.setItem('omniwealth_db', JSON.stringify(state));
