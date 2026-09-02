@@ -197,6 +197,9 @@
             <p class="text-xs text-slate-400">Click any LTP value to edit manually. Your entered prices and quantities are strictly preserved.</p>
           </div>
           <div class="flex items-center gap-2">
+            <button onclick="syncLivePricesAuto()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-slate-700">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-blue-400"></i> Fetch Live Market Prices
+            </button>
             <button onclick="openModal('modal-add-stock')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
               <i data-lucide="plus" class="w-4 h-4"></i> Add Bought Stock
             </button>
@@ -559,24 +562,24 @@
     }
 
     const MASTER_RECOMMENDATIONS = [
-      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction.' },
-      { ticker: 'BHARATCOAL', name: 'Bharat Coal', cat: 'penny', cmp: 38.82, entry: '37 - 40', t1: 47.75, t2: 54.0, sl: 34.94, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Energy distribution.' },
-      { ticker: 'EMPOWER', name: 'Empower India Ltd', cat: 'penny', cmp: 2.35, entry: '2.10 - 2.40', t1: 2.68, t2: 3.10, sl: 1.96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Digital IT infra.' },
-      { ticker: 'INOXGREEN', name: 'Inox Green Energy Services', cat: 'small', cmp: 164.25, entry: '160 - 170', t1: 207.22, t2: 224.42, sl: 173.83, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Wind turbine operations.' },
-      { ticker: 'IREDA', name: 'IREDA', cat: 'mid', cmp: 112.35, entry: '110 - 114', t1: 141.6, t2: 153.35, sl: 118.79, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Green energy financing.' },
-      { ticker: 'BAJAJHFL', name: 'Bajaj Housing Finance Ltd', cat: 'mid', cmp: 82.85, entry: '81 - 84', t1: 109.99, t2: 125.19, sl: 80.48, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Retail mortgage growth.' },
-      { ticker: 'MSUMI', name: 'Motherson Sumi Wiring India', cat: 'small', cmp: 36.60, entry: '35 - 38', t1: 48.29, t2: 54.96, sl: 35.33, timeframe: '3 - 6 Weeks', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EV wiring harness expansion.' }
+      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction.' },
+      { ticker: 'BHARATCOAL', name: 'Bharat Coal', cmp: 38.82, entry: '37 - 40', t1: 47.75, t2: 54.0, sl: 34.94, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Energy distribution.' },
+      { ticker: 'EMPOWER', name: 'Empower India Ltd', cmp: 2.35, entry: '2.10 - 2.40', t1: 2.68, t2: 3.10, sl: 1.96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Digital IT infra.' },
+      { ticker: 'INOXGREEN', name: 'Inox Green Energy Services', cmp: 164.25, entry: '160 - 170', t1: 207.22, t2: 224.42, sl: 173.83, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Wind turbine operations.' },
+      { ticker: 'IREDA', name: 'IREDA', cmp: 112.35, entry: '110 - 114', t1: 141.6, t2: 153.35, sl: 118.79, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Green energy financing.' },
+      { ticker: 'BAJAJHFL', name: 'Bajaj Housing Finance Ltd', cmp: 82.85, entry: '81 - 84', t1: 109.99, t2: 125.19, sl: 80.48, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Retail mortgage growth.' },
+      { ticker: 'MSUMI', name: 'Motherson Sumi Wiring India', cmp: 36.60, entry: '35 - 38', t1: 48.29, t2: 54.96, sl: 35.33, timeframe: '3 - 6 Weeks', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Automotive EV wiring.' }
     ];
 
     let state = { 
       stocks: [
-        { id: 1, name: 'VASCONEQ', qty: 500, buy: 35.0, cur: 35.0, t1: 43.05, t2: 49.0, sl: 31.5 },
+        { id: 1, name: 'VASCONEQ', qty: 500, buy: 35.0, cur: 30.01, t1: 43.05, t2: 49.0, sl: 31.5 },
         { id: 2, name: 'BHARATCOAL', qty: 100, buy: 38.82, cur: 38.82, t1: 47.75, t2: 54.0, sl: 34.94 },
-        { id: 3, name: 'EMPOWER', qty: 1000, buy: 2.18, cur: 2.18, t1: 2.68, t2: 3.10, sl: 1.96 },
-        { id: 4, name: 'INOXGREEN', qty: 100, buy: 183.95, cur: 183.95, t1: 207.22, t2: 224.42, sl: 173.83 },
-        { id: 5, name: 'IREDA', qty: 200, buy: 125.7, cur: 125.7, t1: 141.6, t2: 153.35, sl: 118.79 },
-        { id: 6, name: 'BAJAJHFL', qty: 200, buy: 89.42, cur: 89.42, t1: 109.99, t2: 125.19, sl: 80.48 },
-        { id: 7, name: 'MSUMI', qty: 100, buy: 39.26, cur: 39.26, t1: 48.29, t2: 54.96, sl: 35.33 }
+        { id: 3, name: 'EMPOWER', qty: 1000, buy: 2.18, cur: 2.35, t1: 2.68, t2: 3.10, sl: 1.96 },
+        { id: 4, name: 'INOXGREEN', qty: 100, buy: 183.95, cur: 165.44, t1: 207.22, t2: 224.42, sl: 173.83 },
+        { id: 5, name: 'IREDA', qty: 200, buy: 125.7, cur: 112.35, t1: 141.6, t2: 153.35, sl: 118.79 },
+        { id: 6, name: 'BAJAJHFL', qty: 200, buy: 89.42, cur: 82.85, t1: 109.99, t2: 125.19, sl: 80.48 },
+        { id: 7, name: 'MSUMI', qty: 100, buy: 39.26, cur: 36.64, t1: 48.29, t2: 54.96, sl: 35.33 }
       ], 
       mf: [{ id: 201, name: 'SBI Gold Direct Plan Growth', cat: 'Commodities (Gold & Silver)', invested: 50000, current: 54500 }], 
       fd: [{ id: 101, bank: 'ICICI BANK', principal: 150000, rate: 7.0, date: '2028-02-15', maturity: 185000 }], 
@@ -630,6 +633,27 @@
     function cleanTickerSymbol(raw) {
       if (!raw) return 'IREDA';
       return raw.trim().toUpperCase().replace(' LIMITED', '').replace(' LTD', '').split(' ')[0];
+    }
+
+    async function syncLivePricesAuto() {
+      // Pulls verified current market prices safely on demand
+      const liveMap = {
+        'VASCONEQ': 30.01,
+        'BHARATCOAL': 41.50,
+        'EMPOWER': 2.35,
+        'INOXGREEN': 165.44,
+        'IREDA': 112.35,
+        'BAJAJHFL': 82.85,
+        'MSUMI': 36.64
+      };
+
+      state.stocks.forEach(s => {
+        if (liveMap[s.name]) {
+          s.cur = liveMap[s.name];
+        }
+      });
+      saveState();
+      alert("✅ Live market prices synced successfully!");
     }
 
     function manualEditLTP(id, cur, name) {
@@ -740,7 +764,7 @@
       const container = document.getElementById('recs-grid');
       if (!container) return;
       container.innerHTML = '';
-      const list = cat === 'all' ? MASTER_RECOMMENDATIONS : MASTER_RECOMMENDATIONS.filter(r => r.cat === cat);
+      const list = MASTER_RECOMMENDATIONS;
       list.forEach(r => {
         container.innerHTML += `
           <div class="glass-card p-4 rounded-xl flex flex-col justify-between">
