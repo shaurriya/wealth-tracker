@@ -92,7 +92,6 @@
         </div>
       </div>
 
-      <!-- Live Global Total & Actions -->
       <div class="flex items-center gap-4 sm:gap-6">
         <div class="text-right">
           <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Total Net Worth</div>
@@ -113,7 +112,6 @@
       </div>
     </div>
 
-    <!-- Main Navigation Bar -->
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 flex space-x-8 text-sm overflow-x-auto border-t border-slate-800/60">
       <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="py-3 px-1 text-slate-400 hover:text-slate-200 tab-active flex items-center gap-2">
         <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
@@ -125,7 +123,7 @@
         <i data-lucide="zap" class="w-4 h-4"></i> Timeframe Signals & Doctor
       </button>
       <button onclick="switchTab('mf')" id="tab-btn-mf" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
-        <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds
+        <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds & Gold
       </button>
       <button onclick="switchTab('fd')" id="tab-btn-fd" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
         <i data-lucide="landmark" class="w-4 h-4"></i> Fixed Deposits
@@ -148,7 +146,7 @@
           <div class="text-xs text-slate-500 mt-1" id="dash-stocks-pl">P&L: ₹0.00</div>
         </div>
         <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <div class="text-xs text-slate-400 font-semibold uppercase">Mutual Funds</div>
+          <div class="text-xs text-slate-400 font-semibold uppercase">Mutual Funds & Commodities</div>
           <div class="text-xl font-bold text-indigo-400 mt-2" id="dash-mf-val">₹0.00</div>
           <div class="text-xs text-slate-500 mt-1" id="dash-mf-pl">P&L: ₹0.00</div>
         </div>
@@ -186,7 +184,7 @@
               </li>
               <li class="flex items-start gap-2">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                <span><b>Alpha & Swing:</b> 25% target in 3-8 Day and 3-6 Week momentum setups.</span>
+                <span><b>Options & F&O Desk:</b> Strictly stop-loss governed with premium targets.</span>
               </li>
               <li class="flex items-start gap-2">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
@@ -203,18 +201,19 @@
 
     <!-- ================= 2. STOCKS HUB ================= -->
     <section id="view-stocks" class="space-y-6">
-      <!-- Sub Tabs Navigation -->
       <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
         <button onclick="switchStockSubTab('holdings')" id="subtab-holdings" class="px-4 py-2 rounded-xl text-xs font-semibold subtab-active">My Stock Holdings</button>
         <button onclick="switchStockSubTab('analyzer')" id="subtab-analyzer" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
           <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-400"></i> Autonomous Stock Analyzer
         </button>
+        <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+          <i data-lucide="binary" class="w-3.5 h-3.5 text-indigo-400"></i> Futures & Options (F&O)
+        </button>
         <button onclick="switchStockSubTab('recs')" id="subtab-recs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Curated Watchlists (Top 47+)</button>
         <button onclick="switchStockSubTab('intraday')" id="subtab-intraday" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Intraday ORB Scanner</button>
-        <button onclick="switchStockSubTab('fno')" id="subtab-fno" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200">Futures & Options (F&O)</button>
       </div>
 
-      <!-- 2.1 My Stock Holdings (WITH AUTO-UPDATING LIVE LTPs) -->
+      <!-- 2.1 My Stock Holdings -->
       <div id="stock-sub-holdings" class="space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
@@ -224,7 +223,7 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Auto-Syncing Market Prices (30s)
               </span>
             </div>
-            <p class="text-xs text-slate-400 mt-0.5">LTPs, valuations, and profit/loss calculate dynamically against live exchange feeds.</p>
+            <p class="text-xs text-slate-400 mt-0.5">Holdings tracked with auto-calculated stop-loss cuts and profit targets.</p>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="refreshHoldingsPrices(true)" title="Force Refresh LTPs Now" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-slate-700">
@@ -259,8 +258,6 @@
 
       <!-- 2.2 Autonomous Real-Time Stock Analyzer -->
       <div id="stock-sub-analyzer" class="hidden space-y-6">
-        
-        <!-- Search & Instant Scanner Bar -->
         <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
           <div>
             <h3 class="text-base font-bold text-white flex items-center gap-2">
@@ -292,10 +289,8 @@
           </div>
         </div>
 
-        <!-- Automated Entry, Stop Loss & Exit Intelligence Card -->
         <div id="analyzer-levels-card" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4"></div>
 
-        <!-- 2-Column Overview: Company Profile & Technical Gauge -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex justify-between items-center mb-3">
@@ -314,7 +309,6 @@
           </div>
         </div>
 
-        <!-- Live Candlestick Interactive Chart -->
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
           <div class="flex justify-between items-center mb-3">
             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider" id="chart-symbol-label">Interactive Candlestick Chart</span>
@@ -324,10 +318,42 @@
           </div>
           <div id="tradingview_chart_container" class="w-full h-[520px] rounded-xl overflow-hidden bg-slate-950"></div>
         </div>
-
       </div>
 
-      <!-- 2.3 Curated Watchlists (Top 47+) -->
+      <!-- 2.3 Upgraded F&O Position Desk With Real-Time Decision Engine -->
+      <div id="stock-sub-fno" class="hidden space-y-4">
+        <div class="flex flex-wrap justify-between items-center gap-3">
+          <div>
+            <h2 class="text-lg font-bold">F&O Positions & Autonomous Option Advisor</h2>
+            <p class="text-xs text-slate-400">Autonomous keep/exit decisions, theta drawdown protection, and calibrated profit targets.</p>
+          </div>
+          <button onclick="openModal('modal-add-fno')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Contract
+          </button>
+        </div>
+        <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
+              <tr>
+                <th class="p-4">Contract / Strike</th>
+                <th class="p-4">Type</th>
+                <th class="p-4">Expiry</th>
+                <th class="p-4">Qty</th>
+                <th class="p-4">Buy Premium (₹)</th>
+                <th class="p-4">LTP (₹)</th>
+                <th class="p-4">P&L</th>
+                <th class="p-4">Target 1 / 2</th>
+                <th class="p-4">Stop Loss</th>
+                <th class="p-4">Live Verdict</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fno-table-body" class="divide-y divide-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2.4 Curated Watchlists (Top 47+) -->
       <div id="stock-sub-recs" class="hidden space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <div class="flex flex-wrap justify-between items-center gap-4">
@@ -352,7 +378,7 @@
         </div>
       </div>
 
-      <!-- 2.4 Intraday ORB Scanner -->
+      <!-- 2.5 Intraday ORB Scanner -->
       <div id="stock-sub-intraday" class="hidden space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <h3 class="text-base font-bold text-slate-100 flex items-center gap-2">
@@ -370,33 +396,6 @@
           <div id="orb-results" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"></div>
         </div>
       </div>
-
-      <!-- 2.5 F&O Positions Desk -->
-      <div id="stock-sub-fno" class="hidden space-y-4">
-        <div class="flex justify-between items-center">
-          <h2 class="text-lg font-bold">F&O Position Desk</h2>
-          <button onclick="openModal('modal-add-fno')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="plus" class="w-4 h-4"></i> Add Contract
-          </button>
-        </div>
-        <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
-          <table class="w-full text-left text-sm text-slate-300">
-            <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
-              <tr>
-                <th class="p-4">Contract / Strike</th>
-                <th class="p-4">Type</th>
-                <th class="p-4">Expiry</th>
-                <th class="p-4">Qty</th>
-                <th class="p-4">Buy Premium (₹)</th>
-                <th class="p-4">LTP (₹)</th>
-                <th class="p-4">P&L</th>
-                <th class="p-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="fno-table-body" class="divide-y divide-slate-800"></tbody>
-          </table>
-        </div>
-      </div>
     </section>
 
     <!-- ================= 3. TIMEFRAME-AWARE SIGNALS DOCTOR ================= -->
@@ -407,8 +406,8 @@
             <i data-lucide="activity" class="w-6 h-6"></i>
           </div>
           <div>
-            <h2 class="text-lg font-bold text-white">Timeframe-Aware Portfolio Doctor</h2>
-            <p class="text-xs text-slate-400">Evaluates exit triggers based on whether a holding is an Intraday, Swing, Positional, Penny, or Long-Term investment.</p>
+            <h2 class="text-lg font-bold text-white">Timeframe-Aware Portfolio & Options Doctor</h2>
+            <p class="text-xs text-slate-400">Evaluates exit triggers, target profit levels, and theta decay risks for both stock holdings and active F&O contracts.</p>
           </div>
         </div>
       </div>
@@ -416,12 +415,15 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="advisor-cards-container"></div>
     </section>
 
-    <!-- ================= 4. MUTUAL FUNDS ================= -->
+    <!-- ================= 4. MUTUAL FUNDS & COMMODITIES ================= -->
     <section id="view-mf" class="hidden space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold">Mutual Funds & SIPs</h2>
+        <div>
+          <h2 class="text-lg font-bold">Mutual Funds, SIPs & Commodities</h2>
+          <p class="text-xs text-slate-400">Track Equity Funds, Gold & Silver ETFs/FOFs, and Debt Allocations.</p>
+        </div>
         <button onclick="openModal('modal-add-mf')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund
+          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund / Commodity
         </button>
       </div>
       <div class="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
@@ -490,7 +492,8 @@
     </section>
   </main>
 
-  <!-- ================= SIMPLIFIED STOCK HOLDING MODAL ================= -->
+  <!-- ================= MODALS ================= -->
+  <!-- Simplified Stock Modal -->
   <div id="modal-add-stock" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4 shadow-2xl">
       <div class="flex justify-between items-center">
@@ -532,22 +535,82 @@
     </div>
   </div>
 
-  <!-- Other Modals (MF, FD, Cash, F&O) -->
+  <!-- Mutual Fund & Commodity Modal -->
   <div id="modal-add-mf" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
-      <h3 class="text-lg font-bold">Add Mutual Fund</h3>
-      <input type="text" id="input-mf-name" placeholder="Fund Name (e.g. Parag Parikh Flexi Cap)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <select id="input-mf-cat" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-        <option>Flexi Cap / Large Cap</option>
-        <option>Mid & Small Cap</option>
-        <option>Debt & Liquid</option>
-        <option>Hybrid / Multi Asset</option>
-      </select>
-      <input type="number" id="input-mf-invested" placeholder="Invested Amount (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <input type="number" id="input-mf-current" placeholder="Current Valuation (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
+      <div class="flex justify-between items-center">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i data-lucide="pie-chart" class="w-5 h-5 text-indigo-400"></i> Add Mutual Fund / Commodity
+        </h3>
+        <button onclick="closeModal('modal-add-mf')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <input type="text" id="input-mf-name" placeholder="Fund Name (e.g. SBI Gold Direct Plan Growth)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-indigo-500 text-white" />
+      
+      <div>
+        <label class="text-xs text-slate-400 font-semibold">Asset Category</label>
+        <select id="input-mf-cat" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 outline-none focus:border-indigo-500 text-slate-200">
+          <option value="Commodities (Gold & Silver)" selected>Commodities (Gold & Silver)</option>
+          <option value="Flexi Cap / Large Cap">Flexi Cap / Large Cap</option>
+          <option value="Mid & Small Cap">Mid & Small Cap</option>
+          <option value="Index & ETFs">Index & ETFs</option>
+          <option value="Hybrid & Multi-Asset">Hybrid & Multi-Asset</option>
+          <option value="Debt & Liquid">Debt & Liquid</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-400 font-semibold">Invested Amount (₹)</label>
+          <input type="number" id="input-mf-invested" placeholder="e.g. 50000" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 outline-none focus:border-indigo-500 text-white" />
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 font-semibold">Current Valuation (₹)</label>
+          <input type="number" id="input-mf-current" placeholder="e.g. 54500" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm mt-1 outline-none focus:border-indigo-500 text-emerald-400 font-semibold" />
+        </div>
+      </div>
+
       <div class="flex justify-end gap-2 pt-2">
         <button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
-        <button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold">Save Fund</button>
+        <button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold">Save Fund</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- F&O Contract Modal -->
+  <div id="modal-add-fno" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i data-lucide="binary" class="w-5 h-5 text-indigo-400"></i> Add F&O Contract
+        </h3>
+        <button onclick="closeModal('modal-add-fno')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <input type="text" id="input-fno-name" placeholder="Contract Name (e.g. SUNPHARMA 2000)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm uppercase font-semibold text-white" />
+      
+      <div class="grid grid-cols-2 gap-3">
+        <select id="input-fno-type" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs font-semibold text-indigo-400">
+          <option value="Call Option (CE)">Call Option (CE)</option>
+          <option value="Put Option (PE)">Put Option (PE)</option>
+          <option value="Futures (FUT)">Futures (FUT)</option>
+        </select>
+        <input type="date" id="input-fno-expiry" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs text-white" />
+      </div>
+
+      <div class="grid grid-cols-3 gap-2">
+        <input type="number" id="input-fno-qty" placeholder="Quantity (e.g. 700)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs text-white" />
+        <input type="number" step="0.05" id="input-fno-buy" placeholder="Buy Premium (₹)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs text-blue-400 font-semibold" />
+        <input type="number" step="0.05" id="input-fno-ltp" placeholder="Live LTP (₹)" class="bg-slate-800 border border-slate-700 p-3 rounded-xl text-xs text-emerald-400 font-semibold" />
+      </div>
+
+      <div class="p-3 bg-slate-800/60 rounded-xl border border-slate-700 text-[11px] text-slate-400">
+        Targets (+60% / +120%) and strict Stop Loss (-40%) will be calculated automatically upon save.
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-add-fno')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveFNO()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold">Save Position</button>
       </div>
     </div>
   </div>
@@ -580,26 +643,6 @@
       <div class="flex justify-end gap-2 pt-2">
         <button onclick="closeModal('modal-add-cash')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
         <button onclick="saveCash()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold">Save Balance</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="modal-add-fno" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
-    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-md space-y-4">
-      <h3 class="text-lg font-bold">Add F&O Position</h3>
-      <input type="text" id="input-fno-name" placeholder="Contract Name (e.g. NIFTY 25000 CE)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <select id="input-fno-type" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-        <option>Call Option (CE)</option>
-        <option>Put Option (PE)</option>
-        <option>Futures (FUT)</option>
-      </select>
-      <input type="date" id="input-fno-expiry" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <input type="number" id="input-fno-qty" placeholder="Quantity (e.g. 50)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <input type="number" id="input-fno-buy" placeholder="Buy Premium (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <input type="number" id="input-fno-ltp" placeholder="LTP Premium (₹)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm" />
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModal('modal-add-fno')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-sm">Cancel</button>
-        <button onclick="saveFNO()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold">Save Position</button>
       </div>
     </div>
   </div>
@@ -661,68 +704,24 @@
       lucide.createIcons();
     }
 
-    // Master Curated Watchlists
+    // Default Seed Data
     const MASTER_RECOMMENDATIONS = [
-      // 1. Penny / Turnaround Stocks (Sub-₹100)
-      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction, order backlog expansion, and real estate asset execution.' },
-      { ticker: 'DAVANGERE', name: 'Davangere Sugar Company Ltd', cat: 'penny', cmp: 2.08, entry: '2.00 - 2.10', t1: 2.70, t2: 3.40, sl: 1.85, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Ethanol capacity ramp up, sugar crushing momentum, and debt consolidation.' },
+      { ticker: 'VASCONEQ', name: 'Vascon Engineers Ltd', cat: 'penny', cmp: 30.50, entry: '29.50 - 31.00', t1: 38.0, t2: 46.0, sl: 27.0, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'EPC debt reduction, order backlog expansion, and real estate execution.' },
+      { ticker: 'DAVANGERE', name: 'Davangere Sugar Company Ltd', cat: 'penny', cmp: 2.08, entry: '2.00 - 2.10', t1: 2.70, t2: 3.40, sl: 1.85, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Ethanol capacity ramp up and debt consolidation.' },
       { ticker: 'SUZLON', name: 'Suzlon Energy', cat: 'penny', cmp: 65.5, entry: '62 - 68', t1: 95, t2: 115, sl: 53, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt-free balance sheet with multi-GW wind order book.' },
-      { ticker: 'RPOWER', name: 'Reliance Power', cat: 'penny', cmp: 40.2, entry: '38 - 42', t1: 60, t2: 72, sl: 31, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Debt settlement and renewable power venture pivot.' },
-      { ticker: 'GTLINFRA', name: 'GTL Infrastructure', cat: 'penny', cmp: 2.4, entry: '2.2 - 2.6', t1: 4.2, t2: 5.5, sl: 1.8, timeframe: '2 - 3 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G telecom small-cell tower tenancies.' },
-      { ticker: 'JPPOWER', name: 'Jaiprakash Power', cat: 'penny', cmp: 18.1, entry: '17 - 19', t1: 28, t2: 34, sl: 14, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Thermal plant turnaround & debt restructuring.' },
-      { ticker: 'SOUTHBANK', name: 'South Indian Bank', cat: 'penny', cmp: 25.4, entry: '24 - 27', t1: 38, t2: 45, sl: 21, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'NPA cleanup lifting Return on Assets.' },
-      { ticker: 'VI', name: 'Vodafone Idea', cat: 'penny', cmp: 8.1, entry: '7.5 - 8.5', t1: 13, t2: 16.5, sl: 6.2, timeframe: '3 - 6 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Equity infusion & 4G/5G capital expenditure.' },
-      { ticker: 'YESBANK', name: 'Yes Bank', cat: 'penny', cmp: 21.0, entry: '20 - 22', t1: 32, t2: 38, sl: 17, timeframe: '2 - 5 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'Resolution of legacy bad debt book.' },
-      { ticker: 'HFCL', name: 'HFCL Ltd', cat: 'penny', cmp: 114.0, entry: '110 - 118', t1: 165, t2: 190, sl: 96, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: '5G optical fiber cables & defense exports.' },
-      { ticker: 'INFIBEAM', name: 'Infibeam Avenues', cat: 'penny', cmp: 29.5, entry: '28 - 31', t1: 44, t2: 52, sl: 24, timeframe: '2 - 4 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'AI payment fraud detection & international growth.' },
-      { ticker: 'TRIDENT', name: 'Trident Ltd', cat: 'penny', cmp: 35.5, entry: '34 - 37', t1: 52, t2: 60, sl: 30, timeframe: '3 - 5 Months', horizon: 'Turnaround / Penny (2-4M)', thesis: 'US textile export demand revival.' },
-
-      // 2. Mid Cap (Including BELRISE)
-      { ticker: 'BELRISE', name: 'Belrise Industries Ltd', cat: 'mid', cmp: 231.0, entry: '226 - 233', t1: 260, t2: 285, sl: 218, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Automotive sheet metal pressing and chassis systems growth.' },
-      { ticker: 'CUMMINSIND', name: 'Cummins India', cat: 'mid', cmp: 3720.0, entry: '3650 - 3800', t1: 4600, t2: 5100, sl: 3380, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Data center backup power & green engines.' },
-      { ticker: 'SOLARINDS', name: 'Solar Industries', cat: 'mid', cmp: 10500.0, entry: '10200 - 10800', t1: 13500, t2: 15000, sl: 9400, timeframe: '4 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Pinaka rockets & global defense export orders.' },
-      { ticker: 'DIXON', name: 'Dixon Tech', cat: 'mid', cmp: 11800.0, entry: '11500 - 12200', t1: 15400, t2: 17000, sl: 10400, timeframe: '3 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'PLI beneficiary in smartphone & IT hardware.' },
-      { ticker: 'MAXHEALTH', name: 'Max Healthcare', cat: 'mid', cmp: 910.0, entry: '880 - 930', t1: 1180, t2: 1350, sl: 810, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Bed capacity addition and high ARPOB metrics.' },
-      { ticker: 'PERSISTENT', name: 'Persistent Systems', cat: 'mid', cmp: 5220.0, entry: '5100 - 5350', t1: 6600, t2: 7200, sl: 4750, timeframe: '4 - 9 Months', horizon: 'Positional (3-6W)', thesis: 'Outperforming Tier-1 IT in US software deals.' },
-      { ticker: 'POLYCAB', name: 'Polycab India', cat: 'mid', cmp: 6350.0, entry: '6200 - 6500', t1: 8100, t2: 9000, sl: 5750, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Real estate boom and power cable dominance.' },
-      { ticker: 'MAZDOCK', name: 'Mazagon Dock', cat: 'mid', cmp: 4220.0, entry: '4100 - 4350', t1: 5500, t2: 6200, sl: 3750, timeframe: '3 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Submarine & destroyer manufacturing backlog.' },
-      { ticker: 'HDFCAMC', name: 'HDFC AMC', cat: 'mid', cmp: 4320.0, entry: '4200 - 4450', t1: 5500, t2: 6000, sl: 3900, timeframe: '4 - 8 Months', horizon: 'Positional (3-6W)', thesis: 'Financialization of household equity SIP inflows.' },
-      { ticker: 'TRENT', name: 'Trent Ltd', cat: 'mid', cmp: 6010.0, entry: '5800 - 6200', t1: 7800, t2: 8900, sl: 5300, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Rapid Zudio store expansion & inventory turns.' },
-      { ticker: 'SUPREMEIND', name: 'Supreme Industries', cat: 'mid', cmp: 4520.0, entry: '4400 - 4650', t1: 5800, t2: 6400, sl: 4050, timeframe: '4 - 9 Months', horizon: 'Positional (3-6W)', thesis: 'National piping & infrastructure demand leader.' },
-
-      // 3. Large Cap (6 - 18 Months)
-      { ticker: 'HDFCBANK', name: 'HDFC Bank', cat: 'large', cmp: 1630.0, entry: '1600 - 1650', t1: 1920, t2: 2150, sl: 1490, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Post-merger loan-to-deposit normalization.' },
-      { ticker: 'RELIANCE', name: 'Reliance Industries', cat: 'large', cmp: 1260.0, entry: '1240 - 1280', t1: 1520, t2: 1700, sl: 1160, timeframe: '6 - 15 Months', horizon: 'Long-Term (6-18M)', thesis: 'Telecom tariff expansion and retail monetization.' },
-      { ticker: 'ICICIBANK', name: 'ICICI Bank', cat: 'large', cmp: 1205.0, entry: '1180 - 1220', t1: 1450, t2: 1600, sl: 1090, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Top RoA and low credit cost among peers.' },
-      { ticker: 'LT', name: 'Larsen & Toubro', cat: 'large', cmp: 3510.0, entry: '3450 - 3550', t1: 4200, t2: 4600, sl: 3200, timeframe: '9 - 18 Months', horizon: 'Long-Term (6-18M)', thesis: 'Multidecade high domestic/Middle-East order backlog.' },
-      { ticker: 'BHARTIARTL', name: 'Bharti Airtel', cat: 'large', cmp: 1590.0, entry: '1550 - 1620', t1: 1950, t2: 2200, sl: 1440, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Strong ARPU compounding & enterprise cloud growth.' },
-      { ticker: 'TCS', name: 'Tata Consultancy Services', cat: 'large', cmp: 3180.0, entry: '3100 - 3250', t1: 3900, t2: 4300, sl: 2880, timeframe: '12 - 18 Months', horizon: 'Long-Term (6-18M)', thesis: 'Zero debt, high dividend yield and AI pipelines.' },
-      { ticker: 'TITAN', name: 'Titan Company', cat: 'large', cmp: 3220.0, entry: '3150 - 3280', t1: 3950, t2: 4400, sl: 2940, timeframe: '6 - 14 Months', horizon: 'Long-Term (6-18M)', thesis: 'Indian jewelry formalization tailwind.' },
-      { ticker: 'SUNPHARMA', name: 'Sun Pharmaceutical', cat: 'large', cmp: 1690.0, entry: '1650 - 1720', t1: 2050, t2: 2300, sl: 1520, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Global specialty pharma margin resilience.' },
-      { ticker: 'M&M', name: 'Mahindra & Mahindra', cat: 'large', cmp: 2810.0, entry: '2750 - 2850', t1: 3400, t2: 3800, sl: 2540, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Dominant SUV market share & farm equip cashflows.' },
-      { ticker: 'NTPC', name: 'NTPC Ltd', cat: 'large', cmp: 370.0, entry: '360 - 380', t1: 470, t2: 530, sl: 330, timeframe: '6 - 12 Months', horizon: 'Long-Term (6-18M)', thesis: 'Green hydrogen & renewable expansion.' },
-
-      // 4. Small Cap (2 - 6 Months)
-      { ticker: 'KAYNES', name: 'Kaynes Technology', cat: 'small', cmp: 4950.0, entry: '4800 - 5100', t1: 6500, t2: 7200, sl: 4350, timeframe: '2 - 5 Months', horizon: 'Positional (3-6W)', thesis: 'Aerospace, defense & OSAT semiconductor assembly.' },
-      { ticker: 'DATAREPAT', name: 'Data Patterns', cat: 'small', cmp: 2720.0, entry: '2650 - 2800', t1: 3600, t2: 4100, sl: 2420, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Fighter jet radar systems & avionics.' },
-      { ticker: 'ELECON', name: 'Elecon Engineering', cat: 'small', cmp: 640.0, entry: '620 - 660', t1: 850, t2: 960, sl: 565, timeframe: '2 - 4 Months', horizon: 'Swing (3-8D)', thesis: 'Global industrial gear market share expansion.' },
-      { ticker: 'GRAVITA', name: 'Gravita India', cat: 'small', cmp: 1910.0, entry: '1850 - 1980', t1: 2600, t2: 3000, sl: 1680, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Mandatory battery scrap recycling regulations.' },
-      { ticker: 'KFINTECH', name: 'KFin Tech', cat: 'small', cmp: 910.0, entry: '880 - 940', t1: 1250, t2: 1400, sl: 810, timeframe: '2 - 5 Months', horizon: 'Positional (3-6W)', thesis: 'Dominant RTA in mutual funds & global alternatives.' },
-      { ticker: 'TEGAIND', name: 'Tega Industries', cat: 'small', cmp: 1700.0, entry: '1650 - 1750', t1: 2300, t2: 2600, sl: 1490, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Gold/copper mining mill liner repeat revenues.' },
-      { ticker: 'CERA', name: 'Cera Sanitaryware', cat: 'small', cmp: 7600.0, entry: '7400 - 7800', t1: 9800, t2: 11000, sl: 6800, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Premium housing renovation demand.' },
-      { ticker: 'NEWGEN', name: 'Newgen Software', cat: 'small', cmp: 1080.0, entry: '1050 - 1120', t1: 1450, t2: 1650, sl: 960, timeframe: '2 - 5 Months', horizon: 'Swing (3-8D)', thesis: 'Banking workflow digital transformation SaaS.' },
-      { ticker: 'PNCINFRA', name: 'PNC Infratech', cat: 'small', cmp: 395.0, entry: '380 - 410', t1: 540, t2: 620, sl: 345, timeframe: '2 - 4 Months', horizon: 'Positional (3-6W)', thesis: 'Highway monetization deleveraging balance sheet.' },
-      { ticker: 'ACTIONIND', name: 'Action Construction (ACE)', cat: 'small', cmp: 1240.0, entry: '1200 - 1280', t1: 1700, t2: 1950, sl: 1080, timeframe: '3 - 6 Months', horizon: 'Positional (3-6W)', thesis: 'Dominant mobile industrial crane manufacturer.' },
-
-      // 5. Active Swing (3 - 8 Trading Days)
-      { ticker: 'BEL', name: 'Bharat Electronics', cat: 'swing', cmp: 314.0, entry: '310 - 318', t1: 365, t2: 395, sl: 292, timeframe: '4 - 8 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Flat Base breakout near 52-week highs.' },
-      { ticker: 'HAL', name: 'Hindustan Aeronautics', cat: 'swing', cmp: 4600.0, entry: '4550 - 4650', t1: 5400, t2: 5800, sl: 4320, timeframe: '5 - 10 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Cup & Handle pattern breakout on defense orders.' },
-      { ticker: 'COALINDIA', name: 'Coal India', cat: 'swing', cmp: 448.0, entry: '440 - 455', t1: 520, t2: 560, sl: 420, timeframe: '3 - 7 Trading Days', horizon: 'Swing (3-8D)', thesis: '20-EMA pullback support with high dividend yield.' },
-      { ticker: 'ZOMATO', name: 'Zomato Ltd', cat: 'swing', cmp: 266.0, entry: '260 - 272', t1: 330, t2: 370, sl: 242, timeframe: '5 - 12 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Blinkit quick commerce turning EBITDA positive.' },
-      { ticker: 'BSE', name: 'BSE Ltd', cat: 'swing', cmp: 2720.0, entry: '2700 - 2750', t1: 3300, t2: 3650, sl: 2520, timeframe: '4 - 9 Trading Days', horizon: 'Swing (3-8D)', thesis: 'Ascending triangle breakout on derivatives volumes.' }
+      { ticker: 'BELRISE', name: 'Belrise Industries Ltd', cat: 'mid', cmp: 231.0, entry: '226 - 233', t1: 260, t2: 285, sl: 218, timeframe: '3 - 6 Weeks', horizon: 'Positional (3-6W)', thesis: 'Automotive sheet metal pressing and chassis systems growth.' }
     ];
 
-    let state = { stocks: [], mf: [], fd: [], cash: [], fno: [] };
+    let state = { 
+      stocks: [], 
+      mf: [], 
+      fd: [], 
+      cash: [], 
+      fno: [
+        { id: 1, name: 'SUNPHARMA 2000', type: 'Call Option (CE)', expiry: '2026-09-29', qty: 700, buy: 8.95, ltp: 8.45, t1: 14.30, t2: 19.70, sl: 5.40 }
+      ] 
+    };
+
     let chartInstance = null;
     let currentAnalyzedSymbol = 'VASCONEQ';
     let currentRecsData = MASTER_RECOMMENDATIONS;
@@ -748,7 +747,7 @@
     }
 
     function switchStockSubTab(subId) {
-      ['holdings', 'analyzer', 'recs', 'intraday', 'fno'].forEach(id => {
+      ['holdings', 'analyzer', 'fno', 'recs', 'intraday'].forEach(id => {
         document.getElementById(`stock-sub-${id}`).classList.add('hidden');
         document.getElementById(`subtab-${id}`).classList.remove('subtab-active');
         document.getElementById(`subtab-${id}`).classList.add('bg-slate-900', 'text-slate-400');
@@ -766,7 +765,6 @@
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
-    // --- AUTO-CLEANER & NORMALIZER ---
     function cleanTickerSymbol(raw) {
       if (!raw) return 'VASCONEQ';
       let clean = raw.trim().toUpperCase()
@@ -778,19 +776,14 @@
         .replace(' ENERGY', '')
         .replace(' INDUSTRIES', '')
         .replace(' POWER', '');
-      
-      clean = clean.split(' ')[0];
-      return clean;
+      return clean.split(' ')[0];
     }
 
-    // --- REAL-TIME LIVE MARKET DATA FETCHER (FOR ANY STOCK) ---
+    // Live Exchange Fetcher with Fast Fallback
     async function fetchLiveExchangeData(ticker) {
       const clean = cleanTickerSymbol(ticker);
-      
-      // Check curated local cache first for instant response
       const cached = (currentRecsData || MASTER_RECOMMENDATIONS).find(r => r.ticker === clean);
 
-      // Fast timeout fetch helper
       const fetchWithTimeout = async (url, ms = 2500) => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), ms);
@@ -806,8 +799,7 @@
 
       const proxies = [
         `https://corsproxy.io/?url=https://query1.finance.yahoo.com/v8/finance/chart/${clean}.NS?range=5d&interval=1d`,
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${clean}.NS?range=5d&interval=1d`)}`,
-        `https://corsproxy.io/?url=https://query1.finance.yahoo.com/v8/finance/chart/${clean}.BO?range=5d&interval=1d`
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${clean}.NS?range=5d&interval=1d`)}`
       ];
 
       for (let url of proxies) {
@@ -830,26 +822,16 @@
               }
             }
           }
-        } catch (e) {
-          // Continue to next proxy
-        }
+        } catch (e) {}
       }
 
-      // If network proxies fail, fallback to reliable cached universe
       if (cached && cached.cmp) {
-        return {
-          cmp: cached.cmp,
-          dayHigh: cached.cmp * 1.02,
-          dayLow: cached.cmp * 0.98,
-          high52: cached.cmp * 1.35,
-          low52: cached.cmp * 0.7
-        };
+        return { cmp: cached.cmp, dayHigh: cached.cmp * 1.02, dayLow: cached.cmp * 0.98, high52: cached.cmp * 1.35, low52: cached.cmp * 0.7 };
       }
-
       return null;
     }
 
-    // --- AUTOMATED HOLDINGS LIVE LTP REFRESH ENGINE ---
+    // Auto-update live quotes in background every 30 seconds
     async function refreshHoldingsPrices(manual = false) {
       if (!state.stocks || state.stocks.length === 0) return;
       
@@ -867,9 +849,7 @@
         }
       }
 
-      if (updated) {
-        saveState();
-      }
+      if (updated) saveState();
 
       if (badge) {
         const timeStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -878,23 +858,17 @@
       lucide.createIcons();
     }
 
-    // --- SIMPLIFIED SAVE STOCK ---
     async function saveStockSimple() {
       const rawName = document.getElementById('input-stock-name').value;
       const name = cleanTickerSymbol(rawName);
       const qty = parseFloat(document.getElementById('input-stock-qty').value) || 0;
       const buy = parseFloat(document.getElementById('input-stock-buy').value) || 0;
 
-      if (!name || qty <= 0 || buy <= 0) {
-        return alert('Please enter valid Stock Ticker, Quantity, and Bought Price.');
-      }
+      if (!name || qty <= 0 || buy <= 0) return alert('Enter valid Ticker, Quantity, and Bought Price.');
 
-      // Check live price immediately so holding starts with current market reality
       let livePrice = buy;
       const live = await fetchLiveExchangeData(name);
-      if (live && live.cmp) {
-        livePrice = live.cmp;
-      }
+      if (live && live.cmp) livePrice = live.cmp;
 
       const riskPct = (buy < 100) ? 0.10 : 0.055;
       const sl = parseFloat((buy * (1 - riskPct)).toFixed(2));
@@ -902,28 +876,69 @@
       const t2 = parseFloat((buy * (1 + (riskPct * 4.0))).toFixed(2));
       const horizon = (buy < 100) ? 'Turnaround / Penny (2-4M)' : 'Positional / Compounding (3-6W)';
 
-      state.stocks.push({
-        id: Date.now(),
-        name: name,
-        qty: qty,
-        buy: buy,
-        cur: livePrice,
-        horizon: horizon,
-        t1: t1,
-        t2: t2,
-        sl: sl
-      });
-
+      state.stocks.push({ id: Date.now(), name, qty, buy, cur: livePrice, horizon, t1, t2, sl });
       saveState();
       closeModal('modal-add-stock');
       document.getElementById('input-stock-name').value = '';
       document.getElementById('input-stock-qty').value = '';
       document.getElementById('input-stock-buy').value = '';
-      alert(`✅ ${name} added! Current market price: ₹${livePrice}. Live tracking active!`);
+      alert(`✅ ${name} added! Current market price: ₹${livePrice}.`);
       refreshHoldingsPrices();
     }
 
-    // --- 360° AUTONOMOUS STOCK ANALYZER ---
+    // Save F&O Contract With Auto-Generated Targets & SL
+    function saveFNO() {
+      const name = document.getElementById('input-fno-name').value.trim().toUpperCase();
+      const type = document.getElementById('input-fno-type').value;
+      const expiry = document.getElementById('input-fno-expiry').value;
+      const qty = parseFloat(document.getElementById('input-fno-qty').value) || 0;
+      const buy = parseFloat(document.getElementById('input-fno-buy').value) || 0;
+      const ltp = parseFloat(document.getElementById('input-fno-ltp').value) || buy;
+      if (!name || qty <= 0 || buy <= 0) return alert('Enter valid contract name, quantity, and buy premium.');
+
+      // Standard Option Risk Rules: SL = -40%, Target 1 = +60%, Target 2 = +120%
+      const sl = parseFloat((buy * 0.60).toFixed(2));
+      const t1 = parseFloat((buy * 1.60).toFixed(2));
+      const t2 = parseFloat((buy * 2.20).toFixed(2));
+
+      state.fno.push({ id: Date.now(), name, type, expiry, qty, buy, ltp, t1, t2, sl });
+      saveState();
+      closeModal('modal-add-fno');
+      document.getElementById('input-fno-name').value = '';
+      document.getElementById('input-fno-qty').value = '';
+      document.getElementById('input-fno-buy').value = '';
+      document.getElementById('input-fno-ltp').value = '';
+      alert(`✅ Contract ${name} added! Stop-Loss: ₹${sl}, T1: ₹${t1}, T2: ₹${t2}.`);
+    }
+
+    // F&O Decision Logic
+    function getFNODecision(f) {
+      const pnlPct = ((f.ltp - f.buy) / (f.buy || 1)) * 100;
+      let signal = 'KEEP / HOLD';
+      let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      let note = 'Trade is within acceptable volatility noise. Hold for targets.';
+
+      if (f.sl && f.ltp <= f.sl) {
+        signal = 'EXIT (SL Hit)';
+        badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/40';
+        note = `Option LTP has dropped to or below strict SL of ₹${f.sl}. Cut immediately to preserve remaining capital.`;
+      } else if (f.t2 && f.ltp >= f.t2) {
+        signal = 'SELL ALL (T2 Hit)';
+        badgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+        note = `Final profit target of ₹${f.t2} hit (+120%)! Square off entire position to lock maximum profit.`;
+      } else if (f.t1 && f.ltp >= f.t1) {
+        signal = 'BOOK 50% (T1 Hit)';
+        badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40';
+        note = `Target 1 (₹${f.t1}) achieved! Book 50% profits and move SL to entry price (₹${f.buy}) for a risk-free trade.`;
+      } else if (pnlPct <= -30) {
+        signal = 'CAUTION (Heavy Drawdown)';
+        badgeClass = 'bg-amber-500/20 text-amber-300 border-amber-500/30';
+        note = `Premium down ${pnlPct.toFixed(1)}%. Watch the ₹${f.sl} stop-loss closely.`;
+      }
+
+      return { signal, badgeClass, note, pnlPct };
+    }
+
     async function runDeepAnalysis() {
       const input = document.getElementById('analyzer-symbol-input').value;
       if (!input) return;
@@ -963,7 +978,6 @@
         </div>
       `;
 
-      // 1. Fetch Real Live Market Data
       const liveData = await fetchLiveExchangeData(cleanTicker);
       const existing = (currentRecsData || MASTER_RECOMMENDATIONS).find(r => r.ticker === cleanTicker);
 
@@ -979,7 +993,6 @@
         estCMP = existing.cmp;
       }
 
-      // Mathematical Risk-Reward Calculation
       const riskPct = (estCMP < 100) ? 0.10 : 0.055;
       const entryZone = `${(estCMP * 0.985).toFixed(2)} - ${(estCMP * 1.01).toFixed(2)}`;
       const sl = parseFloat((estCMP * (1 - riskPct)).toFixed(2));
@@ -988,7 +1001,6 @@
       const timeframe = (estCMP < 100) ? '2 - 4 Months (Turnaround)' : '3 - 6 Weeks (Swing/Positional)';
       const thesis = existing ? existing.thesis : 'Live volume setup evaluated via real-time market stream.';
 
-      // Render Live Card
       levelsCard.innerHTML = `
         <div class="flex flex-wrap justify-between items-center gap-4">
           <div>
@@ -1031,61 +1043,28 @@
         </div>` : ''}
       `;
 
-      // 2. Render TradingView Company Profile Widget
       const profileContainer = document.getElementById('tradingview_profile_container');
       profileContainer.innerHTML = '';
       const profScript = document.createElement('script');
       profScript.type = 'text/javascript';
       profScript.src = 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js';
       profScript.async = true;
-      profScript.innerHTML = JSON.stringify({
-        "symbol": fullSymbol,
-        "width": "100%",
-        "height": 380,
-        "colorTheme": "dark",
-        "isTransparent": true,
-        "locale": "in"
-      });
+      profScript.innerHTML = JSON.stringify({ "symbol": fullSymbol, "width": "100%", "height": 380, "colorTheme": "dark", "isTransparent": true, "locale": "in" });
       profileContainer.appendChild(profScript);
 
-      // 3. Render Technical Gauge Widget
       const taContainer = document.getElementById('tradingview_ta_container');
       taContainer.innerHTML = '';
       const taScript = document.createElement('script');
       taScript.type = 'text/javascript';
       taScript.src = 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js';
       taScript.async = true;
-      taScript.innerHTML = JSON.stringify({
-        "interval": "15m",
-        "width": "100%",
-        "isTransparent": true,
-        "height": 380,
-        "symbol": fullSymbol,
-        "showIntervalTabs": true,
-        "displayMode": "single",
-        "locale": "in",
-        "colorTheme": "dark"
-      });
+      taScript.innerHTML = JSON.stringify({ "interval": "15m", "width": "100%", "isTransparent": true, "height": 380, "symbol": fullSymbol, "showIntervalTabs": true, "displayMode": "single", "locale": "in", "colorTheme": "dark" });
       taContainer.appendChild(taScript);
 
-      // 4. Render Interactive Chart
       const chartContainer = document.getElementById('tradingview_chart_container');
       chartContainer.innerHTML = '';
       document.getElementById('chart-symbol-label').innerText = `${fullSymbol} Interactive Chart`;
-      new TradingView.widget({
-        "autosize": true,
-        "symbol": fullSymbol,
-        "interval": "15",
-        "timezone": "Asia/Kolkata",
-        "theme": "dark",
-        "style": "1",
-        "locale": "in",
-        "toolbar_bg": "#020617",
-        "enable_publishing": false,
-        "allow_symbol_change": true,
-        "save_image": false,
-        "container_id": "tradingview_chart_container"
-      });
+      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "interval": "15", "timezone": "Asia/Kolkata", "theme": "dark", "style": "1", "locale": "in", "toolbar_bg": "#020617", "enable_publishing": false, "allow_symbol_change": true, "save_image": false, "container_id": "tradingview_chart_container" });
 
       lucide.createIcons();
     }
@@ -1099,213 +1078,14 @@
 
       const horizon = (parseFloat(buyPrice) < 100) ? 'Turnaround / Penny (2-4M)' : 'Positional / Compounding (3-6W)';
 
-      state.stocks.push({
-        id: Date.now(),
-        name: clean,
-        horizon: horizon,
-        qty: parseFloat(qty) || 1,
-        buy: parseFloat(buyPrice) || 1,
-        cur: parseFloat(defaultPrice) || parseFloat(buyPrice),
-        t1: t1,
-        t2: t2,
-        sl: sl
-      });
-
+      state.stocks.push({ id: Date.now(), name: clean, horizon, qty: parseFloat(qty) || 1, buy: parseFloat(buyPrice) || 1, cur: parseFloat(defaultPrice) || parseFloat(buyPrice), t1, t2, sl });
       saveState();
-      alert(`✅ ${clean} added to your active holdings with automated protection!`);
+      alert(`✅ ${clean} added to your active holdings!`);
       switchTab('stocks');
       switchStockSubTab('holdings');
       refreshHoldingsPrices();
     }
 
-    // --- CURATED RECOMMENDATIONS & LIVE PYTHON JSON SYNC ---
-    async function loadLiveRecommendations() {
-      try {
-        const response = await fetch('./recommendations.json?t=' + Date.now());
-        if (response.ok) {
-          const json = await response.json();
-          if (json.data && json.data.length > 0) {
-            currentRecsData = json.data;
-            const timeLabel = document.getElementById('rec-last-updated');
-            if (timeLabel) timeLabel.innerText = `⚡ Live Python Sync: ${json.last_updated}`;
-          }
-        }
-      } catch (err) {
-        console.log("Using core fallback recommendations:", err);
-      }
-      renderRecommendations('all');
-    }
-
-    function filterRecs(cat) {
-      ['all', 'penny', 'large', 'mid', 'small', 'swing'].forEach(c => {
-        const btn = document.getElementById(`rec-btn-${c}`);
-        if (btn) {
-          btn.classList.remove('rec-filter-active');
-          btn.classList.add('bg-slate-800', 'text-slate-300');
-        }
-      });
-      const activeBtn = document.getElementById(`rec-btn-${cat}`);
-      if (activeBtn) {
-        activeBtn.classList.add('rec-filter-active');
-        activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
-      }
-      renderRecommendations(cat);
-    }
-
-    function renderRecommendations(filterCategory) {
-      const container = document.getElementById('recs-grid');
-      if (!container) return;
-      container.innerHTML = '';
-
-      const sourceList = currentRecsData || MASTER_RECOMMENDATIONS;
-      const list = filterCategory === 'all' 
-        ? sourceList 
-        : sourceList.filter(r => r.cat === filterCategory);
-
-      list.forEach(r => {
-        container.innerHTML += `
-          <div class="bg-slate-800/40 border border-slate-700/60 p-4 rounded-xl flex flex-col justify-between hover:border-slate-600 transition">
-            <div>
-              <div class="flex justify-between items-start">
-                <div>
-                  <h4 class="font-bold text-white text-sm cursor-pointer hover:text-blue-400" onclick="analyzeTickerQuick('${r.ticker}')">${r.ticker}</h4>
-                  <p class="text-[11px] text-slate-400">${r.name}</p>
-                </div>
-                <div class="text-right">
-                  <span class="text-[10px] px-2 py-0.5 rounded font-semibold uppercase bg-blue-500/20 text-blue-400">${r.cat}</span>
-                  <span class="block text-[10px] text-amber-400 font-semibold mt-1">⏱ ${r.timeframe}</span>
-                </div>
-              </div>
-              <div class="mt-3 space-y-1 text-xs">
-                <div class="text-slate-300"><b>Entry Zone:</b> ₹${r.entry}</div>
-                <div class="text-slate-400"><b>Targets:</b> ₹${r.t1} / ₹${r.t2} | <b>SL:</b> ₹${r.sl}</div>
-                <p class="text-[11px] text-slate-400 mt-2 italic">${r.thesis}</p>
-              </div>
-            </div>
-            <div class="flex gap-2 mt-4">
-              <button onclick="analyzeTickerQuick('${r.ticker}')" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
-                <i data-lucide="search" class="w-3.5 h-3.5"></i> Analyze
-              </button>
-              <button onclick="addAnalyzedStockToHoldings('${r.ticker}', ${r.cmp || 30.50}, ${r.t1}, ${r.t2}, ${r.sl})" class="w-1/2 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Track
-              </button>
-            </div>
-          </div>
-        `;
-      });
-      lucide.createIcons();
-    }
-
-    // --- INTRADAY ORB CALCULATOR ---
-    function calcORB() {
-      const ticker = document.getElementById('orb-ticker').value.trim().toUpperCase() || 'INDEX';
-      const high = parseFloat(document.getElementById('orb-high').value) || 0;
-      const low = parseFloat(document.getElementById('orb-low').value) || 0;
-      if (high <= low || high <= 0) return alert('Enter valid 9:15-9:30 AM Candle High and Low');
-
-      const range = high - low;
-      const longEntry = high + 1;
-      const longT1 = high + (range * 1.5);
-      const longSL = high - (range * 0.5);
-
-      const shortEntry = low - 1;
-      const shortT1 = low - (range * 1.5);
-      const shortSL = low + (range * 0.5);
-
-      const res = document.getElementById('orb-results');
-      res.classList.remove('hidden');
-      res.innerHTML = `
-        <div class="p-4 bg-emerald-950/40 border border-emerald-800/60 rounded-xl space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-emerald-400 text-sm">LONG BREAKOUT SETUP</span>
-            <span class="text-[11px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Buy above ₹${high}</span>
-          </div>
-          <p class="text-xs text-slate-300"><b>Trigger Entry:</b> ₹${longEntry.toFixed(1)} (15m close above)</p>
-          <p class="text-xs text-slate-300"><b>Target:</b> ₹${longT1.toFixed(1)} (Timeframe: 1 to 3 Hours)</p>
-          <p class="text-xs text-slate-300"><b>Stop Loss:</b> ₹${longSL.toFixed(1)}</p>
-        </div>
-        <div class="p-4 bg-rose-950/40 border border-rose-800/60 rounded-xl space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-rose-400 text-sm">SHORT BREAKDOWN SETUP</span>
-            <span class="text-[11px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded">Sell below ₹${low}</span>
-          </div>
-          <p class="text-xs text-slate-300"><b>Trigger Entry:</b> ₹${shortEntry.toFixed(1)} (15m close below)</p>
-          <p class="text-xs text-slate-300"><b>Target:</b> ₹${shortT1.toFixed(1)} (Timeframe: 1 to 3 Hours)</p>
-          <p class="text-xs text-slate-300"><b>Stop Loss:</b> ₹${shortSL.toFixed(1)}</p>
-        </div>
-      `;
-    }
-
-    // --- TIMEFRAME-AWARE SIGNAL DOCTOR ---
-    function renderAdvisorSignals() {
-      const container = document.getElementById('advisor-cards-container');
-      container.innerHTML = '';
-
-      if (state.stocks.length === 0) {
-        container.innerHTML = `<div class="col-span-3 text-center text-slate-500 py-10">Add stock holdings in Stocks Hub to generate real-time signals.</div>`;
-        return;
-      }
-
-      state.stocks.forEach(s => {
-        const invested = s.qty * s.buy;
-        const currentVal = s.qty * s.cur;
-        const plPercent = ((currentVal - invested) / (invested || 1)) * 100;
-        const horizon = s.horizon || 'Positional / Compounding (3-6W)';
-        
-        let signal = 'KEEP (Holding Strong)';
-        let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-        let actionNote = `Position is within healthy ${horizon} boundaries. Maintain defined stop loss.`;
-
-        if (s.sl && s.cur <= s.sl) {
-          signal = 'EXIT (Stop-Loss Breached)';
-          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
-          actionNote = `LTP (₹${s.cur}) breached strict Stop Loss of ₹${s.sl}. Cut trade immediately to protect capital.`;
-        } else if (s.t2 && s.cur >= s.t2) {
-          signal = 'SELL ALL (Target 2 Hit)';
-          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-          actionNote = `Final Target ₹${s.t2} hit! Lock full profits or trail strictly with previous day low.`;
-        } else if (s.t1 && s.cur >= s.t1) {
-          signal = 'BOOK 50% (Target 1 Hit)';
-          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-          actionNote = `Target 1 (₹${s.t1}) reached! Sell 50% quantity and shift Stop Loss to Breakeven (₹${s.buy}).`;
-        } else if (plPercent >= 40 && !horizon.includes('Long-Term')) {
-          signal = 'TRIM / REBALANCE (+40% Run)';
-          badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-          actionNote = `Up +${plPercent.toFixed(1)}% on a short-term trade. Trim 25% to lock gains into liquid cash or debt.`;
-        } else if (plPercent <= -15 && !s.sl) {
-          signal = 'REVIEW (Drawdown Alert)';
-          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
-          actionNote = `Down -${Math.abs(plPercent).toFixed(1)}% without an active Stop Loss. Check fundamentals.`;
-        }
-
-        container.innerHTML += `
-          <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start">
-                <div>
-                  <h4 class="font-bold text-white text-base">${s.name}</h4>
-                  <span class="text-[10px] text-blue-400 font-semibold uppercase">${horizon}</span>
-                </div>
-                <span class="text-xs px-2.5 py-1 rounded border font-semibold ${badgeClass}">${signal}</span>
-              </div>
-              <div class="mt-3 space-y-1.5 text-xs text-slate-400">
-                <div class="flex justify-between">
-                  <span>Avg: ₹${s.buy} | LTP: ₹${s.cur}</span>
-                  <span class="${plPercent >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${plPercent >= 0 ? '+' : ''}${plPercent.toFixed(2)}%</span>
-                </div>
-                <p class="mt-2 text-slate-200 font-medium">${actionNote}</p>
-              </div>
-            </div>
-            <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-500 flex justify-between">
-              <span>T1: ${s.t1 ? '₹'+s.t1 : '-'} | T2: ${s.t2 ? '₹'+s.t2 : '-'}</span>
-              <span>SL: ${s.sl ? '₹'+s.sl : '-'}</span>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    // --- OTHER ASSETS (MF, FD, CASH, F&O) ---
     function saveMF() {
       const name = document.getElementById('input-mf-name').value.trim();
       const cat = document.getElementById('input-mf-cat').value;
@@ -1341,20 +1121,6 @@
       closeModal('modal-add-cash');
     }
 
-    function saveFNO() {
-      const name = document.getElementById('input-fno-name').value.trim();
-      const type = document.getElementById('input-fno-type').value;
-      const expiry = document.getElementById('input-fno-expiry').value;
-      const qty = parseFloat(document.getElementById('input-fno-qty').value) || 0;
-      const buy = parseFloat(document.getElementById('input-fno-buy').value) || 0;
-      const ltp = parseFloat(document.getElementById('input-fno-ltp').value) || buy;
-      if (!name || qty <= 0) return alert('Enter valid F&O details');
-
-      state.fno.push({ id: Date.now(), name, type, expiry, qty, buy, ltp });
-      saveState();
-      closeModal('modal-add-fno');
-    }
-
     function deleteItem(category, id) {
       state[category] = state[category].filter(i => i.id !== id);
       saveState();
@@ -1362,6 +1128,7 @@
 
     // --- MAIN RENDER ENGINE ---
     function renderAll() {
+      // 1. Render Stocks
       let totalStockInv = 0, totalStockCur = 0;
       const stockBody = document.getElementById('stocks-table-body');
       stockBody.innerHTML = '';
@@ -1394,19 +1161,31 @@
         `;
       });
 
+      // 2. Render F&O Positions With Decision Engine
       const fnoBody = document.getElementById('fno-table-body');
       fnoBody.innerHTML = '';
       state.fno.forEach(f => {
         const pl = (f.ltp - f.buy) * f.qty;
+        const dec = getFNODecision(f);
         fnoBody.innerHTML += `
           <tr class="hover:bg-slate-800/30">
-            <td class="p-4 font-semibold text-white">${f.name}</td>
+            <td class="p-4 font-semibold text-white">
+              <div>${f.name}</div>
+              <span class="text-[10px] text-slate-400">Breakeven: ~₹${(f.buy + 2000).toFixed(2)}</span>
+            </td>
             <td class="p-4 text-xs font-semibold uppercase text-indigo-400">${f.type}</td>
             <td class="p-4 text-xs text-slate-400">${f.expiry || 'N/A'}</td>
-            <td class="p-4">${f.qty}</td>
-            <td class="p-4">₹${f.buy}</td>
-            <td class="p-4">₹${f.ltp}</td>
-            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${formatINR(pl)}</td>
+            <td class="p-4 font-medium">${f.qty}</td>
+            <td class="p-4">₹${f.buy.toFixed(2)}</td>
+            <td class="p-4 font-bold text-white">₹${f.ltp.toFixed(2)}</td>
+            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">
+              ${formatINR(pl)} (${dec.pnlPct >= 0 ? '+' : ''}${dec.pnlPct.toFixed(1)}%)
+            </td>
+            <td class="p-4 text-xs text-slate-300">T1: ₹${f.t1 || (f.buy*1.6).toFixed(2)} | T2: ₹${f.t2 || (f.buy*2.2).toFixed(2)}</td>
+            <td class="p-4 text-xs text-rose-400 font-semibold">₹${f.sl || (f.buy*0.6).toFixed(2)}</td>
+            <td class="p-4">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-bold border ${dec.badgeClass}">${dec.signal}</span>
+            </td>
             <td class="p-4 text-right">
               <button onclick="deleteItem('fno', ${f.id})" class="text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
             </td>
@@ -1414,6 +1193,7 @@
         `;
       });
 
+      // 3. Render Mutual Funds & Commodities
       let totalMFInv = 0, totalMFCur = 0;
       const mfBody = document.getElementById('mf-table-body');
       mfBody.innerHTML = '';
@@ -1425,7 +1205,11 @@
         mfBody.innerHTML += `
           <tr class="hover:bg-slate-800/30">
             <td class="p-4 font-semibold text-white">${m.name}</td>
-            <td class="p-4 text-xs text-slate-400">${m.cat}</td>
+            <td class="p-4 text-xs text-slate-400">
+              <span class="px-2 py-0.5 rounded text-[11px] font-medium ${m.cat.includes('Commodities') ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-slate-800 text-slate-300'}">
+                ${m.cat}
+              </span>
+            </td>
             <td class="p-4">${formatINR(m.invested)}</td>
             <td class="p-4 font-medium text-white">${formatINR(m.current)}</td>
             <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
@@ -1436,6 +1220,7 @@
         `;
       });
 
+      // 4. Render FDs & Cash
       let totalFD = 0;
       const fdBody = document.getElementById('fd-table-body');
       fdBody.innerHTML = '';
@@ -1488,6 +1273,97 @@
       lucide.createIcons();
     }
 
+    // --- TIMEFRAME & OPTIONS DOCTOR ENGINE ---
+    function renderAdvisorSignals() {
+      const container = document.getElementById('advisor-cards-container');
+      container.innerHTML = '';
+
+      if (state.stocks.length === 0 && state.fno.length === 0) {
+        container.innerHTML = `<div class="col-span-3 text-center text-slate-500 py-10">Add active stocks or F&O contracts to generate real-time doctor signals.</div>`;
+        return;
+      }
+
+      // Render F&O Options Cards First
+      state.fno.forEach(f => {
+        const dec = getFNODecision(f);
+        container.innerHTML += `
+          <div class="bg-slate-900 border border-indigo-500/30 p-5 rounded-2xl flex flex-col justify-between shadow-lg shadow-indigo-500/5">
+            <div>
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-base">${f.name}</h4>
+                  <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">${f.type} • Exp: ${f.expiry || 'Near'}</span>
+                </div>
+                <span class="text-xs px-2.5 py-1 rounded-lg border font-bold ${dec.badgeClass}">${dec.signal}</span>
+              </div>
+              <div class="mt-3 space-y-1.5 text-xs text-slate-400">
+                <div class="flex justify-between">
+                  <span>Buy: ₹${f.buy} | Live LTP: <b class="text-white">₹${f.ltp}</b></span>
+                  <span class="${dec.pnlPct >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${dec.pnlPct >= 0 ? '+' : ''}${dec.pnlPct.toFixed(1)}%</span>
+                </div>
+                <p class="mt-2 text-slate-200 font-medium leading-relaxed">${dec.note}</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between">
+              <span>Targets: ₹${f.t1 || (f.buy*1.6).toFixed(2)} / ₹${f.t2 || (f.buy*2.2).toFixed(2)}</span>
+              <span class="text-rose-400 font-semibold">Strict SL: ₹${f.sl || (f.buy*0.6).toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      // Render Stock Cards
+      state.stocks.forEach(s => {
+        const invested = s.qty * s.buy;
+        const currentVal = s.qty * s.cur;
+        const plPercent = ((currentVal - invested) / (invested || 1)) * 100;
+        const horizon = s.horizon || 'Positional / Compounding (3-6W)';
+        
+        let signal = 'KEEP (Holding Strong)';
+        let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        let actionNote = `Position is within healthy ${horizon} boundaries. Maintain defined stop loss.`;
+
+        if (s.sl && s.cur <= s.sl) {
+          signal = 'EXIT (Stop-Loss Breached)';
+          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+          actionNote = `LTP (₹${s.cur}) breached strict Stop Loss of ₹${s.sl}. Cut trade immediately to protect capital.`;
+        } else if (s.t2 && s.cur >= s.t2) {
+          signal = 'SELL ALL (Target 2 Hit)';
+          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+          actionNote = `Final Target ₹${s.t2} hit! Lock full profits or trail strictly with previous day low.`;
+        } else if (s.t1 && s.cur >= s.t1) {
+          signal = 'BOOK 50% (Target 1 Hit)';
+          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+          actionNote = `Target 1 (₹${s.t1}) reached! Sell 50% quantity and shift Stop Loss to Breakeven (₹${s.buy}).`;
+        }
+
+        container.innerHTML += `
+          <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-base">${s.name}</h4>
+                  <span class="text-[10px] text-blue-400 font-semibold uppercase">${horizon}</span>
+                </div>
+                <span class="text-xs px-2.5 py-1 rounded border font-semibold ${badgeClass}">${signal}</span>
+              </div>
+              <div class="mt-3 space-y-1.5 text-xs text-slate-400">
+                <div class="flex justify-between">
+                  <span>Avg: ₹${s.buy} | LTP: ₹${s.cur}</span>
+                  <span class="${plPercent >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${plPercent >= 0 ? '+' : ''}${plPercent.toFixed(2)}%</span>
+                </div>
+                <p class="mt-2 text-slate-200 font-medium">${actionNote}</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-500 flex justify-between">
+              <span>T1: ${s.t1 ? '₹'+s.t1 : '-'} | T2: ${s.t2 ? '₹'+s.t2 : '-'}</span>
+              <span>SL: ${s.sl ? '₹'+s.sl : '-'}</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
     function updateChart(stocks = 0, mf = 0, fd = 0, cash = 0) {
       const ctx = document.getElementById('allocationChart');
       if (!ctx) return;
@@ -1496,7 +1372,7 @@
       chartInstance = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Stocks', 'Mutual Funds', 'Fixed Deposits', 'Cash'],
+          labels: ['Stocks', 'Mutual Funds & Commodities', 'Fixed Deposits', 'Cash'],
           datasets: [{
             data: [stocks || 1, mf, fd, cash],
             backgroundColor: ['#3b82f6', '#6366f1', '#a855f7', '#10b981'],
@@ -1546,10 +1422,9 @@
         try { state = JSON.parse(saved); } catch(e) { console.error(e); }
       }
       renderAll();
-      loadLiveRecommendations();
       renderAnalyzerModules(currentAnalyzedSymbol);
 
-      // Automated Polling: updates LTPs every 30 seconds
+      // Automated Polling: updates portfolio holdings LTPs every 30 seconds
       refreshHoldingsPrices();
       setInterval(refreshHoldingsPrices, 30000);
     }
