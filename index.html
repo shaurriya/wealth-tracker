@@ -98,13 +98,10 @@
         <i data-lucide="line-chart" class="w-4 h-4"></i> Portfolio Hub
       </button>
       <button onclick="switchTab('jarvis_sug')" id="tab-btn-jarvis_sug" class="py-3 px-1 text-amber-400 hover:text-amber-300 flex items-center gap-2 font-semibold">
-        <i data-lucide="sparkles" class="w-4 h-4"></i> JARVIS Suggestions (10-20)
-      </button>
-      <button onclick="switchTab('advisor')" id="tab-btn-advisor" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
-        <i data-lucide="cpu" class="w-4 h-4"></i> Financial Health
+        <i data-lucide="sparkles" class="w-4 h-4"></i> JARVIS Suggestions
       </button>
       <button onclick="switchTab('mf')" id="tab-btn-mf" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
-        <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds & Gold
+        <i data-lucide="pie-chart" class="w-4 h-4"></i> Mutual Funds & Gold/Silver
       </button>
       <button onclick="switchTab('fd')" id="tab-btn-fd" class="py-3 px-1 text-slate-400 hover:text-slate-200 flex items-center gap-2">
         <i data-lucide="landmark" class="w-4 h-4"></i> Fixed Deposits
@@ -121,7 +118,7 @@
     <!-- 1. DASHBOARD -->
     <section id="view-dashboard" class="space-y-6">
       
-      <!-- JARVIS Interactive Command & Live Status Banner -->
+      <!-- Market Status Banner -->
       <div class="glass-card jarvis-glow p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
           <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
@@ -132,11 +129,9 @@
             <p class="text-xs text-slate-300" id="market-status-banner">Checking exchange status...</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="forceSyncLivePrices()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
-            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Force Sync Prices
-          </button>
-        </div>
+        <button onclick="forceSyncLivePrices()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Force Sync Prices
+        </button>
       </div>
 
       <!-- Sentinel Stop-Loss Alert Banner -->
@@ -158,7 +153,7 @@
           <div class="text-xs text-slate-500 mt-1" id="dash-stocks-pl">P&L: ₹0.00</div>
         </div>
         <div class="glass-card p-5 rounded-2xl">
-          <div class="text-xs text-slate-400 font-semibold uppercase">Mutual Funds & Gold</div>
+          <div class="text-xs text-slate-400 font-semibold uppercase">Mutual Funds & Commodities</div>
           <div class="text-xl font-bold text-indigo-400 mt-2" id="dash-mf-val">₹0.00</div>
           <div class="text-xs text-slate-500 mt-1" id="dash-mf-pl">P&L: ₹0.00</div>
         </div>
@@ -223,11 +218,11 @@
           </div>
         </div>
         <div class="flex gap-2">
-          <button onclick="filterJarvisTable('all')" id="jt-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All Setups (20)</button>
-          <button onclick="filterJarvisTable('intraday')" id="jt-btn-intraday" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Intraday / ORB</button>
-          <button onclick="filterJarvisTable('swing')" id="jt-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Swing (3-10 Days)</button>
-          <button onclick="filterJarvisTable('short')" id="jt-btn-short" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Short-Term (1-3 Mo)</button>
-          <button onclick="filterJarvisTable('long')" id="jt-btn-long" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Long-Term (6+ Mo)</button>
+          <button onclick="filterJarvisTable('all')" id="jt-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold rec-filter-active">All Setups</button>
+          <button onclick="filterJarvisTable('intraday')" id="jt-btn-intraday" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Intraday</button>
+          <button onclick="filterJarvisTable('swing')" id="jt-btn-swing" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Swing</button>
+          <button onclick="filterJarvisTable('short')" id="jt-btn-short" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Short-Term</button>
+          <button onclick="filterJarvisTable('long')" id="jt-btn-long" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300">Long-Term</button>
         </div>
       </div>
 
@@ -347,42 +342,25 @@
       </div>
     </section>
 
-    <!-- 3. FINANCIAL HEALTH -->
-    <section id="view-advisor" class="hidden space-y-6">
-      <div class="glass-card jarvis-glow p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30"><i data-lucide="cpu" class="w-6 h-6 animate-pulse"></i></div>
-          <div>
-            <h2 class="text-lg font-bold text-white">Financial Health Audit & Rebalancing Assistant</h2>
-            <p class="text-xs text-slate-400">Institutional health scoring and concentration risk evaluation.</p>
-          </div>
-        </div>
-        <button onclick="executeJarvisActionPlan()" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2">
-          <i data-lucide="zap" class="w-4 h-4"></i> Execute Action Plan
-        </button>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="jarvis-advisor-cards"></div>
-    </section>
-
-    <!-- 4. MUTUAL FUNDS & GOLD -->
+    <!-- 3. MUTUAL FUNDS & COMMODITIES (GOLD & SILVER) -->
     <section id="view-mf" class="hidden space-y-4">
       <div class="flex justify-between items-center">
         <div>
-          <h2 class="text-lg font-bold">Mutual Funds, SIPs & Commodities</h2>
-          <p class="text-xs text-slate-400">Track Equity Funds, Gold, and Silver allocations.</p>
+          <h2 class="text-lg font-bold">Mutual Funds, SIPs & Gold/Silver Commodities</h2>
+          <p class="text-xs text-slate-400">Match your exact monthly SIP tranches and commodity holdings.</p>
         </div>
         <button onclick="openModal('modal-add-mf')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund
+          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund / Gold / Silver
         </button>
       </div>
       <div class="overflow-x-auto glass-card rounded-2xl">
         <table class="w-full text-left text-sm text-slate-300">
           <thead class="bg-slate-800/60 text-slate-400 text-xs uppercase font-semibold">
             <tr>
-              <th class="p-4">Fund Name</th>
+              <th class="p-4">Fund / Commodity Name</th>
               <th class="p-4">Category</th>
-              <th class="p-4">Invested</th>
-              <th class="p-4">Current Value</th>
+              <th class="p-4">Invested Amount (₹)</th>
+              <th class="p-4">Current Value (₹)</th>
               <th class="p-4">P&L (%)</th>
               <th class="p-4 text-right">Actions</th>
             </tr>
@@ -392,7 +370,7 @@
       </div>
     </section>
 
-    <!-- 5. FIXED DEPOSITS -->
+    <!-- 4. FIXED DEPOSITS -->
     <section id="view-fd" class="hidden space-y-4">
       <div class="flex justify-between items-center">
         <div>
@@ -420,7 +398,7 @@
       </div>
     </section>
 
-    <!-- 6. CASH -->
+    <!-- 5. CASH -->
     <section id="view-cash" class="hidden space-y-4">
       <div class="flex justify-between items-center">
         <h2 class="text-lg font-bold">Cash & Liquid Reserves</h2>
@@ -457,20 +435,23 @@
     </div>
   </div>
 
+  <!-- UPGRADED MF / GOLD / SILVER MODAL -->
   <div id="modal-add-mf" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4">
-      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Fund / Gold</h3><button onclick="closeModal('modal-add-mf')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-      <input type="text" id="input-mf-name" placeholder="Fund Name" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Mutual Fund / Gold / Silver</h3><button onclick="closeModal('modal-add-mf')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <input type="text" id="input-mf-name" placeholder="Fund Name (e.g. Parag Parikh Flexi Cap)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
       <select id="input-mf-cat" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-slate-200">
-        <option value="Commodities (Gold & Silver)" selected>Commodities (Gold & Silver)</option>
+        <option value="Small Cap Growth">Small Cap Growth</option>
+        <option value="Index Fund (Nifty 50 / Next 50)">Index Fund (Nifty 50 / Next 50)</option>
         <option value="Flexi Cap / Large Cap">Flexi Cap / Large Cap</option>
-        <option value="Mid & Small Cap">Mid & Small Cap</option>
+        <option value="Mid Cap Growth">Mid Cap Growth</option>
+        <option value="Gold & Silver Commodity" selected>Gold & Silver Commodity</option>
       </select>
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="input-mf-invested" placeholder="Invested ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
         <input type="number" id="input-mf-current" placeholder="Current ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
       </div>
-      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Fund</button></div>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Asset</button></div>
     </div>
   </div>
 
@@ -552,7 +533,6 @@
       lucide.createIcons();
     }
 
-    // 20+ Master Suggestions Matrix
     const MASTER_SUGGESTIONS = [
       { name: 'NIFTY 50 Index (NIFTY)', bucket: 'Intraday / ORB', cmp: 25120.0, timeframe: 'Intraday', entry: 'Break of 15m High', t1: '25,350', t2: '25,500', sl: '0.4% Trail', type: 'intraday' },
       { name: 'State Bank of India (SBIN)', bucket: 'Intraday Momentum', cmp: 810.0, timeframe: 'Intraday', entry: '808 - 812', t1: '825', t2: '840', sl: '798', type: 'intraday' },
@@ -594,7 +574,7 @@
     }
 
     function switchTab(tabId) {
-      ['dashboard', 'stocks', 'jarvis_sug', 'advisor', 'mf', 'fd', 'cash'].forEach(id => {
+      ['dashboard', 'stocks', 'jarvis_sug', 'mf', 'fd', 'cash'].forEach(id => {
         const el = document.getElementById(`view-${id}`);
         const btn = document.getElementById(`tab-btn-${id}`);
         if (el) el.classList.add('hidden');
@@ -604,7 +584,6 @@
       document.getElementById(`tab-btn-${tabId}`).classList.add('tab-active');
       if (tabId === 'dashboard') updateChart();
       if (tabId === 'jarvis_sug') renderJarvisTable('all');
-      if (tabId === 'advisor') renderJarvisAdvisor();
       lucide.createIcons();
     }
 
@@ -991,24 +970,6 @@
       lucide.createIcons();
     }
 
-    function renderJarvisAdvisor() {
-      const container = document.getElementById('jarvis-advisor-cards');
-      container.innerHTML = `
-        <div class="glass-card border-blue-500/30 p-5 rounded-2xl space-y-3">
-          <div class="flex items-center gap-2 text-blue-400 font-bold text-sm"><i data-lucide="shield-check" class="w-4 h-4"></i> Core Asset Balance</div>
-          <p class="text-xs text-slate-300 leading-relaxed">JARVIS recommends maintaining at least 40% in large-cap compounders like Reliance or HDFC Bank to protect against volatility.</p>
-        </div>
-        <div class="glass-card border-amber-500/30 p-5 rounded-2xl space-y-3">
-          <div class="flex items-center gap-2 text-amber-400 font-bold text-sm"><i data-lucide="trending-up" class="w-4 h-4"></i> Profit Harvesting</div>
-          <p class="text-xs text-slate-300 leading-relaxed">When short-term swing positions hit +30%, JARVIS will prompt you to sweep 50% profits into liquid cash reserves.</p>
-        </div>
-        <div class="glass-card border-emerald-500/30 p-5 rounded-2xl space-y-3">
-          <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm"><i data-lucide="landmark" class="w-4 h-4"></i> Fixed Income Yield</div>
-          <p class="text-xs text-slate-300 leading-relaxed">Your fixed income and gold buffers are performing within desired stability parameters.</p>
-        </div>
-      `;
-    }
-
     function updateChart(stocks = 0, mf = 0, fd = 0, cash = 0) {
       const ctx = document.getElementById('allocationChart');
       if (!ctx) return;
@@ -1016,7 +977,7 @@
       chartInstance = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Stocks', 'Mutual Funds & Gold', 'Fixed Deposits', 'Cash'],
+          labels: ['Stocks', 'Mutual Funds & Commodities', 'Fixed Deposits', 'Cash'],
           datasets: [{ data: [stocks || 1, mf, fd, cash], backgroundColor: ['#3b82f6', '#6366f1', '#a855f7', '#10b981'], borderWidth: 0 }]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } } }
