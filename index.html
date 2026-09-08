@@ -134,7 +134,7 @@
         </div>
         <div class="flex items-center gap-2">
           <button onclick="forceSyncLivePrices()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
-            <i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i> Force Sync Live Prices
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Force Sync Prices
           </button>
         </div>
       </div>
@@ -632,7 +632,6 @@
       return raw.trim().toUpperCase().replace(' LIMITED', '').replace(' LTD', '').split(' ')[0];
     }
 
-    // Market Status Check & Autonomous Live Sync Simulation
     function checkMarketStatus() {
       const now = new Date();
       const hours = now.getHours();
@@ -655,7 +654,6 @@
     }
 
     function forceSyncLivePrices() {
-      // Simulated live price variance tick for active holdings to showcase auto-updating capability
       state.stocks.forEach(s => {
         const variance = (Math.random() * 0.01 - 0.004) * s.cur;
         s.cur = parseFloat((s.cur + variance).toFixed(2));
@@ -1028,7 +1026,7 @@
     function exportData() {
       const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = `omniwealth_jarvis_backup_${new Date().toISOString().slice(0, 10)}.json`; a.click();
+      const a = document.createElement('a'); a.href = url; a.download = `omniwealth_jarvis_report.json`; a.click();
     }
 
     function importData(event) {
