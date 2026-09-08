@@ -347,10 +347,10 @@
       <div class="flex justify-between items-center">
         <div>
           <h2 class="text-lg font-bold">Mutual Funds, SIPs & Gold/Silver Commodities</h2>
-          <p class="text-xs text-slate-400">Match your exact monthly SIP tranches and commodity holdings.</p>
+          <p class="text-xs text-slate-400">Adding a monthly amount to an existing fund automatically updates your total invested amount.</p>
         </div>
-        <button onclick="openModal('modal-add-mf')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2">
-          <i data-lucide="plus" class="w-4 h-4"></i> Add Fund / Gold / Silver
+        <button onclick="openModal('modal-add-mf')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow">
+          <i data-lucide="plus" class="w-4 h-4"></i> Add / Update Monthly SIP
         </button>
       </div>
       <div class="overflow-x-auto glass-card rounded-2xl">
@@ -359,7 +359,7 @@
             <tr>
               <th class="p-4">Fund / Commodity Name</th>
               <th class="p-4">Category</th>
-              <th class="p-4">Invested Amount (₹)</th>
+              <th class="p-4">Total Invested (₹)</th>
               <th class="p-4">Current Value (₹)</th>
               <th class="p-4">P&L (%)</th>
               <th class="p-4 text-right">Actions</th>
@@ -435,23 +435,24 @@
     </div>
   </div>
 
-  <!-- UPGRADED MF / GOLD / SILVER MODAL -->
+  <!-- SMART UPSERT MUTUAL FUND / GOLD / SILVER MODAL -->
   <div id="modal-add-mf" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="glass-card p-6 rounded-2xl w-full max-w-md space-y-4">
-      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add Mutual Fund / Gold / Silver</h3><button onclick="closeModal('modal-add-mf')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="flex justify-between items-center"><h3 class="text-lg font-bold text-white">Add / Update Monthly SIP</h3><button onclick="closeModal('modal-add-mf')" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
       <input type="text" id="input-mf-name" placeholder="Fund Name (e.g. Parag Parikh Flexi Cap)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
       <select id="input-mf-cat" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-slate-200">
         <option value="Small Cap Growth">Small Cap Growth</option>
         <option value="Index Fund (Nifty 50 / Next 50)">Index Fund (Nifty 50 / Next 50)</option>
         <option value="Flexi Cap / Large Cap">Flexi Cap / Large Cap</option>
         <option value="Mid Cap Growth">Mid Cap Growth</option>
-        <option value="Gold & Silver Commodity" selected>Gold & Silver Commodity</option>
+        <option value="Gold & Silver Commodity">Gold & Silver Commodity</option>
       </select>
       <div class="grid grid-cols-2 gap-3">
-        <input type="number" id="input-mf-invested" placeholder="Invested ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
-        <input type="number" id="input-mf-current" placeholder="Current ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
+        <input type="number" id="input-mf-invested" placeholder="Monthly Tranche ₹ (e.g. 2500)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-white" />
+        <input type="number" id="input-mf-current" placeholder="Current Total Value ₹" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm text-emerald-400 font-semibold" />
       </div>
-      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save Asset</button></div>
+      <p class="text-[11px] text-slate-400 italic">💡 If fund already exists, this automatically adds the amount to your total invested capital.</p>
+      <div class="flex justify-end gap-2 pt-2"><button onclick="closeModal('modal-add-mf')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs">Cancel</button><button onclick="saveMF()" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save / Update SIP</button></div>
     </div>
   </div>
 
@@ -697,123 +698,31 @@
       closeModal('modal-add-stock');
     }
 
-    function saveFNO() {
-      const name = document.getElementById('input-fno-name').value.trim().toUpperCase();
-      const type = document.getElementById('input-fno-type').value;
-      const expiry = document.getElementById('input-fno-expiry').value;
-      const qty = parseFloat(document.getElementById('input-fno-qty').value) || 0;
-      const buy = parseFloat(document.getElementById('input-fno-buy').value) || 0;
-      const ltp = parseFloat(document.getElementById('input-fno-ltp').value) || buy;
-      if (!name || qty <= 0 || buy <= 0) return alert('Enter valid contract details.');
+    // SMART UPSERT MF FUNCTION (Automatically adds monthly amounts to existing funds)
+    function saveMF() {
+      const nameInput = document.getElementById('input-mf-name').value.trim();
+      const cat = document.getElementById('input-mf-cat').value;
+      const monthlyAdd = parseFloat(document.getElementById('input-mf-invested').value) || 0;
+      const currentVal = parseFloat(document.getElementById('input-mf-current').value) || monthlyAdd;
 
-      const sl = parseFloat((buy * 0.60).toFixed(2));
-      const t1 = parseFloat((buy * 1.60).toFixed(2));
-      const t2 = parseFloat((buy * 2.20).toFixed(2));
+      if (!nameInput || monthlyAdd <= 0) return alert('Please enter valid fund name and amount.');
 
-      state.fno.push({ id: Date.now(), name, type, expiry, qty, buy, ltp, t1, t2, sl });
-      saveState();
-      closeModal('modal-add-fno');
-    }
-
-    function getFNODecision(f) {
-      const pnlPct = ((f.ltp - f.buy) / (f.buy || 1)) * 100;
-      let signal = 'KEEP / HOLD';
-      let badgeClass = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      const sl = f.sl || (f.buy * 0.6);
-      const t1 = f.t1 || (f.buy * 1.6);
-      const t2 = f.t2 || (f.buy * 2.2);
-
-      if (f.ltp <= sl) { signal = 'EXIT (SL)'; badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/40'; }
-      else if (f.ltp >= t2) { signal = 'SELL ALL (T2)'; badgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'; }
-      else if (f.ltp >= t1) { signal = 'BOOK 50% (T1)'; badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'; }
-      return { signal, badgeClass, pnlPct, sl, t1, t2 };
-    }
-
-    function getExpiryCountdown(expiryDateStr) {
-      if (!expiryDateStr) return 'Active';
-      const diff = new Date(expiryDateStr) - new Date();
-      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      if (days < 0) return 'Expired';
-      if (days === 0) return 'Expires Today!';
-      return `${days} days left`;
-    }
-
-    function checkJarvisSentinel() {
-      const banner = document.getElementById('jarvis-sentinel-banner');
-      const msg = document.getElementById('jarvis-sentinel-msg');
-      let triggered = [];
-      state.stocks.forEach(s => {
-        if (s.sl && s.cur <= s.sl * 1.02) {
-          triggered.push(`${s.name} is testing Stop-Loss (LTP: ₹${s.cur} vs SL: ₹${s.sl})`);
-        }
-      });
-      if (triggered.length > 0) {
-        msg.innerText = triggered.join(' | ');
-        banner.classList.remove('hidden');
+      const existingFund = state.mf.find(m => m.name.toLowerCase() === nameInput.toLowerCase());
+      if (existingFund) {
+        existingFund.invested += monthlyAdd;
+        existingFund.current = currentVal;
+        existingFund.cat = cat;
+        alert(`Successfully added ₹${monthlyAdd} to ${existingFund.name}! Total Invested is now ₹${existingFund.invested}.`);
       } else {
-        banner.classList.add('hidden');
+        state.mf.push({ id: Date.now(), name: nameInput, cat, invested: monthlyAdd, current: currentVal });
+        alert(`Created new asset: ${nameInput} with ₹${monthlyAdd} invested.`);
       }
-    }
 
-    function exportCSV() {
-      let csv = "Asset Category,Name/Ticker,Quantity,Buy Price,Current Price,Current Value\n";
-      state.stocks.forEach(s => { csv += `Stock,${s.name},${s.qty},${s.buy},${s.cur},${s.qty * s.cur}\n`; });
-      state.mf.forEach(m => { csv += `Mutual Fund,${m.name},1,${m.invested},${m.current},${m.current}\n`; });
-      state.fd.forEach(d => { csv += `Fixed Deposit,${d.bank},1,${d.principal},${d.maturity},${d.maturity}\n`; });
-      
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = `omniwealth_jarvis_report.csv`; a.click();
-    }
-
-    async function runDeepAnalysis() {
-      const input = document.getElementById('analyzer-symbol-input').value;
-      if (!input) return;
-      currentAnalyzedSymbol = cleanTickerSymbol(input);
-      document.getElementById('analyzer-symbol-input').value = currentAnalyzedSymbol;
-      await renderAnalyzerModules(currentAnalyzedSymbol);
-    }
-
-    async function renderAnalyzerModules(ticker) {
-      const cleanTicker = cleanTickerSymbol(ticker);
-      const fullSymbol = `NSE:${cleanTicker}`;
-      const levelsCard = document.getElementById('analyzer-levels-card');
-      const existing = MASTER_SUGGESTIONS.find(r => r.name.includes(cleanTicker));
-      const estCMP = existing ? existing.cmp : 1500.00;
-
-      const riskPct = 0.055;
-      const sl = parseFloat((estCMP * (1 - riskPct)).toFixed(2));
-      const t1 = parseFloat((estCMP * (1 + (riskPct * 2.3))).toFixed(2));
-      const t2 = parseFloat((estCMP * (1 + (riskPct * 4.0))).toFixed(2));
-
-      levelsCard.innerHTML = `
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-bold text-white">${cleanTicker} <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Reference LTP: ₹${estCMP}</span></h2>
-          <button onclick="addAnalyzedStockToHoldings('${cleanTicker}', ${estCMP}, ${t1}, ${t2}, ${sl})" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-lg">Track Position</button>
-        </div>
-        <div class="grid grid-cols-3 gap-3 text-xs pt-2">
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Stop Loss: <b class="text-rose-400">₹${sl}</b></div>
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 1: <b class="text-emerald-400">₹${t1}</b></div>
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">Target 2: <b class="text-emerald-300">₹${t2}</b></div>
-        </div>
-      `;
-
-      document.getElementById('tradingview_profile_container').innerHTML = '';
-      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "width": "100%", "height": 380, "colorTheme": "dark", "isTransparent": true, "container_id": "tradingview_profile_container" });
-      document.getElementById('tradingview_ta_container').innerHTML = '';
-      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "width": "100%", "height": 380, "colorTheme": "dark", "isTransparent": true, "container_id": "tradingview_ta_container" });
-      document.getElementById('tradingview_chart_container').innerHTML = '';
-      new TradingView.widget({ "autosize": true, "symbol": fullSymbol, "interval": "15", "theme": "dark", "style": "1", "container_id": "tradingview_chart_container" });
-    }
-
-    function addAnalyzedStockToHoldings(ticker, defaultPrice, t1, t2, sl) {
-      const clean = cleanTickerSymbol(ticker);
-      const qty = prompt(`Enter quantity for ${clean}:`, '100');
-      if (!qty) return;
-      state.stocks.push({ id: Date.now(), name: clean, qty: parseFloat(qty), buy: defaultPrice, cur: defaultPrice, t1, t2, sl });
       saveState();
-      switchTab('stocks');
-      switchStockSubTab('holdings');
+      closeModal('modal-add-mf');
+      document.getElementById('input-mf-name').value = '';
+      document.getElementById('input-mf-invested').value = '';
+      document.getElementById('input-mf-current').value = '';
     }
 
     function saveFD() {
@@ -826,17 +735,6 @@
       state.fd.push({ id: Date.now(), bank, principal, rate, date, maturity });
       saveState();
       closeModal('modal-add-fd');
-    }
-
-    function saveMF() {
-      const name = document.getElementById('input-mf-name').value.trim();
-      const cat = document.getElementById('input-mf-cat').value;
-      const invested = parseFloat(document.getElementById('input-mf-invested').value) || 0;
-      const current = parseFloat(document.getElementById('input-mf-current').value) || invested;
-      if (!name) return alert('Enter fund name');
-      state.mf.push({ id: Date.now(), name, cat, invested, current });
-      saveState();
-      closeModal('modal-add-mf');
     }
 
     function saveCash() {
@@ -869,29 +767,6 @@
             <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${pl >= 0 ? '+' : ''}${plPct.toFixed(2)}%</td>
             <td class="p-4 text-xs text-slate-400">T1: ${s.t1 || '-'} | SL: ₹${s.sl || '-'}</td>
             <td class="p-4 text-right"><button onclick="deleteItem('stocks', ${s.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
-          </tr>
-        `;
-      });
-
-      let totalFno = 0;
-      const fnoBody = document.getElementById('fno-table-body');
-      fnoBody.innerHTML = '';
-      state.fno.forEach(f => {
-        const pl = (f.ltp - f.buy) * f.qty;
-        totalFno += (f.qty * f.ltp);
-        const dec = getFNODecision(f);
-        const countdown = getExpiryCountdown(f.expiry);
-        fnoBody.innerHTML += `
-          <tr class="hover:bg-slate-800/30">
-            <td class="p-4 font-semibold text-white">${f.name}</td>
-            <td class="p-4 text-xs text-indigo-400">${f.type}</td>
-            <td class="p-4 text-xs text-amber-400 font-medium">${countdown}</td>
-            <td class="p-4">${f.qty}</td>
-            <td class="p-4">₹${f.buy}</td>
-            <td class="p-4 font-bold">₹${f.ltp}</td>
-            <td class="p-4 ${pl >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${formatINR(pl)}</td>
-            <td class="p-4"><span class="px-2.5 py-1 rounded-lg text-xs font-bold border ${dec.badgeClass}">${dec.signal}</span></td>
-            <td class="p-4 text-right"><button onclick="deleteItem('fno', ${f.id})" class="text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
           </tr>
         `;
       });
@@ -947,7 +822,7 @@
         `;
       });
 
-      const netWorth = totalStockCur + totalMFCur + totalFD + totalCash + totalFno;
+      const netWorth = totalStockCur + totalMFCur + totalFD + totalCash;
       document.getElementById('global-net-worth').innerText = formatINR(netWorth);
       document.getElementById('dash-stocks-val').innerText = formatINR(totalStockCur);
       document.getElementById('dash-stocks-pl').innerText = `P&L: ${formatINR(totalStockCur - totalStockInv)}`;
@@ -961,10 +836,6 @@
       const projected3Yr = netWorth * Math.pow(1.14, 3);
       document.getElementById('sim-1yr').innerText = formatINR(projected1Yr);
       document.getElementById('sim-3yr').innerText = formatINR(projected3Yr);
-
-      if (totalCash > 25000) {
-        document.getElementById('jarvis-sip-hint').innerText = `₹${(totalCash - 10000).toLocaleString('en-IN')} available for SIP deployment`;
-      }
 
       updateChart(totalStockCur, totalMFCur, totalFD, totalCash);
       lucide.createIcons();
@@ -1001,7 +872,6 @@
           if (parsed.mf) state.mf = parsed.mf;
           if (parsed.fd) state.fd = parsed.fd;
           if (parsed.cash) state.cash = parsed.cash;
-          if (parsed.fno) state.fno = parsed.fno;
           saveState(); 
           alert('Portfolio imported successfully!'); 
         } catch (err) { alert('Invalid JSON file'); }
@@ -1020,13 +890,11 @@
           if (parsed.mf) state.mf = parsed.mf;
           if (parsed.fd) state.fd = parsed.fd;
           if (parsed.cash) state.cash = parsed.cash;
-          if (parsed.fno) state.fno = parsed.fno;
         } catch(e) {} 
       }
       checkMarketStatus();
       renderAll();
       renderJarvisTable('all');
-      renderAnalyzerModules(currentAnalyzedSymbol);
       checkJarvisSentinel();
     }
 
