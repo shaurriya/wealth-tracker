@@ -1,6 +1,6 @@
 {
-  "last_updated": "21 Sep 2026, 03:08 AM IST",
-  "count": 40,
+  "last_updated": "22 Sep 2026, 03:07 AM IST",
+  "count": 41,
   "data": [
     {
       "ticker": "SUZLON",
@@ -60,11 +60,11 @@
       "cat": "penny",
       "horizon": "Turnaround / Penny (2-4M)",
       "timeframe": "2 - 4 Months",
-      "cmp": 45.19,
-      "entry": "44.3 - 45.6",
-      "t1": 58.7,
-      "t2": 65.5,
-      "sl": 40.7,
+      "cmp": 46.07,
+      "entry": "45.1 - 46.5",
+      "t1": 59.9,
+      "t2": 66.8,
+      "sl": 41.5,
       "thesis": "NPA cleanup lifting Return on Assets."
     },
     {
@@ -216,11 +216,11 @@
       "cat": "large",
       "horizon": "Long-Term (6-18M)",
       "timeframe": "6 - 12 Months",
-      "cmp": 1867.3,
-      "entry": "1830.0 - 1886.0",
-      "t1": 2324.8,
-      "t2": 2520.9,
-      "sl": 1736.6,
+      "cmp": 1837.3,
+      "entry": "1800.6 - 1855.7",
+      "t1": 2287.4,
+      "t2": 2480.4,
+      "sl": 1708.7,
       "thesis": "Global specialty pharma margin resilience."
     },
     {
@@ -255,11 +255,11 @@
       "cat": "mid",
       "horizon": "Positional (3-6W)",
       "timeframe": "3 - 6 Months",
-      "cmp": 5020.0,
-      "entry": "4919.6 - 5070.2",
-      "t1": 5863.4,
-      "t2": 6315.2,
-      "sl": 4718.8,
+      "cmp": 5099.5,
+      "entry": "4997.5 - 5150.5",
+      "t1": 5956.2,
+      "t2": 6415.2,
+      "sl": 4793.5,
       "thesis": "Data center backup power & green engines."
     },
     {
@@ -268,11 +268,11 @@
       "cat": "mid",
       "horizon": "Positional (3-6W)",
       "timeframe": "4 - 8 Months",
-      "cmp": 18815.0,
-      "entry": "18438.7 - 19003.2",
-      "t1": 21975.9,
-      "t2": 23669.3,
-      "sl": 17686.1,
+      "cmp": 18555.0,
+      "entry": "18183.9 - 18740.5",
+      "t1": 21672.2,
+      "t2": 23342.2,
+      "sl": 17441.7,
       "thesis": "Pinaka rockets & global defense export orders."
     },
     {
@@ -287,6 +287,19 @@
       "t2": 16347.7,
       "sl": 12215.3,
       "thesis": "PLI beneficiary in smartphone & IT hardware."
+    },
+    {
+      "ticker": "MAXHEALTH",
+      "name": "Max Healthcare",
+      "cat": "mid",
+      "horizon": "Positional (3-6W)",
+      "timeframe": "3 - 6 Months",
+      "cmp": 1049.3,
+      "entry": "1028.3 - 1059.8",
+      "t1": 1225.6,
+      "t2": 1320.0,
+      "sl": 986.3,
+      "thesis": "Bed capacity addition and high ARPOB metrics."
     },
     {
       "ticker": "PERSISTENT",
@@ -346,11 +359,11 @@
       "cat": "mid",
       "horizon": "Positional (3-6W)",
       "timeframe": "3 - 6 Months",
-      "cmp": 2789.0,
-      "entry": "2733.2 - 2816.9",
-      "t1": 3257.6,
-      "t2": 3508.6,
-      "sl": 2621.7,
+      "cmp": 2824.0,
+      "entry": "2767.5 - 2852.2",
+      "t1": 3298.4,
+      "t2": 3552.6,
+      "sl": 2654.6,
       "thesis": "Rapid Zudio store expansion & inventory turns."
     },
     {
@@ -359,11 +372,11 @@
       "cat": "mid",
       "horizon": "Positional (3-6W)",
       "timeframe": "4 - 9 Months",
-      "cmp": 3300.0,
-      "entry": "3234.0 - 3333.0",
-      "t1": 3854.4,
-      "t2": 4151.4,
-      "sl": 3102.0,
+      "cmp": 3580.3,
+      "entry": "3508.7 - 3616.1",
+      "t1": 4181.8,
+      "t2": 4504.0,
+      "sl": 3365.5,
       "thesis": "National piping & infrastructure demand leader."
     },
     {
@@ -385,11 +398,11 @@
       "cat": "small",
       "horizon": "Swing (3-8D)",
       "timeframe": "2 - 4 Months",
-      "cmp": 414.6,
-      "entry": "406.3 - 418.7",
-      "t1": 466.4,
-      "t2": 497.5,
-      "sl": 393.9,
+      "cmp": 421.2,
+      "entry": "412.8 - 425.4",
+      "t1": 473.9,
+      "t2": 505.4,
+      "sl": 400.1,
       "thesis": "Global industrial gear market share expansion."
     },
     {
@@ -424,11 +437,11 @@
       "cat": "small",
       "horizon": "Positional (3-6W)",
       "timeframe": "3 - 6 Months",
-      "cmp": 5646.0,
-      "entry": "5533.1 - 5702.5",
-      "t1": 6594.5,
-      "t2": 7102.7,
-      "sl": 5307.2,
+      "cmp": 5645.0,
+      "entry": "5532.1 - 5701.4",
+      "t1": 6593.4,
+      "t2": 7101.4,
+      "sl": 5306.3,
       "thesis": "Premium housing renovation demand."
     },
     {
@@ -502,11 +515,11 @@
       "cat": "swing",
       "horizon": "Swing (3-8D)",
       "timeframe": "3 - 7 Trading Days",
-      "cmp": 418.0,
-      "entry": "409.6 - 422.2",
-      "t1": 459.8,
-      "t2": 484.9,
-      "sl": 401.3,
+      "cmp": 409.9,
+      "entry": "401.7 - 414.0",
+      "t1": 450.9,
+      "t2": 475.5,
+      "sl": 393.5,
       "thesis": "20-EMA pullback support with high dividend yield."
     },
     {
